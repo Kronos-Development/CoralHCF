@@ -96,9 +96,6 @@ public class DefaultFoxtrotTabLayoutProvider implements LayoutProvider {
 
         layout.set(0, ++y, location);
 
-        /* Getting the direction 4 times a second for each player on the server may be intensive.
-        We may want to cache the entire location so it is accessed no more than 1 time per second.
-        FIXME, WIP */
 
         String direction = PlayerDirection.getCardinalDirection(player)
                 .replace("[N]", "[NORTH]")
@@ -501,9 +498,6 @@ public class DefaultFoxtrotTabLayoutProvider implements LayoutProvider {
 
         layout.set(2, 11, location);
 
-        /* Getting the direction 4 times a second for each player on the server may be intensive.
-        We may want to cache the entire location so it is accessed no more than 1 time per second.
-        FIXME, WIP */
         String direction = PlayerDirection.getCardinalDirection(player);
         if (direction != null) {
             layout.set(2, 10, ChatColor.GRAY + "(" + loc.getBlockX() + ", " + loc.getBlockZ() + ") [" + direction + "]");

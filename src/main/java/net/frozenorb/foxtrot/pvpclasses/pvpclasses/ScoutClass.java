@@ -147,7 +147,11 @@ public class ScoutClass extends PvPClass {
 		lastGrapplingUsage.put(player.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10L));
 
 		switch (event.getState()) {
-			case FAILED_ATTEMPT:
+			case FAILED_ATTEMPT: {
+				player.sendMessage(ChatColor.RED + "Your hook needs to be in the ground!");
+				break;
+			}
+
 			case IN_GROUND: {
 				if (event.getHook().getLocation().distance(player.getLocation()) > 30) {
 					player.sendMessage(ChatColor.RED + "You are too far from the hook!");

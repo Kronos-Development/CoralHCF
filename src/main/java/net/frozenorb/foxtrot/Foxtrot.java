@@ -28,6 +28,7 @@ import net.frozenorb.foxtrot.pvpclasses.PvPClassHandler;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
 import net.frozenorb.foxtrot.server.ServerHandler;
 import net.frozenorb.foxtrot.tab.FoxtrotTabLayoutProvider;
+import net.frozenorb.foxtrot.tasks.RallyExpireTask;
 import net.frozenorb.foxtrot.team.TeamHandler;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.commands.team.TeamClaimCommand;
@@ -80,8 +81,17 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private ChatModeMap chatModeMap;
 	@Getter private FishingKitMap fishingKitMap;
 	@Getter private ToggleGlobalChatMap toggleGlobalChatMap;
+	@Getter private ToggleLFFMessageMap toggleLFFMessageMap;
 	@Getter private StaffBoardMap staffBoardMap;
 	@Getter private AbilityCooldownsMap abilityCooldownsMap;
+	@Getter private FDisplayMap fDisplayMap;
+
+	@Getter private TeamColorMap teamColorMap;
+	@Getter private EnemyColorMap enemyColorMap;
+	@Getter private AllyColorMap allyColorMap;
+	@Getter private ArcherTagColorMap archerTagColorMap;
+	@Getter private FocusColorMap focusColorMap;
+
 	@Getter private ClassCooldownsMap classCooldownsMap;
 	@Getter private ChatSpyMap chatSpyMap;
 	@Getter private DiamondMinedMap diamondMinedMap;
@@ -212,10 +222,7 @@ public class Foxtrot extends JavaPlugin {
 		RedisSaveTask.save(null, false);
 		Foxtrot.getInstance().getServerHandler().save();
 		Foxtrot.getInstance().getMapHandler().save();
-
-		if (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-			Foxtrot.getInstance().getMapHandler().getStatsHandler().save();
-		}
+		Foxtrot.getInstance().getMapHandler().getStatsHandler().save();
 
 		RegenUtils.resetAll();
 
@@ -301,6 +308,12 @@ public class Foxtrot extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new BlockRegenListener(), this);
 		}
 
+		// Register CheatBreaker specific listeners
+		if (Bukkit.getPluginManager().getPlugin("UniversalClientAPI") != null && Bukkit.getPluginManager().getPlugin("UniversalClientAPI").isEnabled()) {
+			getServer().getPluginManager().registerEvents(new ClientListener(), this);
+			Bukkit.getScheduler().runTaskTimer(this, new RallyExpireTask(), 0, 20);
+		}
+
 		// Register kitmap specific listeners
 		if (getServerHandler().isVeltKitMap() || getMapHandler().isKitMap()) {
 			getServer().getPluginManager().registerEvents(new KitMapListener(), this);
@@ -324,7 +337,16 @@ public class Foxtrot extends JavaPlugin {
 		(killsMap = new KillsMap()).loadFromRedis();
 		(chatModeMap = new ChatModeMap()).loadFromRedis();
 		(toggleGlobalChatMap = new ToggleGlobalChatMap()).loadFromRedis();
+		(toggleLFFMessageMap = new ToggleLFFMessageMap()).loadFromRedis();
 		(abilityCooldownsMap = new AbilityCooldownsMap()).loadFromRedis();
+		(fDisplayMap = new FDisplayMap()).loadFromRedis();
+
+		(teamColorMap = new TeamColorMap()).loadFromRedis();
+		(enemyColorMap = new EnemyColorMap()).loadFromRedis();
+		(allyColorMap = new AllyColorMap()).loadFromRedis();
+		(archerTagColorMap = new ArcherTagColorMap()).loadFromRedis();
+		(focusColorMap = new FocusColorMap()).loadFromRedis();
+
 		(staffBoardMap = new StaffBoardMap()).loadFromRedis();
 		(classCooldownsMap = new ClassCooldownsMap()).loadFromRedis();
 		(fishingKitMap = new FishingKitMap()).loadFromRedis();

@@ -1,10 +1,12 @@
 package net.frozenorb.foxtrot.map.stats.command;
 
+import com.minexd.zoot.util.NPC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.map.stats.command.StatsTopCommand.StatsObjective;
 import net.frozenorb.qlib.command.Command;
 import net.frozenorb.qlib.command.Param;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.SkullType;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -60,7 +62,28 @@ public class LeaderboardAddCommand {
         Foxtrot.getInstance().getMapHandler().getStatsHandler().getObjectives().put(block.getLocation(), objective);
     }
 
-    @Command(names = {"clearleaderboards"}, permission = "op")
+    @Command(names = {"leaderboard npc add"}, permission="op", async = true)
+    public static void leaderboardAddNPC(Player sender, @Param(name="objective")String objectiveName) {
+        Location loc = sender.getLocation();
+        StatsObjective objective;
+
+        try {
+            objective = StatsObjective.valueOf(objectiveName);
+        } catch (Exception ex) {
+            sender.sendMessage(ChatColor.RED + "Invalid objective!");
+            return;
+        }
+
+        NPC npc = new NPC("Loading");
+        npc.grabSkin("MHF_Exclamation");
+        npc.setLocation(loc);
+        npc.spawn();
+
+
+        Foxtrot.getInstance().getMapHandler().getStatsHandler().setupNPC(npc, "objective");
+
+    }
+
     public static void clearallstats(Player sender) {
         ConversationFactory factory = new ConversationFactory(Foxtrot.getInstance()).withModality(true).withPrefix(new NullConversationPrefix()).withFirstPrompt(new StringPrompt() {
 

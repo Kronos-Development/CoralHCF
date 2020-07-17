@@ -10,12 +10,14 @@ import net.frozenorb.foxtrot.team.claims.Subclaim;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmaskType;
 import net.frozenorb.foxtrot.team.subclaim.SubclaimType;
+import net.frozenorb.foxtrot.util.ChatUtils;
 import net.frozenorb.qlib.command.FrozenCommandHandler;
 import net.frozenorb.qlib.qLib;
 import net.frozenorb.qlib.redis.RedisCommand;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import redis.clients.jedis.Jedis;
 
@@ -145,7 +147,8 @@ public class TeamHandler {
     public void setupTeam(Team team, boolean update) {
         teamNameMap.put(team.getName().toLowerCase(), team);
         teamUniqueIdMap.put(team.getUniqueId(), team);
-        
+        team.setTeamColor(ChatUtils.randomChatColor());
+
         for (UUID member : team.getMembers()) {
             setTeam(member, team, update); // no need to update mongo!
         }

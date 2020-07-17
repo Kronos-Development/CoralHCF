@@ -1,15 +1,12 @@
 package net.frozenorb.foxtrot.server.conditional.staff;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPIHook;
 import net.frozenorb.qlib.nametag.FrozenNametagHandler;
 import net.frozenorb.qlib.visibility.FrozenVisibilityHandler;
-import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -72,7 +69,8 @@ public class ModHandler {
 
             player.getInventory().setItem(8, StaffItems.GO_VIS);
 
-            CBAPIHook.giveAllStaffModules(player);
+            CheatBreakerAPI.getInstance().giveAllStaffModules(player);
+            Bukkit.getPluginManager().callEvent(new ModModeEnterEvent(player));
         } else {
             player.removeMetadata("modmode", Foxtrot.getInstance());
             setVanished(player, false);
@@ -83,8 +81,8 @@ public class ModHandler {
 
             if (player.getGameMode() != GameMode.CREATIVE)
                 player.setAllowFlight(false);
-
-            CBAPIHook.disableAllStaffModules(player);
+            CheatBreakerAPI.getInstance().disableAllStaffModules(player);
+            Bukkit.getPluginManager().callEvent(new ModModeExitEvent(player));
         }
 
         player.updateInventory();
@@ -148,7 +146,7 @@ public class ModHandler {
         public static ItemStack GO_VIS = build(Material.INK_SACK, 1, DyeColor.GRAY.getDyeData(), ChatColor.AQUA + "Become Visible");
         public static ItemStack GO_INVIS = build(Material.INK_SACK, 1, DyeColor.LIME.getDyeData(), ChatColor.AQUA + "Become Invisible");
 
-        public static ItemStack CARPET = build(Material.CARPET, 1, DyeColor.CYAN.getDyeData(), " ");
+        public static ItemStack CARPET = build(Material.CARPET, 1, DyeColor.CYAN.getWoolData(), " ");
 
         public static ItemStack build(Material type, String displayName) {
             return build(type, 1, (byte)0, displayName);

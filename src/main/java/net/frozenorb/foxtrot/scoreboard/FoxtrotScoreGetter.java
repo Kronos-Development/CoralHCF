@@ -164,13 +164,20 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             }
         }
 
+
+        if(Foxtrot.getInstance().getAbilityHandler().isOnCooldown(player.getUniqueId())) {
+            scores.add(ChatColor.GOLD.toString() + ChatColor.BOLD + "Ability&7: &c" + (ScoreFunction.TIME_FANCY.apply(Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000F)));
+        }
+
         if (Setting.SCOREBOARD_ABILITY_COOLDOWNS.isEnabled(player)) {
+
+
             List<AbstractAbility> abilities = Foxtrot.getInstance().getAbilityHandler().getAbilities();
 
             for (AbstractAbility ability : abilities) {
                 if (!ability.isOnCooldown(player.getUniqueId()))
                     continue;
-                scores.add(ability.getDisplayName() + "&7: &r" + (ScoreFunction.TIME_FANCY.apply(ability.getCooldownLeft(player.getUniqueId()) / 1000F)));
+                scores.add(ability.getScoreboardName() +  "&7: &c" + (ScoreFunction.TIME_FANCY.apply(ability.getCooldownLeft(player.getUniqueId()) / 1000F)));
             }
         }
 
@@ -239,6 +246,8 @@ public class FoxtrotScoreGetter implements ScoreGetter {
         if (!scores.isEmpty()) {
             // 'Top' and bottom.
             scores.addFirst("&a&7&m--------------------");
+            scores.add("&b&l");
+            scores.add("&7&ocoral.gg");
             scores.add("&b&7&m--------------------");
         }
     }

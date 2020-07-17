@@ -1,8 +1,8 @@
 package net.frozenorb.foxtrot.team.commands.team;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
+import com.cheatbreaker.api.object.CBWaypoint;
 import net.frozenorb.foxtrot.Foxtrot;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPIHook;
-import net.frozenorb.foxtrot.server.cheatbreaker.WrappedWaypoint;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.qlib.command.Command;
 import net.frozenorb.qlib.command.Param;
@@ -40,9 +40,9 @@ public class TeamDisplayCommand {
             return;
         }
 
-        WrappedWaypoint waypoint = new WrappedWaypoint(team.getName(), team.getHQ(), team.getHQ().getWorld().getUID().toString(), -16776961);
+        CBWaypoint waypoint = new CBWaypoint(team.getName(), team.getHQ(), -16776961, true);
         for (Player member : senderTeam.getOnlineMembers()) {
-            CBAPIHook.sendWaypoint(member, waypoint);
+            CheatBreakerAPI.getInstance().sendWaypoint(member, waypoint);
         }
 
         senderTeam.sendMessage(ChatColor.DARK_AQUA + sender.getName() + " has created a waypoint for " + team.getName() + "'s HQ!");

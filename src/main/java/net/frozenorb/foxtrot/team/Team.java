@@ -1,5 +1,7 @@
 package net.frozenorb.foxtrot.team;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
+import com.cheatbreaker.api.object.CBWaypoint;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 
@@ -15,16 +17,15 @@ import net.frozenorb.foxtrot.chat.enums.ChatMode;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
 import net.frozenorb.foxtrot.persist.maps.DeathbanMap;
 import net.frozenorb.foxtrot.persist.maps.KillsMap;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPIHook;
-import net.frozenorb.foxtrot.server.cheatbreaker.WrappedRule;
-import net.frozenorb.foxtrot.server.cheatbreaker.WrappedWaypoint;
 import net.frozenorb.foxtrot.team.claims.Claim;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
+import net.frozenorb.foxtrot.team.commands.team.TeamDisplayCommand;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.foxtrot.team.dtr.DTRHandler;
 import net.frozenorb.foxtrot.team.track.TeamActionTracker;
 import net.frozenorb.foxtrot.team.track.TeamActionType;
+import net.frozenorb.foxtrot.util.ChatUtils;
 import net.frozenorb.foxtrot.util.CuboidRegion;
 import net.frozenorb.qlib.economy.FrozenEconomyHandler;
 import net.frozenorb.qlib.qLib;
@@ -46,8 +47,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import redis.clients.jedis.Jedis;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
 
 public class Team {
 
@@ -66,6 +69,8 @@ public class Team {
     @Getter @Setter private ObjectId uniqueId;
     @Getter private String name;
     @Getter private Location HQ;
+    @Getter private RallyPoint Rally;
+    @Getter private CBWaypoint HQWaypoint;
     @Getter private double balance;
     @Getter private double DTR;
     @Getter private long DTRCooldown;
@@ -76,6 +81,8 @@ public class Team {
     @Getter private final Set<UUID> captains = new HashSet<>();
     @Getter private final Set<UUID> coleaders = new HashSet<>();
     @Getter private final Set<UUID> invitations = new HashSet<>();
+    @Getter private final Set<UUID> subclaimPermissions = new HashSet<>();
+    @Getter private final Set<UUID> rallyPermissions = new HashSet<>();
     @Getter private final Set<ObjectId> allies = new HashSet<>();
     @Getter private final Set<ObjectId> requestedAllies = new HashSet<>();
     @Getter private String announcement;
@@ -99,11 +106,10 @@ public class Team {
     @Getter private final Set<UUID> historicalMembers = new HashSet<>(); // this will store all players that were once members
 
     // Not persisted //
+    @Getter @Setter private ChatColor teamColor;
     @Getter @Setter private UUID focused;
     @Getter @Setter private long lastRequestReport;
 
-    @Getter @Setter private Rally rally;
-    
     @Getter @Setter private int bards;
     @Getter @Setter private int archers;
     @Getter @Setter private int rogues;
@@ -181,8 +187,23 @@ public class Team {
         }
     }
 
+    public void setRally(RallyPoint rally) {
+        if(this.Rally != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().removeWaypoint(player, this.Rally.getCbWaypoint()));
+        if(rally != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().sendWaypoint(player, rally.getCbWaypoint()));
+        this.Rally = rally;
+    }
+
+    public void setHQWaypoint(CBWaypoint rally) {
+        if(this.HQWaypoint != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().removeWaypoint(player, this.HQWaypoint));
+        if(rally != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().sendWaypoint(player, rally));
+
+        this.HQWaypoint = rally;
+    }
+
+
     public void addMember(UUID member) {
         if (members.add(member)) {
+            sendWaypoint(member);
             historicalMembers.add(member);
 
             if (this.loading) return;
@@ -281,7 +302,7 @@ public class Team {
         String oldHQ = this.HQ == null ? "None" : (getHQ().getBlockX() + ", " + getHQ().getBlockY() + ", " + getHQ().getBlockZ());
         String newHQ = hq == null ? "None" : (hq.getBlockX() + ", " + hq.getBlockY() + ", " + hq.getBlockZ());
         this.HQ = hq;
-
+        setHQWaypoint(hq == null ? null : new CBWaypoint("Home", hq, Color.WHITE.getRGB(), true, true));
         if (this.loading) return;
         TeamActionTracker.logActionAsync(this, TeamActionType.HEADQUARTERS_CHANGED, ImmutableMap.of(
                 "oldHq", oldHQ,
@@ -330,6 +351,44 @@ public class Team {
         return true;
     }
 
+    public void setRallyPermission(UUID changer, UUID uuid, boolean allowed) {
+        if(allowed)
+            getRallyPermissions().add(uuid);
+        else
+            getRallyPermissions().remove(uuid);
+
+        if (this.loading) return;
+        TeamActionTracker.logActionAsync(this, allowed ? TeamActionType.RALLY_PERMISSION_ADD : TeamActionType.RALLY_PERMISSION_REMOVE, ImmutableMap.of(
+                "changer", changer.toString(),
+                "uuid", uuid.toString()
+        ));
+
+        flagForSave();
+    }
+
+    public boolean hasRallyPermission(UUID uuid) {
+        return isCoLeader(uuid) || isOwner(uuid) || isCaptain(uuid) || getRallyPermissions().contains(uuid);
+    }
+
+    public void setSubclaimPermission(UUID changer, UUID uuid, boolean allowed) {
+        if(allowed)
+            getSubclaimPermissions().add(uuid);
+        else
+            getSubclaimPermissions().remove(uuid);
+
+        if (this.loading) return;
+        TeamActionTracker.logActionAsync(this, allowed ? TeamActionType.SUBCLAIM_PERMISSION_ADD : TeamActionType.SUBCLAIM_PERMISSION_REMOVE, ImmutableMap.of(
+                "changer", changer.toString(),
+                "uuid", uuid.toString()
+        ));
+
+        flagForSave();
+    }
+
+    public boolean hasSubclaimPermission(UUID uuid) {
+        return isCoLeader(uuid) || isOwner(uuid) || isCaptain(uuid) || getSubclaimPermissions().contains(uuid);
+    }
+
     public void disband() {
         try {
             if (owner != null) {
@@ -357,6 +416,7 @@ public class Team {
 
         for (UUID uuid : members) {
             Foxtrot.getInstance().getChatModeMap().setChatMode(uuid, ChatMode.PUBLIC);
+            clearWaypoint(uuid);
         }
 
         Foxtrot.getInstance().getTeamHandler().removeTeam(this);
@@ -664,7 +724,24 @@ public class Team {
         return (claims.contains(claim));
     }
 
+    public void sendWaypoint(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if(player != null) {
+            if (this.Rally != null) CheatBreakerAPI.getInstance().sendWaypoint(player, this.Rally.getCbWaypoint());
+            if (this.HQWaypoint != null) CheatBreakerAPI.getInstance().sendWaypoint(player, this.HQWaypoint);
+        }
+    }
+
+    public void clearWaypoint(UUID uuid) {
+        Player player = Bukkit.getPlayer(uuid);
+        if(player != null) {
+            if (this.Rally != null) CheatBreakerAPI.getInstance().removeWaypoint(player, this.Rally.getCbWaypoint());
+            if (this.HQWaypoint != null) CheatBreakerAPI.getInstance().removeWaypoint(player, this.HQWaypoint);
+        }
+    }
+
     public boolean removeMember(UUID member) {
+        clearWaypoint(member);
         members.remove(member);
         captains.remove(member);
         coleaders.remove(member);
@@ -811,13 +888,22 @@ public class Team {
         return (getDTRIncrement(getOnlineMemberAmount()));
     }
 
-    public double getDTRIncrement(int playersOnline) {
-        double dtrPerHour = DTRHandler.getMaxDTR(getSize());
+    public double getDTRIncrement(int playersOnline, boolean offline) {
+        double dtrPerHour = DTRHandler.getMaxDTR(getSize(), offline);
         return (dtrPerHour / 60);
     }
 
+    public double getDTRIncrement(int playersOnline) {
+        return getDTRIncrement(playersOnline, false);
+    }
+
+    public double getMaxDTR(boolean offline) {
+        return (DTRHandler.getMaxDTR(getSize(), offline));
+    }
+
+
     public double getMaxDTR() {
-        return (DTRHandler.getMaxDTR(getSize()));
+        return (DTRHandler.getMaxDTR(getSize(), false));
     }
 
     public void load(BasicDBObject obj) {
@@ -827,6 +913,8 @@ public class Team {
         if (obj.containsKey("CoLeaders")) for (Object coLeader : (BasicDBList) obj.get("CoLeaders")) addCoLeader(UUID.fromString((String) coLeader));
         if (obj.containsKey("Captains")) for (Object captain : (BasicDBList) obj.get("Captains")) addCaptain(UUID.fromString((String) captain));
         if (obj.containsKey("Members")) for (Object member : (BasicDBList) obj.get("Members")) addMember(UUID.fromString((String) member));
+        if (obj.containsKey("SubclaimPermissions")) for (Object sub : (BasicDBList) obj.get("SubclaimPermissions")) getSubclaimPermissions().add(UUID.fromString((String) sub));
+        if (obj.containsKey("RallyPermissions")) for (Object rally : (BasicDBList) obj.get("RallyPermissions")) getRallyPermissions().add(UUID.fromString((String) rally));
         if (obj.containsKey("Invitations")) for (Object invite : (BasicDBList) obj.get("Invitations")) getInvitations().add(UUID.fromString((String) invite));
         if (obj.containsKey("DTR")) setDTR(obj.getDouble("DTR"));
         if (obj.containsKey("DTRCooldown")) setDTRCooldown(obj.getDate("DTRCooldown").getTime());
@@ -889,6 +977,18 @@ public class Team {
                     }
                 }
             } else if (identifier.equalsIgnoreCase("Invited")) {
+                for (String name : lineParts) {
+                    if (name.length() >= 2) {
+                        getInvitations().add(UUID.fromString(name.trim()));
+                    }
+                }
+            }  else if (identifier.equalsIgnoreCase("RallyPerms")) {
+                for (String name : lineParts) {
+                    if (name.length() >= 2) {
+                        getRallyPermissions().add(UUID.fromString(name.trim()));
+                    }
+                }
+            }  else if (identifier.equalsIgnoreCase("SubclaimPerms")) {
                 for (String name : lineParts) {
                     if (name.length() >= 2) {
                         getInvitations().add(UUID.fromString(name.trim()));
@@ -1042,9 +1142,18 @@ public class Team {
             uniqueId = new ObjectId();
             Foxtrot.getInstance().getLogger().info("Generating UUID for team " + getName() + "...");
         }
-
+        setTeamColor(ChatUtils.randomChatColor());
         loading = false;
         needsSave = forceSave;
+    }
+
+    public boolean isRallyActive() {
+        return getRemainingRallyTime() > 0L;
+    }
+
+    public long getRemainingRallyTime() {
+        if(getRally() == null) return 0L;
+        return Math.max(0L, getRally().getTimeCreated() - System.currentTimeMillis());
     }
 
     public String saveString(boolean toJedis) {
@@ -1062,6 +1171,8 @@ public class Team {
         StringBuilder captains = new StringBuilder();
         StringBuilder coleaders = new StringBuilder();
         StringBuilder invites = new StringBuilder();
+        StringBuilder rallyPerms = new StringBuilder();
+        StringBuilder subclaimPerms = new StringBuilder();
         StringBuilder historicalMembers = new StringBuilder();
 
         for (UUID member : getMembers()) {
@@ -1078,6 +1189,14 @@ public class Team {
 
         for (UUID invite : getInvitations()) {
             invites.append(invite.toString()).append(", ");
+        }
+
+        for (UUID sub : getSubclaimPermissions()) {
+            subclaimPerms.append(sub.toString()).append(", ");
+        }
+
+        for (UUID rally : getRallyPermissions()) {
+            rallyPerms.append(rally.toString()).append(", ");
         }
 
         for (UUID member : getHistoricalMembers()) {
@@ -1116,6 +1235,8 @@ public class Team {
         teamString.append("Captains:").append(captains.toString()).append('\n');
         teamString.append("Members:").append(members.toString()).append('\n');
         teamString.append("Invited:").append(invites.toString().replace("\n", "")).append('\n');
+        teamString.append("SubclaimPerms:").append(subclaimPerms.toString().replace("\n", "")).append('\n');
+        teamString.append("RallyPerms:").append(rallyPerms.toString().replace("\n", "")).append('\n');
         teamString.append("Subclaims:").append(getSubclaims().toString().replace("\n", "")).append('\n');
         teamString.append("Claims:").append(getClaims().toString().replace("\n", "")).append('\n');
         teamString.append("Allies:").append(getAllies().toString()).append('\n');
@@ -1156,6 +1277,8 @@ public class Team {
         dbObject.put("Captains", UUIDUtils.uuidsToStrings(getCaptains()));
         dbObject.put("Members", UUIDUtils.uuidsToStrings(getMembers()));
         dbObject.put("Invitations", UUIDUtils.uuidsToStrings(getInvitations()));
+        dbObject.put("SubclaimPermissions", UUIDUtils.uuidsToStrings(getSubclaimPermissions()));
+        dbObject.put("RallyPermissions", UUIDUtils.uuidsToStrings(getRallyPermissions()));
         dbObject.put("Allies", getAllies());
         dbObject.put("RequestedAllies", getRequestedAllies());
         dbObject.put("DTR", getDTR());
@@ -1368,14 +1491,15 @@ public class Team {
             teamLine.tooltip("§aClick to warp to HQ");
         }
 
-        if (isRallyActive() && (player.hasPermission("zoot.staff") || isMember(player.getUniqueId()))) {
-            teamLine.then(ChatColor.DARK_AQUA + " - ")
-                    .then(ChatColor.YELLOW + "Rally: " + ChatColor.RESET + rally.getLocation().getBlockX() + ", " + rally.getLocation().getBlockY() + ", " + rally.getLocation().getBlockZ());
+        if(isRallyActive() && (player.hasPermission("zoot.staff") || isMember(player.getUniqueId()))) {
+            teamLine.then().text(ChatColor.DARK_AQUA + " - ");
+            teamLine.then().text(ChatColor.YELLOW + "Rally: " + ChatColor.WHITE + Rally.getLocation().getBlockX() + ", "  + Rally.getLocation().getBlockY() + ", " + Rally.getLocation().getBlockZ());
 
             if (player.hasPermission("zoot.staff")) {
-                teamLine.command("/tppos " + rally.getLocation().getBlockX() + " " + rally.getLocation().getBlockY() + " " + rally.getLocation().getBlockZ());
+                teamLine.command("/tppos " + Rally.getLocation().getBlockX() + " " + Rally.getLocation().getBlockY() + " " + Rally.getLocation().getBlockZ());
                 teamLine.tooltip("§aClick to warp to Rally");
             }
+
         }
 
         if (player.hasPermission("foxtrot.manage")) {
@@ -1476,6 +1600,10 @@ public class Team {
 
         player.sendMessage(GRAY_LINE);
         // .... and that is how we do a /f who.
+
+        if(Foxtrot.getInstance().getFDisplayMap().isToggled(player.getUniqueId()) && getOwner() != null && HQ != null && !isMember(player.getUniqueId()) && (isCoLeader(player.getUniqueId()) || isOwner(player.getUniqueId()))) {
+            TeamDisplayCommand.teamDisplay(player, this);
+        }
     }
 
     @Override
@@ -1521,55 +1649,5 @@ public class Team {
         }
     }
 
-    public void updateWaypointsFor(Player player) {
-        if (owner == null) return;
-        if (rally != null) {
-            WrappedWaypoint waypoint = rally.getWaypoint();
-
-            if (waypoint != null) {
-                CBAPIHook.changeServerRule(player, WrappedRule.SERVER_HANDLES_WAYPOINTS, true);
-
-                if (rally.isActive())
-                    CBAPIHook.sendWaypoint(player, waypoint);
-                else
-                    CBAPIHook.removeWaypoint(player, waypoint);
-            }
-        }
-    }
-
-    public void updateWaypoints() {
-        if (owner == null) return;
-        if (rally != null) {
-            WrappedWaypoint waypoint = rally.getWaypoint();
-            Collection<Player> players = getOnlineMembers();
-
-            Player leader = Bukkit.getPlayer(owner);
-            if (leader != null && leader.isOnline())
-                players.add(leader);
-
-            if (waypoint != null) {
-                for (Player player : players) {
-                    CBAPIHook.changeServerRule(player, WrappedRule.SERVER_HANDLES_WAYPOINTS, true);
-
-                    if (rally.isActive())
-                        CBAPIHook.sendWaypoint(player, waypoint);
-                    else
-                        CBAPIHook.removeWaypoint(player, waypoint);
-                }
-            }
-        }
-    }
-
-    public boolean isRallyActive() {
-        if (rally == null) return false;
-
-        if (!rally.isActive()) {
-            updateWaypoints();
-            rally = null;
-            return false;
-        }
-
-        return true;
-    }
 
 }

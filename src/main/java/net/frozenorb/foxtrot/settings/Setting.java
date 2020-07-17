@@ -118,6 +118,33 @@ public enum  Setting {
         }
 
     },
+    LFF_MESSAGES(
+            ChatColor.LIGHT_PURPLE + "LFF Messages",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want to see",
+                    ChatColor.BLUE + "LFF messages?"
+            ),
+            Material.EYE_OF_ENDER,
+            ChatColor.YELLOW + "Show LFF messages",
+            ChatColor.YELLOW + "Hide LFF messages",
+            true
+    ) {
+
+        @Override
+        public void toggle(Player player) {
+            boolean value = !Foxtrot.getInstance().getToggleLFFMessageMap().isEnabled(player.getUniqueId());
+
+            Foxtrot.getInstance().getToggleLFFMessageMap().setEnabled(player.getUniqueId(), value);
+            player.sendMessage(ChatColor.YELLOW + "You are now " + (value ? ChatColor.GREEN + "able" : ChatColor.RED + "unable") + ChatColor.YELLOW + " to see LFF messages.");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return Foxtrot.getInstance().getToggleGlobalChatMap().isGlobalChatToggled(player.getUniqueId());
+        }
+
+    },
+
     FOUND_DIAMONDS(
             ChatColor.LIGHT_PURPLE + "Found Diamonds",
             ImmutableList.of(
@@ -194,7 +221,32 @@ public enum  Setting {
         public boolean isEnabled(Player player) {
             return Foxtrot.getInstance().getToggleDeathMessageMap().areDeathMessagesEnabled(player.getUniqueId());
         }
-    };
+    },
+    AUTOMATICALLY_F_DISPLAY(
+            ChatColor.LIGHT_PURPLE + "Automatic Faction Display",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want to",
+                    ChatColor.BLUE + "run faction display",
+                    ChatColor.BLUE + "when doing /f who?"
+            ),
+            Material.BEACON,
+            ChatColor.YELLOW + "Run F Display",
+            ChatColor.YELLOW + "Don't Run F Display",
+            true
+    ) {
+        @Override
+        public void toggle(Player player) {
+            boolean value = !Foxtrot.getInstance().getFDisplayMap().isToggled(player.getUniqueId());
+
+            Foxtrot.getInstance().getFDisplayMap().setToggled(player.getUniqueId(), value);
+            player.sendMessage(ChatColor.YELLOW + "F Display will " + (value ? ChatColor.GREEN + "now" : ChatColor.RED + "no longer") + ChatColor.YELLOW + " run when doing /f who.");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return Foxtrot.getInstance().getClassCooldownsMap().isCooldownsToggled(player.getUniqueId());
+        }
+    },;
 
     @Getter private String name;
     @Getter private Collection<String> description;

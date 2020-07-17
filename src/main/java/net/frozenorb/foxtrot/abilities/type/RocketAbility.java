@@ -48,6 +48,11 @@ public class RocketAbility extends AbstractAbility {
     }
 
     @Override
+    public String getScoreboardName() {
+        return getDisplayName();
+    }
+
+    @Override
     public ChatColor getColor() {
         return ChatColor.LIGHT_PURPLE;
     }

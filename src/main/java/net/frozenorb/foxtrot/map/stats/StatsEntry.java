@@ -12,6 +12,7 @@ public class StatsEntry {
     @Getter(value = AccessLevel.PROTECTED) private boolean modified;
 
     @Getter private UUID owner;
+    @Getter private String faction;
 
     @Getter
     @Setter
@@ -29,6 +30,9 @@ public class StatsEntry {
 
     public StatsEntry(UUID owner) {
         this.owner = owner;
+    }
+    public StatsEntry(String owner) {
+        this.faction = owner;
     }
 
     public void addKill() {

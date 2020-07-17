@@ -9,8 +9,6 @@ import lombok.Setter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.events.Event;
 import net.frozenorb.foxtrot.events.EventType;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPIHook;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPITask;
 import net.frozenorb.foxtrot.server.conditional.ConditionalHandler;
 import net.frozenorb.foxtrot.server.idle.IdleCheckRunnable;
 import net.frozenorb.foxtrot.server.permission.IServerPermissions;
@@ -278,27 +276,6 @@ public class ServerHandler {
         registerPlayerDamageRestrictionListener();
 
         this.conditionalHandler = new ConditionalHandler();
-
-        try {
-            Field maxLevelField = net.minecraft.server.v1_7_R4.Enchantment.class.getDeclaredField("maxLevel");
-
-            Field modifiersField = Field.class.getDeclaredField("modifiers");
-            modifiersField.setInt(maxLevelField, maxLevelField.getModifiers() & ~Modifier.FINAL);
-
-            maxLevelField = net.minecraft.server.v1_7_R4.Enchantment.class.getDeclaredField("maxLevel");
-            maxLevelField.setAccessible(true);
-
-            maxLevelField.setInt(Enchantment.DAMAGE_ALL, this.maxSharpness);
-            maxLevelField.setInt(Enchantment.ARROW_DAMAGE, this.maxPower);
-            maxLevelField.setInt(Enchantment.PROTECTION_ENVIRONMENTAL, this.maxProtection);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Failed to update enchantment limits!");
-        }
-
-        new CBAPIHook();
-        if (CBAPIHook.HOOKED)
-            new CBAPITask().runTaskTimerAsynchronously(Foxtrot.getInstance(), 20L, 20L);
     }
 
     public void save() {
@@ -624,7 +601,6 @@ public class ServerHandler {
                     return;
                 }
 
-                // After testing, this code is actually run sometimes. I'm going to leave it. FIXME
                 if (time == 0) {
                     // Remove their PvP timer.
                     if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(player.getUniqueId())) {

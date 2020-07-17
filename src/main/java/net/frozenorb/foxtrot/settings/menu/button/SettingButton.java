@@ -45,6 +45,7 @@ public class SettingButton extends Button {
             TabListMode current = Foxtrot.getInstance().getTabListModeMap().getTabListMode(player.getUniqueId());
 
             for (TabListMode mode : TabListMode.values()) {
+                if(mode == TabListMode.DETAILED_WITH_FACTION_INFO) continue;
                 if (mode != current) {
                     description.add("    " + ChatColor.GRAY + mode.getName());
                 } else {
@@ -74,9 +75,7 @@ public class SettingButton extends Button {
     public static TabListMode next(TabListMode current) {
         switch (current) {
             case DETAILED:
-                return TabListMode.DETAILED_WITH_FACTION_INFO;
-            case DETAILED_WITH_FACTION_INFO:
-                return TabListMode.DETAILED;
+                return TabListMode.VANILLA;
             default:
                 return TabListMode.DETAILED;
         }

@@ -16,11 +16,6 @@ public class StatsTopCommand {
 
     @Command(names = {"statstop", "leaderboards"}, permission = "")
     public static void statstop(CommandSender sender, @Param(name = "objective", defaultValue = "kills") StatsObjective objective) {
-        if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-            sender.sendMessage("§cThis is a KitMap only command.");
-            return;
-        }
-
         sender.sendMessage(ChatColor.RED.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat('-', 53));
         sender.sendMessage(ChatColor.YELLOW + "Leaderboards for: " + ChatColor.RED + objective.getName());
         sender.sendMessage(ChatColor.RED.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat('-', 53));
@@ -28,7 +23,7 @@ public class StatsTopCommand {
         int index = 0;
         for (Map.Entry<StatsEntry, String> entry : Foxtrot.getInstance().getMapHandler().getStatsHandler().getLeaderboards(objective, 10).entrySet()) {
             index++;
-            sender.sendMessage((index == 1 ? ChatColor.RED + "1 " : ChatColor.YELLOW.toString() + index + " ") + ChatColor.YELLOW.toString() + UUIDUtils.name(entry.getKey().getOwner()) + ": " + ChatColor.RED + entry.getValue());
+            sender.sendMessage((index == 1 ? ChatColor.RED + "1 " : ChatColor.YELLOW.toString() + index + " ") + ChatColor.YELLOW.toString() + (objective == StatsObjective.TOP_FACTION ? entry.getKey().getFaction() : UUIDUtils.name(entry.getKey().getOwner())) + ": " + ChatColor.RED + entry.getValue());
         }
 
         sender.sendMessage(ChatColor.RED.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat('-', 53));
@@ -40,6 +35,7 @@ public class StatsTopCommand {
         KILLS("Kills", "k"),
         DEATHS("Deaths", "d"),
         KD("KD", "kdr"),
+        TOP_FACTION("Top Faction", "topfac", "topfaction"),
         HIGHEST_KILLSTREAK("Highest Killstreak", "killstreak", "highestkillstreak", "ks", "highestks", "hks");
 
         private String name;

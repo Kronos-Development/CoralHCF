@@ -12,10 +12,6 @@ public class StatModifyCommands {
 
 	@Command(names = "sm setkills", permission = "op")
 	public static void setKills(Player player, @Param(name = "kills") int kills) {
-		if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-			player.sendMessage("§cThis is a KitMap only command.");
-			return;
-		}
 
 		StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player);
 		stats.setKills(kills);
@@ -27,10 +23,6 @@ public class StatModifyCommands {
 
 	@Command(names = "sm setdeaths", permission = "op")
 	public static void setDeaths(Player player, @Param(name = "deaths") int deaths) {
-		if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-			player.sendMessage("§cThis is a KitMap only command.");
-			return;
-		}
 
 		StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player);
 		stats.setDeaths(deaths);
@@ -42,10 +34,6 @@ public class StatModifyCommands {
 
 	@Command(names = "sm setteamkills", permission = "op")
 	public static void setTeamKills(Player player, @Param(name = "kills") int kills) {
-		if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-			player.sendMessage("§cThis is a KitMap only command.");
-			return;
-		}
 
 		Team team = Foxtrot.getInstance().getTeamHandler().getTeam(player);
 
@@ -57,11 +45,6 @@ public class StatModifyCommands {
 
 	@Command(names = "sm setteamdeaths", permission = "op")
 	public static void setTeamDeaths(Player player, @Param(name = "deaths") int deaths) {
-		if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-			player.sendMessage("§cThis is a KitMap only command.");
-			return;
-		}
-
 		Team team = Foxtrot.getInstance().getTeamHandler().getTeam(player);
 
 		if (team != null) {

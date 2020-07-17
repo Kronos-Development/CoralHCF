@@ -25,7 +25,7 @@ public class RotateAbility extends AbstractAbility {
 
     @Override
     public long getCooldown() {
-        return TimeUnit.SECONDS.toMillis(45L);
+        return TimeUnit.SECONDS.toMillis(90L);
     }
 
     @Override
@@ -43,6 +43,11 @@ public class RotateAbility extends AbstractAbility {
     @Override
     public String getDisplayName() {
         return ChatColor.RED.toString() + ChatColor.BOLD + "Rotate Stick";
+    }
+
+    @Override
+    public String getScoreboardName() {
+        return getDisplayName();
     }
 
     @Override

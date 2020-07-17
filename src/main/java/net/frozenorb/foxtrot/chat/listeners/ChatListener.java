@@ -54,7 +54,6 @@ public class ChatListener implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        Profile profile = Profile.getProfiles().get(event.getPlayer());
         event.getPlayer().removeMetadata("NoSpamCheck", Foxtrot.getInstance());
 
         Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
@@ -132,8 +131,9 @@ public class ChatListener implements Listener {
                 /*if (Foxtrot.getInstance().getConfig().getBoolean("legions")) {
                     publicChatFormat = FoxConstants.publicChatFormatTwoPointOhBaby(playerTeam, rankPrefix, customPrefix);
                 }*/
-
-                String finalMessage = String.format(publicChatFormat, event.getPlayer().getDisplayName(), event.getMessage());
+                Profile profile = Profile.getByUuid(event.getPlayer().getUniqueId());
+                String tag = ChatColor.translateAlternateColorCodes('&', profile.getActiveTag(false) == null ? "" : " " + profile.getActiveTag(false).getTag());
+                String finalMessage = String.format(publicChatFormat, event.getPlayer().getDisplayName() + tag, event.getMessage());
 
                 // Loop those who are to receive the message (which they won't if they have the sender /ignore'd or something),
                 // not online players

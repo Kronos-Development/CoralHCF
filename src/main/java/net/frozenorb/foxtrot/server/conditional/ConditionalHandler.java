@@ -3,6 +3,7 @@ package net.frozenorb.foxtrot.server.conditional;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.server.conditional.staff.ModHandler;
+import net.frozenorb.foxtrot.server.conditional.staff.chest.ChestUtils;
 import net.frozenorb.qlib.command.FrozenCommandHandler;
 import net.frozenorb.qlib.visibility.FrozenVisibilityHandler;
 import net.frozenorb.qlib.visibility.VisibilityAction;
@@ -11,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -53,15 +55,34 @@ public class ConditionalHandler {
             }
 
             @EventHandler
+            public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
+                Player player = event.getPlayer();
+                if (!ModHandler.isModMode(player) || !ModHandler.StaffItems.INSPECT_BOOK.isSimilar(player.getItemInHand())) {
+                    return;
+                }
+                if (!(event.getRightClicked() instanceof Player)) {
+                    return;
+                }
+                Player clicked = (Player)event.getRightClicked();
+                player.sendMessage(ChatColor.YELLOW + "Opening inventory of: " + ChatColor.AQUA + clicked.getName());
+                player.chat("/invsee " + clicked.getName());
+            }
+
+            @EventHandler
             public void onInteract(PlayerInteractEvent event) {
                 Player player = event.getPlayer();
 
-                if (!ModHandler.isModMode(player) || !event.hasItem() || !event.getAction().name().contains("RIGHT")) return;
+                if (!ModHandler.isModMode(player) || !event.getAction().name().contains("RIGHT")) return;
 
-                if (event.getItem().isSimilar(ModHandler.StaffItems.GO_VIS))
-                    ModHandler.setVanished(player, false);
-                else if (event.getItem().isSimilar(ModHandler.StaffItems.GO_INVIS))
-                    ModHandler.setVanished(player, true);
+                if (event.getClickedBlock() != null && event.getClickedBlock().getState() instanceof Chest) {
+                    event.setCancelled(true);
+                    ChestUtils.openSilently(event.getPlayer(), (Chest)event.getClickedBlock().getState());
+                }else if(event.getItem() != null) {
+                    if (event.getItem().isSimilar(ModHandler.StaffItems.GO_VIS))
+                        ModHandler.setVanished(player, false);
+                    else if (event.getItem().isSimilar(ModHandler.StaffItems.GO_INVIS))
+                        ModHandler.setVanished(player, true);
+                }
             }
 
             @EventHandler

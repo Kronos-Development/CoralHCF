@@ -6,8 +6,6 @@ import net.frozenorb.foxtrot.events.region.cavern.CavernHandler;
 import net.frozenorb.foxtrot.events.Event;
 import net.frozenorb.foxtrot.events.koth.KOTH;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
-import net.frozenorb.foxtrot.server.cheatbreaker.CBAPIHook;
-import net.frozenorb.foxtrot.server.cheatbreaker.WrappedRule;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
@@ -55,8 +53,6 @@ public class TeamListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent event) {
-        CBAPIHook.changeServerRule(event.getPlayer(), WrappedRule.MINIMAP_STATUS, false);
-        CBAPIHook.changeServerRule(event.getPlayer(), WrappedRule.SERVER_HANDLES_WAYPOINTS, true);
 
         final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
 
@@ -78,7 +74,6 @@ public class TeamListener implements Listener {
 
                 public void run() {
                     team.sendTeamInfo(event.getPlayer());
-                    team.updateWaypointsFor(event.getPlayer());
                 }
 
             }.runTaskAsynchronously(Foxtrot.getInstance());

@@ -4,6 +4,7 @@ import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.commands.LastInvCommand;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
 import net.frozenorb.qlib.util.TimeUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
@@ -112,7 +113,7 @@ public class PurgatoryListener implements Listener {
             return;
         }
 
-        event.getEntity().spigot().respawn();
+        Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), () -> event.getEntity().spigot().respawn(), 5);
 
         boolean shouldBypass = event.getEntity().isOp();
 

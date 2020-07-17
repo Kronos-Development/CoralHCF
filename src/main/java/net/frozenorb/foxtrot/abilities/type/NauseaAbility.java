@@ -28,7 +28,7 @@ public class NauseaAbility extends AbstractAbility {
 
     @Override
     public long getCooldown() {
-        return TimeUnit.SECONDS.toMillis(45L);
+        return TimeUnit.SECONDS.toMillis(90L);
     }
 
     @Override
@@ -46,6 +46,11 @@ public class NauseaAbility extends AbstractAbility {
     @Override
     public String getDisplayName() {
         return ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Nausea Stick";
+    }
+
+    @Override
+    public String getScoreboardName() {
+        return getDisplayName();
     }
 
     @Override

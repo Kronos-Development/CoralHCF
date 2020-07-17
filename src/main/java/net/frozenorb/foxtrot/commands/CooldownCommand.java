@@ -6,6 +6,7 @@ import net.frozenorb.qlib.command.Command;
 import net.frozenorb.qlib.command.Param;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class CooldownCommand {
 
     @Command(names = {"cooldown", "timer"}, permission = "foxtrot.cooldown")
-    public static void cooldownHelp(Player sender) {
+    public static void cooldownHelp(CommandSender sender) {
         sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat('-', 35));
         sender.sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Cooldown");
         sender.sendMessage("");
@@ -28,7 +29,7 @@ public class CooldownCommand {
     }
 
     @Command(names = {"cooldown set", "timer set"}, permission = "foxtrot.cooldown.set")
-    public static void cooldownSet(Player sender, @Param(name = "player") Player target, @Param(name = "type") String type, @Param(name = "seconds") int seconds) {
+    public static void cooldownSet(CommandSender sender, @Param(name = "player", defaultValue = "self") Player target, @Param(name = "type") String type, @Param(name = "seconds") int seconds) {
         switch (type.toUpperCase().replace("_"," ")) {
             case "ENDERPEARL": {
                 if (seconds <= 0)

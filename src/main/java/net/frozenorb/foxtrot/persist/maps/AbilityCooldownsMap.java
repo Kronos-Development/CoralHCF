@@ -30,7 +30,7 @@ public class AbilityCooldownsMap extends PersistMap<Boolean> {
     }
 
     public boolean isCooldownsToggled(UUID check) {
-        return (contains(check) ? getValue(check) : true);
+        return (contains(check) ? getValue(check) : false);
     }
 
 }

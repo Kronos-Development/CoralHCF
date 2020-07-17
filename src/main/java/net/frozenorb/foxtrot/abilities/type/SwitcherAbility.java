@@ -28,7 +28,7 @@ public class SwitcherAbility extends AbstractAbility {
 
     @Override
     public long getCooldown() {
-        return TimeUnit.SECONDS.toMillis(15L);
+        return TimeUnit.SECONDS.toMillis(60L);
     }
 
     @Override
@@ -45,7 +45,12 @@ public class SwitcherAbility extends AbstractAbility {
 
     @Override
     public String getDisplayName() {
-        return ChatColor.WHITE.toString() + ChatColor.BOLD + "Switcher Ball";
+        return ChatColor.WHITE.toString() + ChatColor.BOLD + "Dinkay's Switchers";
+    }
+
+    @Override
+    public String getScoreboardName() {
+        return ChatColor.WHITE.toString() + ChatColor.BOLD + "Switcher";
     }
 
     @Override

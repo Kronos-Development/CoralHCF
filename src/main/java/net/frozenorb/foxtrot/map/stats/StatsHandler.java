@@ -1,14 +1,14 @@
 package net.frozenorb.foxtrot.map.stats;
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import com.minexd.zoot.hologram.Hologram;
+import com.minexd.zoot.hologram.Holograms;
+import com.minexd.zoot.profile.Profile;
+import com.minexd.zoot.util.NPC;
+import net.frozenorb.foxtrot.team.commands.team.TeamTopCommand;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,6 +40,7 @@ import net.frozenorb.qlib.serialization.LocationSerializer;
 import net.frozenorb.qlib.util.UUIDUtils;
 import net.minecraft.util.com.google.common.collect.Iterables;
 import net.minecraft.util.com.google.common.reflect.TypeToken;
+import org.bukkit.scheduler.BukkitTask;
 
 public class StatsHandler implements Listener {
 
@@ -47,13 +48,18 @@ public class StatsHandler implements Listener {
 
     @Getter private Map<Location, Integer> leaderboardSigns = Maps.newHashMap();
     @Getter private Map<Location, Integer> leaderboardHeads = Maps.newHashMap();
-    
+
+    @Getter private Map<Location, StatsObjective> leaderboardHolos = Maps.newHashMap();
+    @Getter private Map<NPC, StatsObjective> leaderboardNPCs = Maps.newHashMap();
+    @Getter private List<Integer> npcTasks = new ArrayList<>();
     @Getter private Map<Location, StatsObjective> objectives = Maps.newHashMap();
 
     @Getter private Map<Integer, UUID> topKills = Maps.newConcurrentMap();
 
+    @Getter private List<Hologram> activeHolograms = new ArrayList<>();
+
     private boolean firstUpdateComplete = false;
-    
+
     public StatsHandler() {
         qLib.getInstance().runRedisCommand(redis -> {
             for (String key : redis.keys(Bukkit.getServerName() + ":" + "stats:*")) {
@@ -63,7 +69,7 @@ public class StatsHandler implements Listener {
                 stats.put(uuid, entry);
             }
 
-            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Kit Map] Loaded " + stats.size() + " stats.");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + stats.size() + " stats.");
 
             if (redis.exists(Bukkit.getServerName() + ":" + "leaderboardSigns")) {
                 List<String> serializedSigns = qLib.PLAIN_GSON.fromJson(redis.get(Bukkit.getServerName() + ":" + "leaderboardSigns"), new TypeToken<List<String>>() {}.getType());
@@ -75,7 +81,7 @@ public class StatsHandler implements Listener {
                     leaderboardSigns.put(location, place);
                 }
 
-                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Kit Map] Loaded " + leaderboardSigns.size() + " leaderboard signs.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardSigns.size() + " leaderboard signs.");
             }
 
             if (redis.exists(Bukkit.getServerName() + ":" + "leaderboardHeads")) {
@@ -88,9 +94,9 @@ public class StatsHandler implements Listener {
                     leaderboardHeads.put(location, place);
                 }
 
-                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Kit Map] Loaded " + leaderboardHeads.size() + " leaderboard heads.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardHeads.size() + " leaderboard heads.");
             }
-            
+
             if (redis.exists(Bukkit.getServerName() + ":" + "objectives")) {
                 List<String> serializedObjectives = qLib.PLAIN_GSON.fromJson(redis.get(Bukkit.getServerName() + ":" + "objectives"), new TypeToken<List<String>>() {}.getType());
 
@@ -101,7 +107,31 @@ public class StatsHandler implements Listener {
                     objectives.put(location, obj);
                 }
 
-                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Kit Map] Loaded " + objectives.size() + " objectives.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + objectives.size() + " objectives.");
+            }
+
+            if (redis.exists(Bukkit.getServerName() + ":" + "leaderboardHolos")) {
+                List<String> serializedHolos = qLib.PLAIN_GSON.fromJson(redis.get(Bukkit.getServerName() + ":" + "leaderboardHolos"), new TypeToken<List<String>>() {}.getType());
+
+                for (String holo : serializedHolos) {
+                    Location location = LocationSerializer.deserialize((BasicDBObject) JSON.parse(holo.split("----")[0]));
+                    StatsObjective obj = StatsObjective.valueOf(holo.split("----")[1]);
+
+                    setupHologram(location, obj);
+                }
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardHolos.size() + " leaderboard holos.");
+            }
+
+            if (redis.exists(Bukkit.getServerName() + ":" + "leaderboardNPCs")) {
+                List<String> serializedNPCs = qLib.PLAIN_GSON.fromJson(redis.get(Bukkit.getServerName() + ":" + "leaderboardNPCs"), new TypeToken<List<String>>() {}.getType());
+
+                for (String holo : serializedNPCs) {
+                    NPC npc = qLib.PLAIN_GSON.fromJson(holo.split("----")[0], NPC.class);
+                    StatsObjective obj = StatsObjective.valueOf(holo.split("----")[1]);
+
+                    setupNPC(npc, "");
+                }
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardHolos.size() + " leaderboard npcs.");
             }
 
             return null;
@@ -109,7 +139,7 @@ public class StatsHandler implements Listener {
 
         Bukkit.getPluginManager().registerEvents(this, Foxtrot.getInstance());
 
-        FrozenCommandHandler.registerPackage(Foxtrot.getInstance(), "net.frozenorb.foxtrot.map.stats.command");
+        FrozenCommandHandler.registerPackage(Foxtrot.getInstance(), "rip.protocol.hcf.map.stats.command");
 
         FrozenCommandHandler.registerParameterType(StatsTopCommand.StatsObjective.class, new ParameterType<StatsTopCommand.StatsObjective>() {
 
@@ -156,18 +186,39 @@ public class StatsHandler implements Listener {
         });
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::save, 30 * 20L, 30 * 20L);
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::updateTopKillsMap, 30 * 20L, 30 * 20L);
+//        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::updateTopKillsMap, 30 * 20L, 30 * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Foxtrot.getInstance(), this::updatePhysicalLeaderboards, 60 * 20L, 60 * 20L);
+    }
+
+    public void setupNPC(NPC npc, String obj) {
+
+        BukkitTask bukkitTask = Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), () -> {
+
+            StatsEntry stats = get(StatsObjective.KILLS, 1);
+            npc.setName(stats == null || stats.getOwner() == null ? "N/A" : UUIDUtils.name(stats.getOwner()));
+
+                if(stats != null) npc.grabSkin(UUIDUtils.name(stats.getOwner()));
+                else npc.grabSkin("MHF_Question");
+
+
+            npc.updateNPC();
+        }, 0, 120);
+
+        npcTasks.add(bukkitTask.getTaskId());
     }
 
     public void save() {
         qLib.getInstance().runRedisCommand(redis -> {
             List<String> serializedSigns = leaderboardSigns.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue()).collect(Collectors.toList());
             List<String> serializedHeads = leaderboardHeads.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue()).collect(Collectors.toList());
+            List<String> serializedHolos = leaderboardHolos.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue().name()).collect(Collectors.toList());
+            List<String> serializedNPCs = leaderboardNPCs.entrySet().stream().map(entry -> qLib.PLAIN_GSON.toJson(entry.getKey()) + "----" + entry.getValue().name()).collect(Collectors.toList());
             List<String> serializedObjectives = objectives.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue().name()).collect(Collectors.toList());
 
             redis.set(Bukkit.getServerName() + ":" + "leaderboardSigns", qLib.PLAIN_GSON.toJson(serializedSigns));
             redis.set(Bukkit.getServerName() + ":" + "leaderboardHeads", qLib.PLAIN_GSON.toJson(serializedHeads));
+            redis.set(Bukkit.getServerName() + ":" + "leaderboardHolos", qLib.PLAIN_GSON.toJson(serializedHolos));
+            redis.set(Bukkit.getServerName() + ":" + "leaderboardNPCs", qLib.PLAIN_GSON.toJson(serializedNPCs));
             redis.set(Bukkit.getServerName() + ":" + "objectives", qLib.PLAIN_GSON.toJson(serializedObjectives));
 
             // stats
@@ -176,6 +227,34 @@ public class StatsHandler implements Listener {
             }
             return null;
         });
+    }
+//
+//    public void addHologramLeaderboard(Hologram hologram, StatsObjective objective) {
+//        leaderboardHolos.put(objective, hologram);
+//    }
+
+    public void setupHologram(Location location, StatsObjective objective) {
+        Hologram holo = Holograms.newHologram().at(location).updates().onUpdate(
+                hologram -> {
+                    List<String> lines = new ArrayList<>();
+                    lines.add("§7§m---*-----------------*---");
+                    lines.add("§b§l" + (objective != StatsObjective.HIGHEST_KILLSTREAK && objective != StatsObjective.TOP_FACTION  ? "Top " : "") + objective.getName());
+                    lines.add("§7§m---*-----------------*---");
+                    int index = 0;
+                    for (Map.Entry<StatsEntry, String> entry : Foxtrot.getInstance().getMapHandler().getStatsHandler().getLeaderboards(objective, 5).entrySet()) {
+                        index++;
+                        lines.add(ChatColor.AQUA.toString() + "#" + index + " " + ChatColor.WHITE.toString() + (objective == StatsObjective.TOP_FACTION ? entry.getKey().getFaction() : UUIDUtils.name(entry.getKey().getOwner())) + ChatColor.GRAY + " | " + ChatColor.WHITE + entry.getValue());
+                    }
+                    if(index == 0) {
+                        lines.add(ChatColor.RED.toString() + ChatColor.ITALIC + "No data yet...");
+                    }
+                    lines.add("§7§m---*-----------------*---");
+                    hologram.setLines(lines);
+                }
+        ).interval(15, TimeUnit.SECONDS).build();
+        holo.send();
+        leaderboardHolos.put(location, objective);
+        activeHolograms.add(holo);
     }
 
     public StatsEntry getStats(Player player) {
@@ -192,54 +271,63 @@ public class StatsHandler implements Listener {
     }
 
     private void updateTopKillsMap() {
-        StatsEntry first = get(StatsObjective.KILLS, 1);
-        StatsEntry second = get(StatsObjective.KILLS, 2);
-        StatsEntry third = get(StatsObjective.KILLS, 3);
-
-        this.topKills.put(1, (first == null) ? null : first.getOwner());
-        this.topKills.put(2, (second == null) ? null : second.getOwner());
-        this.topKills.put(3, (third == null) ? null : third.getOwner());
-
-        this.firstUpdateComplete = true;
-
-        /*UUID oldFirstPlace = this.topKills.get(1);
+        UUID oldFirstPlace = this.topKills.get(1);
         UUID oldSecondPlace = this.topKills.get(2);
         UUID oldThirdPlace = this.topKills.get(3);
-        
-        UUID newFirstPlace = get(StatsObjective.KILLS, 1).getOwner();
-        UUID newSecondPlace = get(StatsObjective.KILLS, 2).getOwner();
-        UUID newThirdPlace = get(StatsObjective.KILLS, 3).getOwner();
-        
-        if (!CustomTimerCreateCommand.isSOTWTimer()) {
-            if (firstUpdateComplete) {
-                if (newFirstPlace != oldFirstPlace) {
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newFirstPlace) + "&f has surpassed &6" + UUIDUtils.name(oldFirstPlace) + "&f for &6#1&f in kills!"));
-                }
 
-                if (newSecondPlace != oldSecondPlace) {
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newSecondPlace) + "&f has surpassed &6" + UUIDUtils.name(oldSecondPlace) + "&f for &6#2&f in kills!"));
-                }
-                
-                if (newThirdPlace != oldThirdPlace) {
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newThirdPlace) + "&f has surpassed &6" + UUIDUtils.name(oldThirdPlace) + "&f for &6#3&f in kills!"));
-                }
-            }
-        }
-        
-        this.topKills.put(1, newFirstPlace);
-        this.topKills.put(2, newSecondPlace);
-        this.topKills.put(3, newThirdPlace);
-        
-        this.firstUpdateComplete = true;*/
+        UUID newFirstPlace = null;
+        if(get(StatsObjective.KILLS, 1) != null)
+            newFirstPlace = get(StatsObjective.KILLS, 1).getOwner();
+        UUID newSecondPlace = null;
+        if(get(StatsObjective.KILLS, 2) != null)
+            newSecondPlace = get(StatsObjective.KILLS, 2).getOwner();
+        UUID newThirdPlace = null;
+        if(get(StatsObjective.KILLS, 3) != null)
+            newThirdPlace = get(StatsObjective.KILLS, 3).getOwner();
+
+//        if (!CustomTimerCreateCommand.isSOTWTimer()) {
+//            if (firstUpdateComplete) {
+//                if (newFirstPlace != oldFirstPlace && newFirstPlace != null) {
+//                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newFirstPlace) + "&f has surpassed &6" + UUIDUtils.name(oldFirstPlace) + "&f for &6#1&f in kills!"));
+//                }
+//
+//                if (newSecondPlace != oldSecondPlace && newSecondPlace != null) {
+////                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newSecondPlace) + "&f has surpassed &6" + UUIDUtils.name(oldSecondPlace) + "&f for &6#2&f in kills!"));
+//                }
+//
+//                if (newThirdPlace != oldThirdPlace && newThirdPlace != null) {
+////                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6" + UUIDUtils.name(newThirdPlace) + "&f has surpassed &6" + UUIDUtils.name(oldThirdPlace) + "&f for &6#3&f in kills!"));
+//                }
+//            }
+//        }
+        if(get(StatsObjective.KILLS, 1) != null)
+            this.topKills.put(1, newFirstPlace);
+        if(get(StatsObjective.KILLS, 2) != null)
+            this.topKills.put(2, newSecondPlace);
+        if(get(StatsObjective.KILLS, 3) != null)
+            this.topKills.put(3, newThirdPlace);
+
+        this.firstUpdateComplete = true;
     }
-    
+
     public void updatePhysicalLeaderboards() {
         Iterator<Map.Entry<Location, Integer>> iterator = leaderboardSigns.entrySet().iterator();
 
         while (iterator.hasNext()) {
             Map.Entry<Location, Integer> entry = iterator.next();
 
-            StatsEntry stats = get(objectives.get(entry.getKey()), entry.getValue());
+            StatsObjective statsObjective = objectives.get(entry.getKey());
+            StatsEntry stats = get(statsObjective, entry.getValue());
+
+            String optionalStat = null;
+
+            if(statsObjective == StatsObjective.TOP_FACTION) {
+                for (Map.Entry<StatsEntry, String> entriesTopFactions : Foxtrot.getInstance().getMapHandler().getStatsHandler().getLeaderboards(statsObjective, 1).entrySet()) {
+                    stats = entriesTopFactions.getKey();
+                    optionalStat = entriesTopFactions.getValue();
+                    break;
+                }
+            }
 
             if (stats == null) {
                 continue;
@@ -253,9 +341,13 @@ public class StatsHandler implements Listener {
             Sign sign = (Sign) entry.getKey().getBlock().getState();
 
             sign.setLine(0, trim(ChatColor.RED.toString() + ChatColor.BOLD + (beautify(entry.getKey()))));
-            sign.setLine(1, trim(ChatColor.AQUA.toString() + ChatColor.UNDERLINE + UUIDUtils.name(stats.getOwner())));
+            sign.setLine(1, trim(ChatColor.AQUA.toString() + ChatColor.UNDERLINE + (statsObjective == StatsObjective.TOP_FACTION ? stats.getFaction() : UUIDUtils.name(stats.getOwner()))));
 
-            sign.setLine(3, ChatColor.DARK_GRAY.toString() + stats.get(objectives.get(entry.getKey())));
+            if(optionalStat == null) {
+                sign.setLine(3, ChatColor.DARK_GRAY.toString() + stats.get(objectives.get(entry.getKey())));
+            } else {
+                sign.setLine(3, ChatColor.DARK_GRAY.toString() + optionalStat);
+            }
 
             sign.update();
         }
@@ -265,7 +357,9 @@ public class StatsHandler implements Listener {
         while (headIterator.hasNext()) {
             Map.Entry<Location, Integer> entry = headIterator.next();
 
-            StatsEntry stats = get(objectives.get(entry.getKey()), entry.getValue());
+            StatsObjective statsObjective = objectives.get(entry.getKey());
+
+            StatsEntry stats = get(statsObjective, entry.getValue());
 
             if (stats == null) {
                 continue;
@@ -278,26 +372,28 @@ public class StatsHandler implements Listener {
 
             Skull skull = (Skull) entry.getKey().getBlock().getState();
 
-            skull.setOwner(UUIDUtils.name(stats.getOwner()));
+            skull.setOwner(statsObjective == StatsObjective.TOP_FACTION ? "GoldBlock" : UUIDUtils.name(stats.getOwner()));
             skull.update();
         }
     }
-    
+
     private String beautify(Location location) {
         StatsObjective objective = objectives.get(location);
-        
+
         switch (objective) {
-        case DEATHS:
-            return "Top Deaths";
-        case HIGHEST_KILLSTREAK:
-            return "Top KillStrk";
-        case KD:
-            return "Top KDR";
-        case KILLS:
-            return "Top Kills";
-        default:
-            return "Error";
-        
+            case DEATHS:
+                return "Top Deaths";
+            case HIGHEST_KILLSTREAK:
+                return "Top KillStrk";
+            case TOP_FACTION:
+                return "Top Faction";
+            case KD:
+                return "Top KDR";
+            case KILLS:
+                return "Top Kills";
+            default:
+                return "Error";
+
         }
     }
 
@@ -305,12 +401,13 @@ public class StatsHandler implements Listener {
         return name.length() <= 15 ? name : name.substring(0, 15);
     }
 
-    private StatsEntry get(StatsObjective objective, int place) {
+    public StatsEntry get(StatsObjective objective, int place) {
         Map<StatsEntry, Number> base = Maps.newHashMap();
 
         for (StatsEntry entry : stats.values()) {
             base.put(entry, entry.get(objective));
         }
+        Foxtrot.getInstance().getTeamHandler().getTeams().stream().filter(team -> team.getPoints() != 0).forEach(team -> base.put(new StatsEntry(team.getName()), team.getPoints()));
 
         TreeMap<StatsEntry, Number> ordered = new TreeMap<>((Comparator<StatsEntry>) (first, second) -> {
             if (first.get(objective).doubleValue() >= second.get(objective).doubleValue()) {
@@ -325,11 +422,11 @@ public class StatsHandler implements Listener {
 
         int index = 0;
         for (Map.Entry<StatsEntry, Number> entry : ordered.entrySet()) {
-            
+
             if (entry.getKey().getDeaths() < 10 && objective == StatsObjective.KD) {
                 continue;
             }
-            
+
             leaderboards.put(entry.getKey(), entry.getValue() + "");
 
             index++;
@@ -360,12 +457,30 @@ public class StatsHandler implements Listener {
     }
 
     public Map<StatsEntry, String> getLeaderboards(StatsTopCommand.StatsObjective objective, int range) {
+        if(objective == StatsObjective.TOP_FACTION) {
+            Map<StatsEntry, String> leaderboards = Maps.newLinkedHashMap();
+
+            LinkedHashMap<Team, Integer> teamsSorted = TeamTopCommand.getSortedTeams();
+            int index = 0;
+
+            for (Team team : teamsSorted.keySet()) {
+                int points = teamsSorted.get(team);
+                if(points > 0){
+
+                    StatsEntry se = new StatsEntry(team.getName());
+                    leaderboards.put(se, points+"");
+                    index++;
+                    if (index == range) {
+                        break;
+                    }
+                }
+            }
+            return leaderboards;
+        }
         if (objective != StatsTopCommand.StatsObjective.KD) {
             Map<StatsEntry, Number> base = Maps.newHashMap();
 
-            for (StatsEntry entry : stats.values()) {
-                base.put(entry, entry.get(objective));
-            }
+            stats.values().stream().filter(statsEntry -> statsEntry.get(objective).intValue() != 0).forEach(statsEntry -> base.put(statsEntry, statsEntry.get(objective)));
 
             TreeMap<StatsEntry, Number> ordered = new TreeMap<>((Comparator<StatsEntry>) (first, second) -> {
                 if (first.get(objective).doubleValue() >= second.get(objective).doubleValue()) {

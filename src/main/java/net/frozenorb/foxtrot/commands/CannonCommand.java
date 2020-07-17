@@ -17,7 +17,7 @@ import net.frozenorb.qlib.qLib;
 import net.frozenorb.qlib.command.Command;
 import net.frozenorb.qlib.command.Param;
 
-public class CannonCommand {
+public class        CannonCommand {
 
     public static final int SPAWN_CANNON_MAX_DISTANCE = 600;
     public static final int SPAWN_CANNON_MIN_DISTANCE = 100;

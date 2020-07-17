@@ -10,8 +10,6 @@ import net.frozenorb.qlib.command.Param;
 
 public class BitmaskCommand {
 
-    //TODO: Cleanup
-
     @Command(names={ "bitmask list", "bitmasks list" }, permission="op")
     public static void bitmaskList(Player sender) {
         for (DTRBitmask bitmaskType : DTRBitmask.values()) {

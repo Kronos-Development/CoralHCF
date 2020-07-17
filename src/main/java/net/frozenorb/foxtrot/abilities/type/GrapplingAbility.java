@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
@@ -48,6 +49,11 @@ public class GrapplingAbility extends AbstractAbility {
     @Override
     public String getDisplayName() {
         return ChatColor.GOLD.toString() + ChatColor.BOLD + "Grappling Hook";
+    }
+
+    @Override
+    public String getScoreboardName() {
+        return getDisplayName();
     }
 
     @Override
@@ -91,7 +97,10 @@ public class GrapplingAbility extends AbstractAbility {
         Location hook = event.getHook().getLocation();
 
         switch (event.getState()) {
-            case FAILED_ATTEMPT:
+            case FAILED_ATTEMPT: {
+                player.sendMessage(ChatColor.RED + "Your hook needs to be in the ground!");
+                break;
+            }
             case IN_GROUND: {
                 if (hook.distance(player.getLocation()) > 30) {
                     player.sendMessage(ChatColor.RED + "You are too far from the hook!");
@@ -121,14 +130,16 @@ public class GrapplingAbility extends AbstractAbility {
             }
         }
 
-        noDamage.put(player.getName(), true);
-        int remaining = addUse(player);
+        if(event.getState() != PlayerFishEvent.State.FAILED_ATTEMPT) {
+            noDamage.put(player.getName(), true);
+            int remaining = addUse(player);
 
-        if (remaining <= 0) {
-            removeOne(player);
-            player.playSound(player.getLocation(), Sound.ITEM_BREAK, 10f, 1f);
-        } else if (getMaxUses() > 0) {
-            player.sendMessage(ChatColor.YELLOW + "This ability now has " + ChatColor.GREEN + remaining + " use" + (remaining > 1 ? "s" : "") + ChatColor.YELLOW + " left.");
+            if (remaining <= 0) {
+                removeOne(player);
+                player.playSound(player.getLocation(), Sound.ITEM_BREAK, 10f, 1f);
+            } else if (getMaxUses() > 0) {
+                player.sendMessage(ChatColor.YELLOW + "This ability now has " + ChatColor.GREEN + remaining + " use" + (remaining > 1 ? "s" : "") + ChatColor.YELLOW + " left.");
+            }
         }
     }
 

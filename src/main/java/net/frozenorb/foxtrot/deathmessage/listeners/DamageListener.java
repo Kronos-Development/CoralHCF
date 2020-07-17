@@ -103,11 +103,8 @@ public class DamageListener implements Listener {
                             StatsEntry victimStats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(victim);
 
                             victimStats.addDeath();
-                        } else if (killer.getAddress().getAddress().getHostAddress().equalsIgnoreCase(victim.getAddress().getAddress().getHostAddress())) {
-                            killer.sendMessage(ChatColor.RED + "Boost Check: You've killed a player on the same IP address as you.");
                         } else if (boosting.containsKey(killer.getUniqueId()) && boosting.get(killer.getUniqueId()) > 1) {
-                            killer.sendMessage(ChatColor.RED + "Boost Check: You've killed " + victim.getName() + " " + boosting.get(killer.getUniqueId()) + " times.");
-                            
+
                             StatsEntry victimStats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(victim);
                             
                             victimStats.addDeath();

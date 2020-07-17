@@ -47,8 +47,12 @@ public abstract class AbstractAbility implements Listener {
     }
 
     public boolean checkCooldown(Player player) {
+        if (Foxtrot.getInstance().getAbilityHandler().isOnCooldown(player.getUniqueId())) {
+            player.sendMessage(ChatColor.RED + "You cannot use any ability for another " + ChatColor.BOLD + TimeUtils.formatIntoDetailedString((int)Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000) + ChatColor.RED + ".");
+            return false;
+        }
         if (isOnCooldown(player.getUniqueId())) {
-            player.sendMessage(ChatColor.RED + "You cannot use this ability for another " + ChatColor.BOLD + TimeUtils.formatIntoDetailedString((int)getCooldownLeft(player.getUniqueId()) / 1000) + ChatColor.RED + ".");
+            player.sendMessage(ChatColor.RED + "You cannot use your " + getDisplayName() + ChatColor.RED + " ability for another " + ChatColor.BOLD + TimeUtils.formatIntoDetailedString((int)getCooldownLeft(player.getUniqueId()) / 1000) + ChatColor.RED + ".");
             return false;
         }
         return true;
@@ -58,6 +62,7 @@ public abstract class AbstractAbility implements Listener {
         if (!checkCooldown(player)) return false;
 
         applyCooldown(player.getUniqueId());
+        Foxtrot.getInstance().getAbilityHandler().applyCooldown(player.getUniqueId());
         return true;
     }
 
@@ -69,6 +74,7 @@ public abstract class AbstractAbility implements Listener {
     public abstract ItemStack getItem();
 
     public abstract String getDisplayName();
+    public abstract String getScoreboardName();
     public abstract ChatColor getColor();
     public abstract List<String> getDescription();
 

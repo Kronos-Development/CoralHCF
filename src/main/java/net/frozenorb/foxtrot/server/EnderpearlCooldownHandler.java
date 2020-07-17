@@ -35,6 +35,9 @@ public class EnderpearlCooldownHandler implements Listener {
 		Player shooter = (Player) event.getEntity().getShooter();
 
 		if (event.getEntity() instanceof EnderPearl) {
+			// Cancel if the player used a Fake Pearl Ability Item
+			if(shooter.hasMetadata("FakePearl")) return;
+
 			// Store the player's enderpearl in-case we need to remove it prematurely
 			shooter.setMetadata("LastEnderPearl", new FixedMetadataValue(Foxtrot.getInstance(), event.getEntity()));
 
@@ -63,6 +66,9 @@ public class EnderpearlCooldownHandler implements Listener {
 		Player thrower = (Player) event.getEntity().getShooter();
 
 		if (enderpearlCooldown.containsKey(thrower.getName()) && enderpearlCooldown.get(thrower.getName()) > System.currentTimeMillis()) {
+			// Cancel if the player used a Fake Pearl Ability Item
+			if(thrower.hasMetadata("FakePearl")) return;
+
 			long millisLeft = enderpearlCooldown.get(thrower.getName()) - System.currentTimeMillis();
 
 			double value = (millisLeft / 1000D);
@@ -82,6 +88,8 @@ public class EnderpearlCooldownHandler implements Listener {
 			event.setCancelled(true); // only reason for this would be player died before pearl landed, so cancel it!
 			return;
 		}
+		// Cancel if the player used a Fake Pearl Ability Item
+		if(event.getPlayer().hasMetadata("FakePearl")) return;
 
 		Location target = event.getTo();
 		Location from = event.getFrom();

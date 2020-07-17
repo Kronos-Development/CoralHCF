@@ -149,9 +149,9 @@ public class MapHandler {
         Foxtrot.getInstance().getServer().addRecipe(horseArmorRecipe);
 
         reclaimHandler = new ReclaimHandler();
-
+        statsHandler = new StatsHandler();
         if (isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-            statsHandler = new StatsHandler();
+
             killstreakHandler = new KillstreakHandler();
             kitManager = new KitManager();
 

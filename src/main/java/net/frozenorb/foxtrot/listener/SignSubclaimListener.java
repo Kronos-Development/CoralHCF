@@ -107,7 +107,7 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         for (Sign sign : subclaimSigns(event.getBlock())) {
-            if (!(owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid))) {
+            if (!(owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid))) {
                 event.getPlayer().sendMessage(NO_ACCESS);
                 event.setCancelled(true);
             }
@@ -125,7 +125,7 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         if (sign.getLine(0).equals(SUBCLAIM_IDENTIFIER)) {
-            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid);
+            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid);
 
             for (int i = 0; i <= 3; i++) {
                 if (sign.getLine(i) != null && sign.getLine(i).equalsIgnoreCase(event.getPlayer().getName())) {
@@ -152,7 +152,7 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         for (Sign sign : subclaimSigns(event.getClickedBlock())) {
-            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid);
+            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid);
 
             for (int i = 0; i <= 3; i++) {
                 if (sign.getLine(i) != null && sign.getLine(i).equalsIgnoreCase(event.getPlayer().getName())) {

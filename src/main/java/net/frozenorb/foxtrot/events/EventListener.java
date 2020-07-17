@@ -81,17 +81,20 @@ public class EventListener implements Listener {
             default:
                 String eventType = "";
                 String capPos = "Unknown";
+                String capWorld;
+
+
 
                 if (event.getEvent() instanceof KOTH) {
                     KOTH koth = (KOTH) event.getEvent();
-
+                    capWorld = getWorldDisplayName(koth.getWorld());
                     eventType = "KOTH";
-                    capPos = koth.getCapLocation().getBlockX() + ", " + koth.getCapLocation().getBlockZ();
+                    capPos = ChatColor.ITALIC.toString() + capWorld + ChatColor.GRAY + " (" + koth.getCapLocation().getBlockX() + ", " + koth.getCapLocation().getBlockZ() + ")";
                 } else if (event.getEvent() instanceof DTC) {
                     DTC dtc = (DTC) event.getEvent();
-
+                    capWorld = getWorldDisplayName(dtc.getWorld());
                     eventType = "DTC";
-                    capPos = dtc.getCapLocation().getBlockX() + ", " + dtc.getCapLocation().getBlockZ();
+                    capPos = ChatColor.ITALIC.toString() + capWorld + ChatColor.GRAY + " (" + dtc.getCapLocation().getBlockX() + ", " + dtc.getCapLocation().getBlockZ() + ")";
                 }
 
                 String main = Foxtrot.getInstance().getServerHandler().getEventMainColor();
@@ -100,10 +103,10 @@ public class EventListener implements Listener {
                 messages = new String[]{
                         other + "███████",
                         other + "█" + main + "█"   + other + "███" + main + "█" + other + "█",
-                        other + "█" + main + "█"   + other + "██"  + main + "█" + other + "██" + " " + ChatColor.GOLD + "[Event]",
-                        other + "█" + main + "███" + other + "███" + " " + ChatColor.YELLOW + event.getEvent().getName() + " " + eventType,
-                        other + "█" + main + "█"   + other + "██"  + main + "█" + other + "██" + " " + ChatColor.GOLD + "can be contested now.",
-                        other + "█" + main + "█"   + other + "███" + main + "█" + other + "█" + " " + ChatColor.WHITE + "Position: " + capPos,
+                        other + "█" + main + "█"   + other + "██"  + main + "█" + other + "██" + " " + ChatColor.BLUE.toString() + ChatColor.BOLD + "[Event]",
+                        other + "█" + main + "███" + other + "███" + " " + ChatColor.AQUA + event.getEvent().getName() + ChatColor.WHITE + " " + eventType,
+                        other + "█" + main + "█"   + other + "██"  + main + "█" + other + "██" + " " + ChatColor.WHITE + "can now be contested.",
+                        other + "█" + main + "█"   + other + "███" + main + "█" + other + "█" + " " + ChatColor.GRAY.toString() + capPos,
                         other + "█" + main + "█"   + other + "███" + main + "█" + other + "█",
                         other + "███████"
                 };
@@ -300,6 +303,23 @@ public class EventListener implements Listener {
             KOTH selected = koths.get(qLib.RANDOM.nextInt(koths.size()));
             selected.activate();
         }, 10 * 60 * 20);
+    }
+
+    private String getWorldDisplayName(String input) {
+        switch(input) {
+            case "world": {
+                return "Overworld";
+            }
+            case "world_nether": {
+                return "The Nether";
+            }
+            case "world_the_end": {
+                return "The End";
+            }
+            default: {
+                return input;
+            }
+        }
     }
 
 }
