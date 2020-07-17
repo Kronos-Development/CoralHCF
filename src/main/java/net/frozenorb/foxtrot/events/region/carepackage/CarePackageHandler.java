@@ -45,7 +45,7 @@ public class CarePackageHandler implements Listener {
         
         FrozenCommandHandler.registerClass(this.getClass());
         this.world = Bukkit.getWorlds().get(0);
-        Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 1 * 60 * 20, Bukkit.getServerName().equalsIgnoreCase("Kitmap") ? 15 * 60 * 20 : 60 * 60 * 20);
+        Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 1 * 60 * 20, 15 * 60 * 20);
 
         try {
             loot = Lists.newArrayList(qLib.GSON.fromJson(qLib.getInstance().runBackboneRedisCommand(new RedisCommand<String>() {
@@ -105,7 +105,7 @@ public class CarePackageHandler implements Listener {
         lastCarePackage = realBlock.getLocation();
 
         Bukkit.getLogger().info("Spawning crate at " + realBlock.getLocation());
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Crate] &eA &dCrate &ehas spawned at &d" + x + " " + z + "&e."));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&3[Care Package] &7A &bCare Package &7has spawned at &b" + x + " " + z + "&7."));
         Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), this::removeCarePackage, 10 * 20 * 60);
     }
 
@@ -113,7 +113,7 @@ public class CarePackageHandler implements Listener {
         if (lastCarePackage != null && lastCarePackage.getBlock() != null && lastCarePackage.getBlock().getType() == Material.ENDER_CHEST) {
             lastCarePackage.getBlock().setType(Material.AIR);
             lastCarePackage.getBlock().removeMetadata("CarePackage", Foxtrot.getInstance());
-            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Crate] &eThe &dCrate &eat &d" + lastCarePackage.getBlockX() + " " + lastCarePackage.getBlockZ() + " &ehas despawned."));
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b[Care Package] &7The &bCare Package &7at &7" + lastCarePackage.getBlockX() + " " + lastCarePackage.getBlockZ() + " &7has despawned."));
         }
     }
 
@@ -160,7 +160,7 @@ public class CarePackageHandler implements Listener {
         clickedBlock.removeMetadata("CarePackage", Foxtrot.getInstance());
         clickedBlock.setType(Material.AIR);
         event.setCancelled(true);
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6[Crate] &eA &dCrate &eat &d" + clickedBlock.getLocation().getBlockX() + " " + clickedBlock.getLocation().getBlockZ() + " &ehas been opened."));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&3[Care Package] &7A &bCrate &7at &b" + clickedBlock.getLocation().getBlockX() + " " + clickedBlock.getLocation().getBlockZ() + " &7has been opened."));
     }
 
     @EventHandler

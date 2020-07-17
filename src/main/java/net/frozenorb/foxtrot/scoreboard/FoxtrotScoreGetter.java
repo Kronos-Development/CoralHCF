@@ -218,7 +218,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
                 scores.add("&c&7&m--------------------");
             }
 
-            scores.add("&e&lConquest:");
+            scores.add("&6&lConquest:");
             int displayed = 0;
 
             for (Map.Entry<ObjectId, Integer> entry : conquest.getTeamPoints().entrySet()) {
