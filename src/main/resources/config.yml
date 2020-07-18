@@ -1,0 +1,118 @@
+Mongo:
+    Host: '127.0.0.1'
+    DBName: 'HCTeams'
+    AuthDB: 'admin'
+    Username: 'MineHQ'
+    Password: ''
+
+networkName: '&6&lMineHQ'
+serverName: HCTeams
+networkWebsite: minehq.com
+statsRoot: minehq.com/hcteams
+
+event:
+  mainColor: "&3"
+  otherColor: "&7"
+
+tab:
+  serverName: '&6&lHCTeams'
+  sectionColor: '&6'
+  infoColor: '&e'
+
+scoreboard:
+  sectionColor: '&6'
+  timeColor: '&f'
+
+nightmare:
+  enabled: true
+  worldName: "NightmareEvent"
+
+abilities: true
+glowstoneMountain: false
+cavern: false
+startingTimer: false
+forceInvites: true
+squads: false
+idleCheck: true
+uhcHealing: false
+passiveTag: true
+allowBoosting: false
+waterPlacementInClaims: false
+blockRemoval: false
+rodPrevention: false
+skybridgePrevention: false
+reduceArmorDamage: true
+blockEntitiesThroughPortals: true
+archerTagColor: YELLOW
+defaultRelationColor: RED
+purgatory: false
+
+enchants:
+  protection: 4
+  power: 5
+  sharpness: 5
+
+help:
+  custom: false
+  section: "&3"
+  entry: "&b"
+  info: "&r"
+
+pvpClasses:
+  archer: true
+  bard: true
+  rogue: true
+  scout: true
+
+minerWorld:
+  regen:
+    COAL_ORE: 30
+    IRON_ORE: 60
+    GOLD_ORE: 90
+    DIAMOND_ORE: 120
+
+potions:
+  REGEN:
+    splash: false
+    drinkables: false
+  SPEED:
+    splash: true
+    drinkables: true
+  FIRE_RESISTANCE:
+    splash: true
+    drinkables: true
+  POISON:
+    splash: true
+    drinkables: false
+  INSTANT_HEAL:
+    splash: true
+    drinkables: true
+  NIGHT_VISION:
+    splash: true
+    drinkables: true
+  WEAKNESS:
+    splash: false
+    drinkables: false
+  STRENGTH:
+    splash: false
+    drinkables: false
+  SLOWNESS:
+    splash: true
+    drinkables: false
+  INSTANT_DAMAGE:
+    splash: false
+    drinkables: false
+  WATER_BREATHING:
+    splash: true
+    drinkables: true
+  INVISIBILITY:
+    splash: false
+    drinkables: false
+
+reclaim:
+  message: "{player} &ehas claimed their {rankdisplay} &eperks!"
+  ranks:
+    Coal:
+      name: "&7Coal"
+      commands:
+        - "addlives {player} soulbound 10"

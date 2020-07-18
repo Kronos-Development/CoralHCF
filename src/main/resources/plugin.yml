@@ -1,0 +1,8 @@
+name: HCTeams
+version: 1.0-SNAPSHOT
+authors:
+  - FrozenOrb
+  - vaperion
+main: net.frozenorb.foxtrot.Foxtrot
+softdepend: [ Vault, Vulcan, Stark, CheatBreakerAPI, UniversalClientAPI ]
+depend: [ qLib, ProtocolLib ]
