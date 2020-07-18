@@ -23,16 +23,16 @@ public class RegenCommand {
         }
 
         if (team.getMaxDTR() == team.getDTR()) {
-            sender.sendMessage(ChatColor.YELLOW + "Your team is currently at max DTR, which is " + ChatColor.LIGHT_PURPLE + team.getMaxDTR() + ChatColor.YELLOW + ".");
+            sender.sendMessage(ChatColor.GRAY + "Your team is currently at max DTR, which is " + ChatColor.AQUA + team.getMaxDTR() + ChatColor.GRAY + ".");
             return;
         }
 
-        sender.sendMessage(ChatColor.YELLOW + "Your team has a max DTR of " + ChatColor.LIGHT_PURPLE + team.getMaxDTR() + ChatColor.YELLOW + ".");
-        sender.sendMessage(ChatColor.YELLOW + "You are regaining DTR at a rate of " + ChatColor.LIGHT_PURPLE + Team.DTR_FORMAT.format(team.getDTRIncrement() * 60) + "/hour" + ChatColor.YELLOW + ".");
-        sender.sendMessage(ChatColor.YELLOW + "At this rate, it will take you " + ChatColor.LIGHT_PURPLE + (hrsToRegain(team) == -1 ? "Infinity" : hrsToRegain(team)) + ChatColor.YELLOW + " hours to fully gain all DTR.");
+        sender.sendMessage(ChatColor.GRAY + "Your team has a max DTR of " + ChatColor.AQUA + team.getMaxDTR() + ChatColor.GRAY + ".");
+        sender.sendMessage(ChatColor.GRAY + "You are regaining DTR at a rate of " + ChatColor.AQUA + Team.DTR_FORMAT.format(team.getDTRIncrement() * 60) + "/hour" + ChatColor.GRAY + ".");
+        sender.sendMessage(ChatColor.GRAY + "At this rate, it will take you " + ChatColor.AQUA + (hrsToRegain(team) == -1 ? "Infinity" : hrsToRegain(team)) + ChatColor.GRAY + " hours to fully gain all DTR.");
 
         if (team.getDTRCooldown() > System.currentTimeMillis()) {
-            sender.sendMessage(ChatColor.YELLOW + "Your team is on DTR cooldown for " + ChatColor.LIGHT_PURPLE + TimeUtils.formatIntoDetailedString((int) (team.getDTRCooldown() - System.currentTimeMillis()) / 1000) + ChatColor.YELLOW + ".");
+            sender.sendMessage(ChatColor.GRAY + "Your team is on DTR cooldown for " + ChatColor.AQUA + TimeUtils.formatIntoDetailedString((int) (team.getDTRCooldown() - System.currentTimeMillis()) / 1000) + ChatColor.GRAY + ".");
         }
     }
 

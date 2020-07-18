@@ -45,7 +45,7 @@ public class NauseaAbility extends AbstractAbility {
 
     @Override
     public String getDisplayName() {
-        return ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Nausea Stick";
+        return ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Compend's Nausea Stick";
     }
 
     @Override

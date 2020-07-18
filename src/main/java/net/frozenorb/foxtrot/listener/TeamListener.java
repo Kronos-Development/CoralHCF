@@ -382,11 +382,13 @@ public class TeamListener implements Listener {
                             return;
                         }
                     }
+                if(DTRBitmask.FFA.appliesAt(event.getEntity().getLocation())) return;
 
                     damager.sendMessage(ChatColor.YELLOW + "You cannot hurt " + ChatColor.DARK_GREEN + victim.getName() + ChatColor.YELLOW + ".");
                     event.setCancelled(true);
                 } else if (team.isAlly(victim.getUniqueId())) {
                     damager.sendMessage(ChatColor.YELLOW + "Be careful, that's your ally " + Team.ALLY_COLOR + victim.getName() + ChatColor.YELLOW + ".");
+                    event.setDamage(event.getDamage() / 2);
                 }
             }
         }

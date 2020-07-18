@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.map.deathban;
 
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
+import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -63,8 +64,9 @@ public class DeathbanListener implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldBypass = player.isOp() || player.hasPermission("zoot.staff");
+        boolean isFFA = DTRBitmask.FFA.appliesAt(player.getLocation());
 
-        if (shouldBypass) {
+        if (shouldBypass || isFFA) {
             Foxtrot.getInstance().getDeathbanMap().revive(player.getUniqueId());
             return;
         }

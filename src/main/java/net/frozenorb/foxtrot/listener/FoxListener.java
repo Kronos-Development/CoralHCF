@@ -1,14 +1,6 @@
 package net.frozenorb.foxtrot.listener;
 
-import static org.bukkit.ChatColor.AQUA;
-import static org.bukkit.ChatColor.BLUE;
-import static org.bukkit.ChatColor.BOLD;
-import static org.bukkit.ChatColor.GOLD;
-import static org.bukkit.ChatColor.GREEN;
-import static org.bukkit.ChatColor.RED;
-import static org.bukkit.ChatColor.RESET;
-import static org.bukkit.ChatColor.YELLOW;
-import static org.bukkit.ChatColor.stripColor;
+import static org.bukkit.ChatColor.*;
 import static org.bukkit.Material.AIR;
 import static org.bukkit.Material.ANVIL;
 import static org.bukkit.Material.BEACON;
@@ -130,10 +122,10 @@ public class FoxListener implements Listener {
 
         String serverName = Foxtrot.getInstance().getServerHandler().getServerName();
 
-        bookMeta.setTitle(GOLD + "Welcome to " + serverName);
+        bookMeta.setTitle(AQUA + "Welcome to " + serverName);
         bookMeta.setPages(
 
-                BLUE + "Welcome to " + serverName + "!"
+                DARK_AQUA + "Welcome to " + serverName + "!"
 
         );
         bookMeta.setAuthor(Foxtrot.getInstance().getServerHandler().getServerName());

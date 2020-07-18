@@ -23,7 +23,7 @@ public class JuggernautCommand {
 
     @Command(names={ "juggernaut" }, permission="")
     public static void Juggernaut(Player sender) {
-        if (!sender.hasPermission("core.juggernaut.revive")) {
+        if (!sender.hasPermission("foxtrot.juggernaut.revive")) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&ePurchase the &6Juggernaut &erank on " + DONATE_URL));
             return;
         }

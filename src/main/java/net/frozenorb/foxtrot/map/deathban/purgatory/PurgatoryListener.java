@@ -3,6 +3,7 @@ package net.frozenorb.foxtrot.map.deathban.purgatory;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.commands.LastInvCommand;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
+import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.qlib.util.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -284,8 +285,9 @@ public class PurgatoryListener implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldBypass = player.isOp() || player.hasPermission("foxtrot.staff");
+        boolean isFFA = DTRBitmask.FFA.appliesAt(player.getLocation());
 
-        if (shouldBypass) {
+        if (shouldBypass || isFFA) {
             Foxtrot.getInstance().getDeathbanMap().revive(event.getPlayer().getUniqueId());
         } else {
             Foxtrot.getInstance().getMapHandler().getPurgatoryHandler().addToPurgatory(event.getPlayer());

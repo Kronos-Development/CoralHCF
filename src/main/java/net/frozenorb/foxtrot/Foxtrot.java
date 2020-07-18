@@ -9,8 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import net.frozenorb.foxtrot.abilities.AbilityHandler;
 import net.frozenorb.foxtrot.chat.ChatHandler;
-import net.frozenorb.foxtrot.commands.PluginDisabledClass;
 import net.frozenorb.foxtrot.deathmessage.DeathMessageHandler;
+import net.frozenorb.foxtrot.elevators.ElevatorListener;
 import net.frozenorb.foxtrot.events.EventHandler;
 import net.frozenorb.foxtrot.events.citadel.CitadelHandler;
 import net.frozenorb.foxtrot.events.conquest.ConquestHandler;
@@ -61,6 +61,7 @@ public class Foxtrot extends JavaPlugin {
 
 	@Getter private ChatHandler chatHandler;
 	@Getter private PvPClassHandler pvpClassHandler;
+	@Getter private CarePackageHandler carePackageHandler;
 	@Getter private TeamHandler teamHandler;
 	@Getter private ServerHandler serverHandler;
 	@Getter private MapHandler mapHandler;
@@ -276,6 +277,7 @@ public class Foxtrot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnchantmentLimiterListener(), this);
 		getServer().getPluginManager().registerEvents(new EnderpearlCooldownHandler(), this);
 		getServer().getPluginManager().registerEvents(new EndListener(), this);
+		getServer().getPluginManager().registerEvents(new ElevatorListener(), this);
 		getServer().getPluginManager().registerEvents(new FoundDiamondsListener(), this);
 		getServer().getPluginManager().registerEvents(new FoxListener(), this);
 		getServer().getPluginManager().registerEvents(new GoldenAppleListener(), this);

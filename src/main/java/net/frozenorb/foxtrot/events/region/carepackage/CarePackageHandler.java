@@ -77,7 +77,7 @@ public class CarePackageHandler implements Listener {
         sender.sendMessage(ChatColor.GREEN + "Loot updated.");
     }
 
-    private void spawnCarePackage() {
+    public void spawnCarePackage() {
         int x = 0, z = 0;
 
         while (Math.abs(x) <= 100) x = qLib.RANDOM.nextInt(1000) - 500;
@@ -114,6 +114,7 @@ public class CarePackageHandler implements Listener {
             lastCarePackage.getBlock().setType(Material.AIR);
             lastCarePackage.getBlock().removeMetadata("CarePackage", Foxtrot.getInstance());
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b[Care Package] &7The &bCare Package &7at &7" + lastCarePackage.getBlockX() + " " + lastCarePackage.getBlockZ() + " &7has despawned."));
+            Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), this::spawnCarePackage, 20 * 60 * 20);
         }
     }
 

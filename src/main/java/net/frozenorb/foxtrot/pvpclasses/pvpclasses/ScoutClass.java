@@ -8,6 +8,7 @@ import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.qlib.util.TimeUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -68,7 +69,7 @@ public class ScoutClass extends PvPClass {
 			player.removePotionEffect(PotionEffectType.SPEED);
 		}*/
 
-		if (currentSpeed == 0 && player.getItemInHand() != null && player.getItemInHand().getType() == Material.SUGAR && !DTRBitmask.SAFE_ZONE.appliesAt(player.getLocation())) {
+		if (currentSpeed == 0 || currentSpeed == 1 && player.getItemInHand() != null && player.getItemInHand().getType() == Material.SUGAR && !DTRBitmask.SAFE_ZONE.appliesAt(player.getLocation())) {
 			smartAddPotion(player, new PotionEffect(PotionEffectType.SPEED, 20 * 6, 1), false, this);
 		}
 
@@ -97,7 +98,7 @@ public class ScoutClass extends PvPClass {
 			}
 
 			for (Player nearbyPlayer : getNearbyPlayers(player, true)) {
-				nearbyPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 10, 2), true);
+				nearbyPlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 5, 2), true);
 			}
 			lastSpeedUsage.put(player.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(30));
 

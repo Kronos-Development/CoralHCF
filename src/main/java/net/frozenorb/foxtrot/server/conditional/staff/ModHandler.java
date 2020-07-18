@@ -67,6 +67,7 @@ public class ModHandler {
             else
                 player.getInventory().setItem(2, StaffItems.CARPET);
 
+            player.getInventory().setItem(7, StaffItems.LAST_DAMAGE);
             player.getInventory().setItem(8, StaffItems.GO_VIS);
 
             CheatBreakerAPI.getInstance().giveAllStaffModules(player);
@@ -146,6 +147,7 @@ public class ModHandler {
         public static ItemStack GO_VIS = build(Material.INK_SACK, 1, DyeColor.GRAY.getDyeData(), ChatColor.AQUA + "Become Visible");
         public static ItemStack GO_INVIS = build(Material.INK_SACK, 1, DyeColor.LIME.getDyeData(), ChatColor.AQUA + "Become Invisible");
 
+        public static ItemStack LAST_DAMAGE = build(Material.EMERALD, ChatColor.RED + "Teleport to Last Damage");
         public static ItemStack CARPET = build(Material.CARPET, 1, DyeColor.CYAN.getWoolData(), " ");
 
         public static ItemStack build(Material type, String displayName) {
