@@ -39,9 +39,6 @@ public class CarePackageHandler implements Listener {
     private static List<ItemStack> loot;
     
     public CarePackageHandler() {
-        if (true) {
-            return;
-        }
         
         FrozenCommandHandler.registerClass(this.getClass());
         this.world = Bukkit.getWorlds().get(0);

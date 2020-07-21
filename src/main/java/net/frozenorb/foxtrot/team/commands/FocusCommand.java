@@ -40,6 +40,7 @@ public class FocusCommand {
         }
 
         senderTeam.setFocused(target.getUniqueId());
+        senderTeam.setFocused(target.getUniqueId());
         senderTeam.sendMessage(ChatColor.LIGHT_PURPLE + target.getName() + ChatColor.YELLOW + " has been focused by " + ChatColor.LIGHT_PURPLE + sender.getName() + ChatColor.YELLOW + ".");
 
         for (Player onlinePlayer : Foxtrot.getInstance().getServer().getOnlinePlayers()) {

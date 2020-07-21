@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import com.minexd.zoot.chat.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +31,8 @@ public class TeamTopCommand {
                 int index = 0;
 
                 sender.sendMessage(Team.GRAY_LINE);
+                sender.sendMessage(ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Top Factions");
+                sender.sendMessage(Team.GRAY_LINE);
 
                 for (Map.Entry<Team, Integer> teamEntry : sortedTeamPlayerCount.entrySet()) {
                     
@@ -50,12 +53,12 @@ public class TeamTopCommand {
                     teamMessage.text(index + ". ").color(ChatColor.GRAY).then();
                     teamMessage.text(teamEntry.getKey().getName()).color(sender instanceof Player && teamEntry.getKey().isMember(((Player) sender).getUniqueId()) ? ChatColor.GREEN : ChatColor.RED)
                     .tooltip((sender instanceof Player && teamEntry.getKey().isMember(((Player) sender).getUniqueId()) ? ChatColor.GREEN : ChatColor.RED).toString() + teamEntry.getKey().getName() + "\n" +
-                    ChatColor.LIGHT_PURPLE + "Leader: " + ChatColor.GRAY + UUIDUtils.name(teamEntry.getKey().getOwner()) + "\n\n" +
-                            ChatColor.LIGHT_PURPLE + "Balance: " + ChatColor.GRAY + "$" + team.getBalance() + "\n" +
-                    ChatColor.LIGHT_PURPLE + "Kills: " + ChatColor.GRAY.toString() + team.getKills() + "\n" +
-                            ChatColor.LIGHT_PURPLE + "Deaths: " + ChatColor.GRAY.toString() + team.getDeaths() + "\n\n" +
-                    ChatColor.LIGHT_PURPLE + "KOTH Captures: " + ChatColor.GRAY.toString() + team.getKothCaptures() + "\n" +
-                            ChatColor.LIGHT_PURPLE + "Diamonds Mined: " + ChatColor.GRAY.toString() + team.getDiamondsMined() + "\n\n" +
+                    ChatColor.AQUA + "Leader: " + ChatColor.GRAY + UUIDUtils.name(teamEntry.getKey().getOwner()) + "\n\n" +
+                            ChatColor.AQUA + "Balance: " + ChatColor.GRAY + "$" + team.getBalance() + "\n" +
+                    ChatColor.AQUA + "Kills: " + ChatColor.GRAY.toString() + team.getKills() + "\n" +
+                            ChatColor.AQUA + "Deaths: " + ChatColor.GRAY.toString() + team.getDeaths() + "\n\n" +
+                    ChatColor.AQUA + "KOTH Captures: " + ChatColor.GRAY.toString() + team.getKothCaptures() + "\n" +
+                            ChatColor.AQUA + "Diamonds Mined: " + ChatColor.GRAY.toString() + team.getDiamondsMined() + "\n\n" +
                      ChatColor.GREEN + "Click to view team info").command("/t who " + teamEntry.getKey().getName()).then();
                     teamMessage.text(" - ").color(ChatColor.YELLOW).then();
                     teamMessage.text(teamEntry.getValue().toString()).color(ChatColor.GRAY);

@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.tab;
 
+import com.google.common.collect.Maps;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.events.Event;
 import net.frozenorb.foxtrot.events.EventScheduledTime;
@@ -9,6 +10,7 @@ import net.frozenorb.foxtrot.map.stats.StatsEntry;
 import net.frozenorb.foxtrot.nametag.FoxtrotNametagProvider;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
+import net.frozenorb.foxtrot.team.commands.team.TeamListCommand;
 import net.frozenorb.foxtrot.util.PlayerDirection;
 import net.frozenorb.qlib.economy.FrozenEconomyHandler;
 import net.frozenorb.qlib.tab.LayoutProvider;
@@ -22,9 +24,14 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FoxtrotTabLayoutProvider implements LayoutProvider {
+
+    private LinkedHashMap<Team, Integer> cachedTeamList = Maps.newLinkedHashMap();
+    long cacheLastUpdated;
 
     @Override
     public TabLayout provide(Player player) {
@@ -56,7 +63,7 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
                     y++;
                 }
             }
-        }else {
+        } else {
 
 
             boolean hcf = true;
@@ -97,11 +104,11 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
             layout.set(1, 2, ChatColor.GRAY + serverIp);
 
             // Player Info
-            layout.set(0, 5, titleColor + ChatColor.BOLD + "Player Info");
-            layout.set(0, 6, infoColor + "Balance: " + ChatColor.WHITE + "$" + balance);
-            layout.set(0, 7, infoColor + "Kills: " + ChatColor.WHITE + kills);
-            layout.set(0, 8, infoColor + "Deaths: " + ChatColor.WHITE + deaths);
-            layout.set(0, 9, infoColor + "Lives: " + ChatColor.WHITE + lives);
+            layout.set(0, 4, titleColor + ChatColor.BOLD + "Player Info");
+            layout.set(0, 5, infoColor + "Balance: " + ChatColor.WHITE + "$" + balance);
+            layout.set(0, 6, infoColor + "Kills: " + ChatColor.WHITE + kills);
+            layout.set(0, 7, infoColor + "Deaths: " + ChatColor.WHITE + deaths);
+            layout.set(0, 8, infoColor + "Lives: " + ChatColor.WHITE + lives);
 
             Team ownerTeam = LandBoard.getInstance().getTeam(loc);
 
@@ -110,23 +117,23 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
             if (ownerTeam != null) {
                 location = ownerTeam.getName(player.getPlayer());
             } else if (!Foxtrot.getInstance().getServerHandler().isWarzone(loc)) {
-                location = ChatColor.GRAY + "The Wilderness";
+                location = ChatColor.GREEN + "Wilderness";
             } else if (LandBoard.getInstance().getTeam(loc) != null && LandBoard.getInstance().getTeam(loc).getName().equalsIgnoreCase("citadel")) {
                 location = titleColor + "Citadel";
             } else {
                 location = ChatColor.RED + "Warzone";
             }
 
-            layout.set(0, 14, titleColor + ChatColor.BOLD + "Location");
-            layout.set(0, 15, infoColor + location + ChatColor.GRAY + " [" + direction + "]");
-            layout.set(0, 16, infoColor + "(" + ChatColor.WHITE + pos + infoColor + ")");
+            layout.set(0, 10, titleColor + ChatColor.BOLD + "Location");
+            layout.set(0, 11, infoColor + location + ChatColor.GRAY + " [" + direction + "]");
+            layout.set(0, 12, ChatColor.AQUA + "(" + ChatColor.WHITE + pos + ChatColor.AQUA + ")");
 
             // Map Info
-            layout.set(2, 5, titleColor + ChatColor.BOLD + "Map Info");
-            layout.set(2, 6, infoColor + "Kit: " + ChatColor.WHITE + Foxtrot.getInstance().getServerHandler().getShortEnchants());
-            layout.set(2, 7, infoColor + "Factions: " + ChatColor.WHITE + Foxtrot.getInstance().getMapHandler().getTeamSize());
-            layout.set(2, 8, infoColor + "Allies: " + ChatColor.WHITE + Foxtrot.getInstance().getMapHandler().getAllyLimit());
-            layout.set(2, 9, infoColor + "Border: " + ChatColor.WHITE + BorderListener.BORDER_SIZE);
+            layout.set(2, 4, titleColor + ChatColor.BOLD + "Map Info");
+            layout.set(2, 5, infoColor + "Kit: " + ChatColor.WHITE + Foxtrot.getInstance().getServerHandler().getShortEnchants());
+            layout.set(2, 6, infoColor + "Factions: " + ChatColor.WHITE + Foxtrot.getInstance().getMapHandler().getTeamSize());
+            layout.set(2, 7, infoColor + "Allies: " + ChatColor.WHITE + Foxtrot.getInstance().getMapHandler().getAllyLimit());
+            layout.set(2, 8, infoColor + "Border: " + ChatColor.WHITE + BorderListener.BORDER_SIZE);
 
             // Event
             KOTH activeKOTH = null;
@@ -154,9 +161,9 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
                     }
                 }
 
-                layout.set(2, 14, titleColor + ChatColor.BOLD + "Next Event");
+                layout.set(2, 10, titleColor + ChatColor.BOLD + "Next Event");
                 if (nextKothName != null) {
-                    layout.set(2, 15, nextKothName);
+                    layout.set(2, 11, nextKothName);
 
                     Event event = Foxtrot.getInstance().getEventHandler().getEvent(nextKothName);
 
@@ -167,15 +174,15 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
                                 .replace("minutes", "min").replace("minute", "min")
                                 .replace("seconds", "sec").replace("second", "sec");
 
-                        layout.set(2, 16, infoColor + "In: " + ChatColor.WHITE + time);
+                        layout.set(2, 12, infoColor + "In: " + ChatColor.WHITE + time);
                     }
                 } else {
-                    layout.set(2, 15, "Not scheduled");
+                    layout.set(2, 11, "Not scheduled");
                 }
             } else {
-                layout.set(2, 14, titleColor + ChatColor.BOLD + "Current Event");
-                layout.set(2, 15, activeKOTH.getName());
-                layout.set(2, 16, "(" + activeKOTH.getCapLocation().getBlockX() + ", " + activeKOTH.getCapLocation().getBlockY() + ", " + activeKOTH.getCapLocation().getBlockZ() + ")");
+                layout.set(2, 10, titleColor + ChatColor.BOLD + "Active Event");
+                layout.set(2, 11, activeKOTH.getName());
+                layout.set(2, 12, ChatColor.translateAlternateColorCodes('&',  "&b(&f" + activeKOTH.getCapLocation().getBlockX() + "&b, &f" + activeKOTH.getCapLocation().getBlockY() + "&b, &f" + activeKOTH.getCapLocation().getBlockZ() + "&b)"));
             }
 
             // Team info
@@ -189,10 +196,71 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
                     watcherRole = "Captain";
                 }
 
-                layout.set(1, 5, titleColor + ChatColor.BOLD + "Team");
-                layout.set(1, 6, infoColor + "Name: " + ChatColor.WHITE + team.getName());
-                layout.set(1, 7, infoColor + "Role: " + ChatColor.WHITE + watcherRole);
-                layout.set(1, 8, infoColor + "DTR: " + ChatColor.WHITE + team.getDTRColor() + Team.DTR_FORMAT.format(team.getDTR()) + team.getDTRSuffix());
+                layout.set(1, 4, titleColor + ChatColor.BOLD + "Faction Info");
+                layout.set(1, 5, infoColor + "Name: " + ChatColor.WHITE + team.getName());
+                layout.set(1, 6, infoColor + "Role: " + ChatColor.WHITE + watcherRole);
+                layout.set(1, 7, infoColor + "DTR: " + ChatColor.WHITE + team.getDTRColor() + Team.DTR_FORMAT.format(team.getDTR()) + team.getDTRSuffix());
+                layout.set(1, 8, infoColor + "Points: " + ChatColor.WHITE + team.getPoints());
+            }
+            Map<Team, Integer> teamPlayerCount = new HashMap<>();
+            boolean shouldReloadCache = cachedTeamList == null || (System.currentTimeMillis() - cacheLastUpdated > 2000);
+
+            if (shouldReloadCache) {
+                // Sort of weird way of getting player counts, but it does it in the least iterations (1), which is what matters!
+                for (Player other : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
+                    if (other.hasMetadata("invisible")) {
+                        continue;
+                    }
+
+                    Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(other);
+
+                    if (playerTeam != null) {
+                        if (teamPlayerCount.containsKey(playerTeam)) {
+                            teamPlayerCount.put(playerTeam, teamPlayerCount.get(playerTeam) + 1);
+                        } else {
+                            teamPlayerCount.put(playerTeam, 1);
+                        }
+                    }
+                }
+            }
+
+            LinkedHashMap<Team, Integer> sortedTeamPlayerCount;
+
+            if (shouldReloadCache) {
+                sortedTeamPlayerCount = TeamListCommand.sortByValues(teamPlayerCount);
+                cachedTeamList = sortedTeamPlayerCount;
+                cacheLastUpdated = System.currentTimeMillis();
+            } else {
+                sortedTeamPlayerCount = cachedTeamList;
+            }
+
+            int index = -1;
+
+            boolean title = false;
+
+            for (Map.Entry<Team, Integer> teamEntry : sortedTeamPlayerCount.entrySet()) {
+                index++;
+
+                if (index > 19) {
+                    break;
+                }
+
+                if (!title) {
+                    title = true;
+                    layout.set(1, 13, titleColor + ChatColor.BOLD.toString() + "Online Teams");
+                }
+
+                String teamName = teamEntry.getKey().getName();
+                String teamColor = teamEntry.getKey().isMember(player.getUniqueId()) ? ChatColor.GREEN.toString() : infoColor;
+                int x = 0;
+                int y = 14;
+
+                if (teamName.length() > 10) teamName = teamName.substring(0, 10);
+                layout.set(index, y, teamColor + teamName + ChatColor.GRAY + " (" + teamEntry.getValue() + ")");
+                if (index == 3) {
+                    index = -1;
+                    y++;
+                }
             }
         }
 

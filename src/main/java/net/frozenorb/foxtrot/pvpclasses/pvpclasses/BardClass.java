@@ -45,9 +45,9 @@ public class BardClass extends PvPClass implements Listener {
     @Getter private static Map<String, Long> lastEffectUsage = new ConcurrentHashMap<>();
     @Getter private static Map<String, Float> energy = new ConcurrentHashMap<>();
 
-    public static final int BARD_RANGE = 20;
+    public static final int BARD_RANGE = 25;
     public static final int EFFECT_COOLDOWN = 10 * 1000;
-    public static final float MAX_ENERGY = 100;
+    public static final float MAX_ENERGY = 120;
     public static final float ENERGY_REGEN_PER_SECOND = 1;
 
     public BardClass() {
