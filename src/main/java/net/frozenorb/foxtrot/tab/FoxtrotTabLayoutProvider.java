@@ -257,7 +257,7 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
 
                 if (teamName.length() > 10) teamName = teamName.substring(0, 10);
                 layout.set(index, y, teamColor + teamName + ChatColor.GRAY + " (" + teamEntry.getValue() + ")");
-                if (index == 3) {
+                if (index == 2) {
                     index = -1;
                     y++;
                 }

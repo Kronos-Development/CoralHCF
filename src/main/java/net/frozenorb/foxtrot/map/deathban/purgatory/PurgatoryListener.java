@@ -285,9 +285,8 @@ public class PurgatoryListener implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldBypass = player.isOp() || player.hasPermission("foxtrot.staff");
-        boolean isFFA = DTRBitmask.FFA.appliesAt(player.getLocation());
 
-        if (shouldBypass || isFFA) {
+        if (shouldBypass) {
             Foxtrot.getInstance().getDeathbanMap().revive(event.getPlayer().getUniqueId());
         } else {
             Foxtrot.getInstance().getMapHandler().getPurgatoryHandler().addToPurgatory(event.getPlayer());

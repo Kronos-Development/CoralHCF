@@ -96,10 +96,6 @@ public class ChatListener implements Listener {
         }
 
         // Don't let deathbanned players chat
-        if (Foxtrot.getInstance().getDeathbanMap().isDeathbanned(event.getPlayer().getUniqueId())) {
-            event.getPlayer().sendMessage(ChatColor.RED + "You can't chat while you are deathbanned.");
-            return;
-        }
 
         // If someone's not in a team, instead of forcing their 'channel' to public,
         // we just tell them they can't.
@@ -133,7 +129,8 @@ public class ChatListener implements Listener {
                 }*/
                 Profile profile = Profile.getByUuid(event.getPlayer().getUniqueId());
                 String tag = ChatColor.translateAlternateColorCodes('&', profile.getActiveTag(false) == null ? "" : " " + profile.getActiveTag(false).getTag());
-                String finalMessage = String.format(publicChatFormat, event.getPlayer().getDisplayName() + tag, event.getMessage());
+                String deathban = ChatColor.translateAlternateColorCodes('&', Foxtrot.getInstance().getDeathbanMap().isDeathbanned(event.getPlayer().getUniqueId()) ? "&c[DEAD] " : "");
+                String finalMessage = String.format(publicChatFormat, deathban + event.getPlayer().getDisplayName() + tag, event.getMessage());
 
                 // Loop those who are to receive the message (which they won't if they have the sender /ignore'd or something),
                 // not online players
@@ -153,10 +150,10 @@ public class ChatListener implements Listener {
                     } else {
                         if (playerTeam.isMember(player.getUniqueId())) {
                             // Gypsie way to get a custom color if they're allies/teammates
-                            player.sendMessage(finalMessage.replace(ChatColor.GOLD + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor(), ChatColor.GOLD + "[" + ChatColor.DARK_GREEN));
+                            player.sendMessage(finalMessage.replace(ChatColor.DARK_GRAY + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor(), ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN));
                         } else if (playerTeam.isAlly(player.getUniqueId())) {
                             // Gypsie way to get a custom color if they're allies/teammates
-                            player.sendMessage(finalMessage.replace(ChatColor.GOLD + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor(), ChatColor.GOLD + "[" + Team.ALLY_COLOR));
+                            player.sendMessage(finalMessage.replace(ChatColor.DARK_GRAY + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor(), ChatColor.DARK_GRAY + "[" + Team.ALLY_COLOR));
                         } else {
                             // We only check this here as...
                             // Team members always see their team's messages

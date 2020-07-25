@@ -35,7 +35,7 @@ public final class FoxConstants {
                 rankPrefix = "";
             }
 
-            starting = ChatColor.GOLD + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor() + team.getName() + ChatColor.GOLD + "]";
+            starting = ChatColor.DARK_GRAY + "[" + Foxtrot.getInstance().getServerHandler().getDefaultRelationColor() + team.getName() + ChatColor.DARK_GRAY + "] ";
         }
 
         return starting + customPrefixString + rankPrefix + ChatColor.WHITE + "%s" + ChatColor.WHITE + ": %s";

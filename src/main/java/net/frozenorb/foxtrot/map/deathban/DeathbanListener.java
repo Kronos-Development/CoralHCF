@@ -64,11 +64,14 @@ public class DeathbanListener implements Listener {
 
         Player player = event.getPlayer();
         boolean shouldBypass = player.isOp() || player.hasPermission("zoot.staff");
-        boolean isFFA = DTRBitmask.FFA.appliesAt(player.getLocation());
+        boolean isPowers = Foxtrot.getInstance().getConfig().getBoolean("powers");
 
-        if (shouldBypass || isFFA) {
+        if (shouldBypass) {
             Foxtrot.getInstance().getDeathbanMap().revive(player.getUniqueId());
             return;
+        }
+        if (isPowers) {
+            if (!Foxtrot.getInstance().getServerHandler().isPreEOTW() || !Foxtrot.getInstance().getServerHandler().isEOTW()) return;
         }
 
         long unbannedOn = Foxtrot.getInstance().getDeathbanMap().getDeathban(event.getPlayer().getUniqueId());

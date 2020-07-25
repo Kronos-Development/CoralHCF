@@ -49,7 +49,7 @@ public enum DTRBitmask {
 
     NIGHTMARE(16384, "Nightmare", "Determines if a region is part of Nightmare"),
 
-    FFA(32768, "FFA Event", "Determines if a region is part of a FFA Event");
+    BOSSBATTLE(32768, "Boss Event", "Determines if a region is part of a Boss Event");
 
     @Getter private int bitmask;
     @Getter private String name;

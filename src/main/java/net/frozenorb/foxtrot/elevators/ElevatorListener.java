@@ -40,11 +40,10 @@ public class ElevatorListener implements Listener {
             return;
         }
 
-        float oldyaw = event.getPlayer().getLocation().getYaw();
-        float oldpitch = event.getPlayer().getLocation().getPitch();
+        final float oldyaw = event.getPlayer().getLocation().getYaw();
+        final float oldpitch = event.getPlayer().getLocation().getPitch();
 
         Location teleportLocation = findValidLocation(event.getClickedBlock().getLocation(), ElevatorDirection.valueOf(sign.getLine(1).toLowerCase()));
-
 
         if (teleportLocation != null) {
             event.getPlayer().teleport(teleportLocation);

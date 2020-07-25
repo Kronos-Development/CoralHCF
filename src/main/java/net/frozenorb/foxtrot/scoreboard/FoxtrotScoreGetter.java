@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.scoreboard;
 
 import com.minexd.zoot.Zoot;
+import com.minexd.zoot.ZootAPI;
 import com.minexd.zoot.profile.Profile;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
@@ -59,19 +60,15 @@ public class FoxtrotScoreGetter implements ScoreGetter {
 
         if (Setting.SCOREBOARD_STAFF_BOARD.isEnabled(player) && ModHandler.isModMode(player)) {
             Profile profile = Profile.getProfiles().get(player.getUniqueId());
+            Zoot zoot = Zoot.get();
+            String chat = "&ePublic";
+            if (profile.getStaffOptions().adminChatModeEnabled()) chat = "&cAdmin";
+            if (profile.getStaffOptions().staffChatModeEnabled()) chat = "&9Staff";
+            if (zoot.getChat().isPublicChatDelayed()) chat = "&ePublic &7(" + zoot.getChat().getDelayTime() + ")";
+            if (zoot.getChat().isPublicChatMuted()) chat = "&ePublic &7(Muted)";
             scores.add("&bVanish&7: " + (ModHandler.isVanished(player) ? "&aEnabled" : "&cDisabled"));
             scores.add("&bPlayers&7: &a" + Bukkit.getOnlinePlayers().size());
-            if(profile.getStaffOptions().staffChatModeEnabled() == true){
-                scores.add("&bChat&7: &aStaff");
-            } else if (Zoot.get().getChat().isPublicChatDelayed() == true){
-                scores.add("&bChat&7: &cPublic &7(Delayed)");
-            } else if (Zoot.get().getChat().isPublicChatMuted() == true) {
-                scores.add("&bChat&7: &cPublic &7(Muted)");
-            } else if (!Zoot.get().getChat().isPublicChatMuted() && !Zoot.get().getChat().isPublicChatDelayed()){
-                scores.add("&bChat&7: &cPublic");
-            } else {
-                scores.add("&bChat&7: &cPublic");
-            }
+            scores.add("&bChat: " + chat);
         }
 
         String sectionColor = Foxtrot.getInstance().getServerHandler().getSbSectionColor();

@@ -45,8 +45,6 @@ import java.util.stream.Collectors;
 
 public class MapHandler {
 
-    private String forkedBy = "vaperion";
-
     private transient File mapInfo;
     @Getter private boolean kitMap;
     @Getter private int allyLimit;

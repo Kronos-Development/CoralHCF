@@ -24,7 +24,7 @@ public class StaffUtilsListener implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (lastDamageLocation != null && event.getItem() != null && event.getItem().getType() == Material.EMERALD && event.getPlayer().getGameMode() == GameMode.CREATIVE) {
+        if (lastDamageLocation != null && event.getItem() != null && event.getItem().getType() == Material.EMERALD && event.getPlayer().hasMetadata("modmode")) {
             event.getPlayer().teleport(lastDamageLocation);
         }
     }

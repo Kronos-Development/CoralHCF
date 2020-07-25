@@ -382,7 +382,6 @@ public class TeamListener implements Listener {
                             return;
                         }
                     }
-                if(DTRBitmask.FFA.appliesAt(event.getEntity().getLocation())) return;
 
                     damager.sendMessage(ChatColor.YELLOW + "You cannot hurt " + ChatColor.DARK_GREEN + victim.getName() + ChatColor.YELLOW + ".");
                     event.setCancelled(true);
