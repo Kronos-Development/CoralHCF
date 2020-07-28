@@ -50,6 +50,7 @@ net\frozenorb\foxtrot\team\commands\RecalculatePointsCommand.class
 net\frozenorb\foxtrot\team\Team$4.class
 net\frozenorb\foxtrot\deathmessage\trackers\BurnTracker$BurnDamage.class
 net\frozenorb\foxtrot\team\commands\team\TeamKickCommand.class
+net\frozenorb\foxtrot\team\permissions\menu\PermissionsMenu$3.class
 net\frozenorb\foxtrot\util\Pair.class
 net\frozenorb\foxtrot\events\conquest\game\ConquestGame.class
 net\frozenorb\foxtrot\commands\SetWorldBufferCommand.class
@@ -87,13 +88,11 @@ net\frozenorb\foxtrot\listener\PvPTimerListener$1.class
 net\frozenorb\foxtrot\team\commands\team\TeamUninviteCommand$1.class
 net\frozenorb\foxtrot\listener\MapListener.class
 net\frozenorb\foxtrot\deathmessage\trackers\BurnTracker.class
-net\frozenorb\foxtrot\settings\Setting$6.class
 net\frozenorb\foxtrot\team\commands\team\TeamDepositCommand.class
 net\frozenorb\foxtrot\server\permission\impl\VaultPermissions.class
 net\frozenorb\foxtrot\team\claims\CoordinateSet.class
 net\frozenorb\foxtrot\persist\maps\ToggleDeathMessageMap.class
 net\frozenorb\foxtrot\team\Team$2.class
-net\frozenorb\foxtrot\settings\Setting$9.class
 net\frozenorb\foxtrot\team\commands\team\TeamRenameCommand.class
 net\frozenorb\foxtrot\util\MapUtil.class
 net\frozenorb\foxtrot\team\claims\VisualClaim$2.class
@@ -205,6 +204,7 @@ net\frozenorb\foxtrot\team\menu\button\RenameButton.class
 net\frozenorb\foxtrot\listener\ArmorDamageListener.class
 net\frozenorb\foxtrot\commands\WipeDeathbansCommand.class
 net\frozenorb\foxtrot\map\killstreaks\velttypes\GoldenApples.class
+net\frozenorb\foxtrot\team\commands\team\TeamInfoCommand$2.class
 net\frozenorb\foxtrot\commands\GoppleCommand.class
 net\frozenorb\foxtrot\events\region\cavern\listeners\CavernListener.class
 net\frozenorb\foxtrot\events\conquest\commands\conquestadmin\ConquestAdminSetScoreCommand.class
@@ -444,7 +444,6 @@ net\frozenorb\foxtrot\team\Team$1.class
 net\frozenorb\foxtrot\protocol\SignGUIPacketAdaper.class
 net\frozenorb\foxtrot\map\killstreaks\velttypes\PermSpeed2.class
 net\frozenorb\foxtrot\deathmessage\trackers\ArrowTracker$ArrowDamageByMob.class
-net\frozenorb\foxtrot\settings\Setting$7.class
 net\frozenorb\foxtrot\tab\DefaultFoxtrotTabLayoutProvider.class
 net\frozenorb\foxtrot\deathmessage\objects\MobDamage.class
 net\frozenorb\foxtrot\events\citadel\CitadelHandler.class
@@ -453,7 +452,6 @@ net\frozenorb\foxtrot\team\commands\team\TeamAcceptCommand.class
 net\frozenorb\foxtrot\settings\commands\SettingsCommand.class
 net\frozenorb\foxtrot\persist\PersistMap$3.class
 net\frozenorb\foxtrot\map\stats\command\LeaderboardAddCommand.class
-net\frozenorb\foxtrot\settings\Setting$8.class
 net\frozenorb\foxtrot\events\region\glowmtn\GlowHandler.class
 net\frozenorb\foxtrot\map\killstreaks\arcanetypes\Strength.class
 net\frozenorb\foxtrot\server\conditional\staff\ModHandler.class
@@ -523,6 +521,7 @@ net\frozenorb\foxtrot\map\killstreaks\arcanetypes\Invis.class
 net\frozenorb\foxtrot\commands\ToggleDatabaseTeamLog.class
 net\frozenorb\foxtrot\persist\maps\DeathsMap.class
 net\frozenorb\foxtrot\commands\CSVExportCommand.class
+net\frozenorb\foxtrot\commands\ShowStaffCommand.class
 net\frozenorb\foxtrot\team\commands\pvp\PvPCreateCommand.class
 net\frozenorb\foxtrot\commands\NullFixCommand.class
 net\frozenorb\foxtrot\listener\RedstoneListener.class
@@ -578,6 +577,7 @@ net\frozenorb\foxtrot\team\claims\VisualClaim$5.class
 net\frozenorb\foxtrot\server\RegionMoveHandler$1.class
 net\frozenorb\foxtrot\team\commands\team\subclaim\TeamSubclaimCommand.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHCreateCommand.class
+net\frozenorb\foxtrot\events\EventListener$4.class
 net\frozenorb\foxtrot\deathmessage\event\CustomPlayerDamageEvent.class
 net\frozenorb\foxtrot\events\koth\events\KOTHControlLostEvent.class
 net\frozenorb\foxtrot\settings\menu\color\ColorTypes.class

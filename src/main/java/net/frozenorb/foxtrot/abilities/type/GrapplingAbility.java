@@ -97,17 +97,13 @@ public class GrapplingAbility extends AbstractAbility {
         Location hook = event.getHook().getLocation();
 
         switch (event.getState()) {
-            case FAILED_ATTEMPT: {
-                player.sendMessage(ChatColor.RED + "Your hook needs to be in the ground!");
-                break;
-            }
             case IN_GROUND: {
-                if (hook.distance(player.getLocation()) > 30) {
+                if (event.getHook().getLocation().distance(player.getLocation()) > 30) {
                     player.sendMessage(ChatColor.RED + "You are too far from the hook!");
                     return;
                 }
 
-                pullTo(player, hook, false);
+                pullTo(player, hook, true);
                 //player.setVelocity(getVector(player, hook));
                 break;
             }
@@ -123,9 +119,6 @@ public class GrapplingAbility extends AbstractAbility {
 
                 pullTo(caught, player.getLocation(), true);
                 //caught.setVelocity(getVector(caught, player.getLocation()));
-
-                player.sendMessage(ChatColor.YELLOW + "You have pulled " + ChatColor.RED + caught.getDisplayName() + ChatColor.YELLOW + " towards you!");
-                caught.sendMessage(ChatColor.RED + player.getDisplayName() + ChatColor.YELLOW + " has pulled you towards them!");
                 break;
             }
         }

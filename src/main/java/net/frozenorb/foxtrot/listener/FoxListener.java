@@ -49,6 +49,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 
+import com.minexd.zoot.profile.Profile;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -496,6 +497,7 @@ public class FoxListener implements Listener {
         SpawnTagHandler.removeTag(event.getEntity());
         Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getEntity());
         Player killer = event.getEntity().getKiller();
+        Profile profile = Profile.getProfiles().get(killer.getUniqueId());
 
         if (Foxtrot.getInstance().getInDuelPredicate().test(event.getEntity())) {
             return;
@@ -522,6 +524,10 @@ public class FoxListener implements Listener {
 
                 if (hand.getType().name().contains("SWORD") || hand.getType() == BOW) {
                     InventoryUtils.addKill(hand, killer.getDisplayName() + YELLOW + " " + (hand.getType() == BOW ? "shot" : "killed") + " " + event.getEntity().getDisplayName());
+                }
+                if(killer != null) {
+                    profile.setTokens(profile.getTokens() + 2);
+                    profile.save();
                 }
             }
         }

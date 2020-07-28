@@ -2,7 +2,6 @@ package net.frozenorb.foxtrot.team.dtr;
 
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.team.Team;
-import net.frozenorb.foxtrot.team.TeamHandler;
 import org.bson.types.ObjectId;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -53,8 +52,8 @@ public class DTRHandler extends BukkitRunnable {
         return (teamsize == 0 ? 0 : BASE_DTR_INCREMENT[teamsize - 1] * Foxtrot.getInstance().getMapHandler().getDtrIncrementMultiplier());
     }
 
-    public static double getMaxDTR(int teamsize, boolean offline) {
-        return (teamsize == 0 ? 100D : offline ? MAX_DTR[teamsize - 1] / 2 :  MAX_DTR[teamsize - 1]);
+    public static double getMaxDTR(int teamsize) {
+        return (teamsize == 0 ? 100D : MAX_DTR[teamsize - 1]);
     }
 
     public static boolean isOnCooldown(Team team) {
@@ -72,25 +71,6 @@ public class DTRHandler extends BukkitRunnable {
     @Override
     public void run() {
         Map<Team, Integer> playerOnlineMap = new HashMap<>();
-
-        Foxtrot.getInstance().getTeamHandler().getTeams().forEach(team -> {
-            if(team.getOwner() == null || team.getMembers().isEmpty()) return;
-            if(team.getDTR() == team.getMaxDTR()) return;
-            if(team.getOnlineMembers().isEmpty()) {
-                if(team.getDTR() > team.getMaxDTR() / 2) return;
-
-                if (isOnCooldown(team)) {
-                    markOnDTRCooldown(team);
-                    return;
-                }
-                wasOnCooldown.remove(team.getUniqueId());
-                double incrementedDtr = team.getDTR() + team.getDTRIncrement(0, true);
-                double maxDtr = team.getMaxDTR() / 2;
-                double newDtr = Math.min(incrementedDtr, maxDtr);
-                team.setDTR(newDtr);
-            }
-        });
-
 
         for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
             if (player.hasMetadata("invisible")) {

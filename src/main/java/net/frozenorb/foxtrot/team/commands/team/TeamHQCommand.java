@@ -47,14 +47,15 @@ public class TeamHQCommand {
             sender.sendMessage(ChatColor.RED + "Use /pvp enable to toggle your PvP Timer off!");
             return;
         }
-
+/**
         boolean charge = team != LandBoard.getInstance().getTeam(sender.getLocation()) && !Foxtrot.getInstance().getConfig().getBoolean("legions");
-        
+
         if (charge && team.getBalance() < (Foxtrot.getInstance().getServerHandler().isHardcore() ? 20 : 50)) {
             sender.sendMessage(ChatColor.RED + "Your team needs at least $" + (Foxtrot.getInstance().getServerHandler().isHardcore() ? 20 : 50) + " to teleport to your team headquarters.");
             return;
         }
+ */
 
-        Foxtrot.getInstance().getServerHandler().beginHQWarp(sender, team, 10, charge);
+        Foxtrot.getInstance().getServerHandler().beginHQWarp(sender, team, 10, false);
     }
 }

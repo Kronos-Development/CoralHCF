@@ -137,10 +137,6 @@ public class SwitcherAbility extends AbstractAbility {
         }
 
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(attacker);
-        if (team != null && team.isMember(victim.getUniqueId())) {
-            attacker.sendMessage(ChatColor.RED + "You cannot do this to your teammate!");
-            return;
-        }
 
         double distance = victimLoc.distance(attackerLoc);
 

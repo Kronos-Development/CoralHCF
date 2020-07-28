@@ -140,8 +140,8 @@ public class RogueClass extends PvPClass {
                         event.setDamage(0D);
                     }
 
-                    DeathMessageHandler.addDamage(victim, new BackstabDamage(victim.getName(), 7D, damager.getName()));
-                    victim.setHealth(Math.max(0D, victim.getHealth() - 7D));
+                    DeathMessageHandler.addDamage(victim, new BackstabDamage(victim.getName(), 4.3D, damager.getName()));
+                    victim.setHealth(Math.max(0D, victim.getHealth() - 4.3D));
                     if (victim.getHealth() <= 0.0D) {
                         Bukkit.getPluginManager().callEvent(new BackstabKillEvent(damager, victim));
                     }

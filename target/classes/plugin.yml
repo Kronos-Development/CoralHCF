@@ -4,5 +4,5 @@ authors:
   - FrozenOrb
   - vaperion
 main: net.frozenorb.foxtrot.Foxtrot
-softdepend: [ Vault, Vulcan, Stark, CheatBreakerAPI, UniversalClientAPI ]
+softdepend: [ Vault, CheatBreakerAPI, UniversalClientAPI ]
 depend: [ qLib, ProtocolLib ]

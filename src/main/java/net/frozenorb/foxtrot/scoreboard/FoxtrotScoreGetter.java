@@ -166,23 +166,10 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             scores.add(ChatColor.GOLD.toString() + ChatColor.BOLD + "Ability&7: &c" + (ScoreFunction.TIME_FANCY.apply(Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000F)));
         }
 
-        if (Setting.SCOREBOARD_ABILITY_COOLDOWNS.isEnabled(player)) {
-
-
-            List<AbstractAbility> abilities = Foxtrot.getInstance().getAbilityHandler().getAbilities();
-
-            for (AbstractAbility ability : abilities) {
-                if (!ability.isOnCooldown(player.getUniqueId()))
-                    continue;
-                scores.add(ability.getScoreboardName() +  "&7: &c" + (ScoreFunction.TIME_FANCY.apply(ability.getCooldownLeft(player.getUniqueId()) / 1000F)));
-            }
-        }
-
         if (archerMarkScore != null) {
             scores.add("&6&lArcher Mark&7: &c" + archerMarkScore);
         }
 
-        if (Setting.SCOREBOARD_CLASS_COOLDOWNS.isEnabled(player)) {
             if (bardEffectScore != null) {
                 scores.add("&a&lBard Effect&7: &c" + bardEffectScore);
             }
@@ -198,7 +185,6 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             if (scoutGrapplingScore != null) {
                 scores.add("&6&lScout Grapple&7: &c" + scoutGrapplingScore);
             }
-        }
 
         if (fstuckScore != null) {
             scores.add("&4&lStuck&7: &c" + fstuckScore);

@@ -53,7 +53,7 @@ public class PurgatoryListener implements Listener {
 
         Sign sign = (Sign) event.getClickedBlock().getState();
 
-        if (!sign.getLine(2).toLowerCase().contains("use a life")) {
+        if (!sign.getLine(2).toLowerCase().contains("use a life") || !sign.getLine(1).toLowerCase().contains("use a life")) {
             return;
         }
 

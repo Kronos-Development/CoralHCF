@@ -6,6 +6,7 @@ import net.frozenorb.foxtrot.events.region.cavern.CavernHandler;
 import net.frozenorb.foxtrot.events.Event;
 import net.frozenorb.foxtrot.events.koth.KOTH;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
+import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
@@ -189,6 +190,7 @@ public class TeamListener implements Listener {
 
     @EventHandler(ignoreCancelled=true) // normal priority
     public void onBlockBreak(BlockBreakEvent event) {
+        PurgatoryHandler purgHandler = Foxtrot.getInstance().getPurgatoryHandler();
         if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())) {
             return;
         }
@@ -201,6 +203,11 @@ public class TeamListener implements Listener {
 
         if (team.hasDTRBitmask(DTRBitmask.ROAD) && event.getBlock().getY() <= 40) {
             return; // allow players to mine under roads
+        }
+
+        if (team.hasDTRBitmask(DTRBitmask.PURGATORY) && purgHandler.getBanCache().containsKey(event.getPlayer().getName())) {
+            return;
+            // allow players to break purgatory
         }
 
         if (!team.isMember(event.getPlayer().getUniqueId())) {

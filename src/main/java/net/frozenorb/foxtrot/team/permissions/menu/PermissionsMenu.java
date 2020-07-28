@@ -73,6 +73,29 @@ public class PermissionsMenu extends Menu {
             }
         });
 
+        buttonMap.put(2, new Button() {
+            @Override
+            public String getName(Player player) {
+                return ChatColor.GREEN + "Display";
+            }
+
+            @Override
+            public List<String> getDescription(Player player) {
+                return Collections.singletonList(ChatColor.WHITE + "Who can set faction displays?");
+            }
+
+            @Override
+            public Material getMaterial(Player player) {
+                return Material.FIREBALL;
+            }
+
+            @Override
+            public void clicked(Player player, int slot, ClickType clickType) {
+                player.closeInventory();
+                new PermissionTypeMenu(team, "Display").openMenu(player);
+            }
+        });
+
         return buttonMap;
     }
 }

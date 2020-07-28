@@ -25,8 +25,8 @@ public class TeamDisplayCommand {
             return;
         }
 
-        if (!senderTeam.isOwner(sender.getUniqueId()) && !senderTeam.isCoLeader(sender.getUniqueId())) {
-            sender.sendMessage(ChatColor.DARK_AQUA + "Only team co-leaders (and above) can do this.");
+        if (!senderTeam.isOwner(sender.getUniqueId()) && !senderTeam.isCoLeader(sender.getUniqueId()) && !senderTeam.hasRallyPermission(sender.getUniqueId())) {
+            sender.sendMessage(ChatColor.DARK_AQUA + "You cannot do this, ask your leader if you think this is an error.");
             return;
         }
 
@@ -46,6 +46,8 @@ public class TeamDisplayCommand {
         }
 
         senderTeam.sendMessage(ChatColor.DARK_AQUA + sender.getName() + " has created a waypoint for " + team.getName() + "'s HQ!");
+
+
     }
 
 }

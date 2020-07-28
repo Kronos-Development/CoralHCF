@@ -68,7 +68,12 @@ public class TeamManageCommand {
         }
     }
 
-    @Command(names = {"manageteam rename"}, permission = "fotrot.manage")
+    @Command(names = {"manageteam points"}, permission = "foxtrot.manage")
+    public static void pointsTeam (Player sender, @Param(name = "team") Team team, @Param(name = "points") int points) {
+        team.setPoints(points);
+    }
+
+    @Command(names = {"manageteam rename"}, permission = "foxtrot.manage")
     public static void renameTeam(Player sender, @Param(name = "team") Team team) {
         conversationString(sender, "§aEnter a new name for " + team.getName() + ".", (name) -> {
             String oldName = team.getName();

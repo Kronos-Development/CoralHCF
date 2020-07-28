@@ -1,5 +1,7 @@
 package net.frozenorb.foxtrot.events;
 
+import com.minexd.zoot.Zoot;
+import com.minexd.zoot.profile.Profile;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import net.frozenorb.foxtrot.Foxtrot;
@@ -145,25 +147,25 @@ public class EventListener implements Listener {
             teamName = ChatColor.GOLD + "[" + ChatColor.YELLOW + team.getName() + ChatColor.GOLD + "]";
         }
 
-        final String[] filler = { "", "", "", "", "", "" };
+        final String[] filler = {"", "", "", "", "", ""};
         String[] messages;
 
         String main = Foxtrot.getInstance().getServerHandler().getEventMainColor();
         String other = Foxtrot.getInstance().getServerHandler().getEventOtherColor();
 
         if (event.getEvent().getName().equalsIgnoreCase("Citadel")) {
-            messages = new String[] {
+            messages = new String[]{
                     other + "███████",
                     other + "██" + main + "████" + other + "█",
-                    other + "█"  + main + "█"    + other + "█████ " + ChatColor.GOLD + "[Citadel]",
-                    other + "█"  + main + "█"    + other + "█████ " + ChatColor.YELLOW + "controlled by",
-                    other + "█"  + main + "█"    + other + "█████ " + teamName + ChatColor.WHITE + event.getPlayer().getDisplayName(),
-                    other + "█"  + main + "█"    + other + "█████",
+                    other + "█" + main + "█" + other + "█████ " + ChatColor.GOLD + "[Citadel]",
+                    other + "█" + main + "█" + other + "█████ " + ChatColor.YELLOW + "controlled by",
+                    other + "█" + main + "█" + other + "█████ " + teamName + ChatColor.WHITE + event.getPlayer().getDisplayName(),
+                    other + "█" + main + "█" + other + "█████",
                     other + "██" + main + "████" + other + "█",
                     other + "███████"
             };
         } else if (event.getEvent().getName().equalsIgnoreCase("EOTW")) {
-            messages = new String[] {
+            messages = new String[]{
                     ChatColor.RED + "███████",
                     ChatColor.RED + "█" + ChatColor.DARK_RED + "█████" + ChatColor.RED + "█" + " " + ChatColor.DARK_RED + "[EOTW]",
                     ChatColor.RED + "█" + ChatColor.DARK_RED + "█" + ChatColor.RED + "█████" + " " + ChatColor.RED.toString() + ChatColor.BOLD + "EOTW has been",
@@ -173,7 +175,7 @@ public class EventListener implements Listener {
                     ChatColor.RED + "███████",
             };
         } else if (event.getEvent().getType() == EventType.DTC) {
-            messages = new String[] {
+            messages = new String[]{
                     ChatColor.RED + "███████",
                     ChatColor.RED + "█" + ChatColor.GOLD + "█████" + ChatColor.RED + "█" + " " + ChatColor.GOLD + "[Event]",
                     ChatColor.RED + "█" + ChatColor.GOLD + "█" + ChatColor.RED + "█████" + " " + ChatColor.YELLOW.toString() + ChatColor.BOLD + "DTC has been",
@@ -182,7 +184,7 @@ public class EventListener implements Listener {
                     ChatColor.RED + "█" + ChatColor.GOLD + "█████" + ChatColor.RED + "█",
                     ChatColor.RED + "███████",
             };
-            
+
             ItemStack rewardKey = InventoryUtils.generateKOTHRewardKey(event.getEvent().getName() + " DTC", 1);
             ItemStack kothSign = Foxtrot.getInstance().getServerHandler().generateKOTHSign(event.getEvent().getName(), team == null ? event.getPlayer().getName() : team.getName(), EventType.DTC);
 
@@ -197,7 +199,7 @@ public class EventListener implements Listener {
                 event.getPlayer().getWorld().dropItemNaturally(event.getPlayer().getLocation(), kothSign);
             }
         } else {
-            messages = new String[] {
+            messages = new String[]{
                     ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.BLUE + event.getEvent().getName() + ChatColor.YELLOW + " has been controlled by " + teamName + ChatColor.WHITE + event.getPlayer().getDisplayName() + ChatColor.YELLOW + "!",
                     ChatColor.GOLD + "[KingOfTheHill] " + ChatColor.YELLOW + "Awarded" + ChatColor.BLUE + " KOTH Key" + ChatColor.YELLOW + " to " + teamName + ChatColor.WHITE + event.getPlayer().getDisplayName() + ChatColor.YELLOW + "."
             };
@@ -207,6 +209,7 @@ public class EventListener implements Listener {
             if (Bukkit.getWorld(koth.getWorld()).getEnvironment() != World.Environment.NORMAL) {
                 tier = 2;
             }
+
 
             ItemStack rewardKey = InventoryUtils.generateKOTHRewardKey(event.getEvent().getName() + " KOTH", tier);
             ItemStack kothSign = Foxtrot.getInstance().getServerHandler().generateKOTHSign(event.getEvent().getName(), team == null ? event.getPlayer().getName() : team.getName(), EventType.KOTH);
@@ -266,6 +269,25 @@ public class EventListener implements Listener {
             }
 
         }.runTaskAsynchronously(Foxtrot.getInstance());
+
+        new BukkitRunnable() {
+
+            public void run() {
+                Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer()).getMembers().forEach(member -> {
+                    Profile profile = Profile.getProfiles().get(member);
+                    if (!event.getEventName().equalsIgnoreCase("Citadel") || !event.getEventName().equalsIgnoreCase("Conquest")) {
+                        profile.setTokens(profile.getTokens() + 10);
+                        profile.save();
+                    } else {
+                        if (event.getEventName().equalsIgnoreCase("Citadel"))
+                            profile.setTokens(profile.getTokens() + 40);
+                        if (event.getEventName().equalsIgnoreCase("Conquest"))
+                            profile.setTokens(profile.getTokens() + 50);
+                        profile.save();
+                    }
+                });
+            }
+    }.runTaskAsynchronously(Foxtrot.getInstance());
     }
 
     @EventHandler

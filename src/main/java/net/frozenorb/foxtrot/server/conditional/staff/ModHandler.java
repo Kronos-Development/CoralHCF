@@ -23,6 +23,9 @@ public class ModHandler {
     public static boolean isModMode(Player player) {
         return player.hasMetadata("modmode");
     }
+    public static boolean canSeeStaff(Player player){
+        return player.hasMetadata("nostaff");
+    }
 
     public static boolean isVanished(Player player) {
         return player.hasMetadata("invisible");

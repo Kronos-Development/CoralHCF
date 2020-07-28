@@ -181,7 +181,7 @@ public class ConditionalHandler {
                 boolean vanished = ModHandler.isVanished(player);
                 boolean modModeViewer = ModHandler.isModMode(viewer);
 
-                return vanished && !modModeViewer && !viewer.hasPermission("foxtrot.staff");
+                return vanished && !modModeViewer && !viewer.hasPermission("foxtrot.staff") || viewer.hasMetadata("nostaff");
             }
         });
     }

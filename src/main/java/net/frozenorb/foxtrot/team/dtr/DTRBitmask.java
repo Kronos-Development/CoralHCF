@@ -49,7 +49,8 @@ public enum DTRBitmask {
 
     NIGHTMARE(16384, "Nightmare", "Determines if a region is part of Nightmare"),
 
-    BOSSBATTLE(32768, "Boss Event", "Determines if a region is part of a Boss Event");
+    PURGATORY(32768, "Purgatory", "Determines if a region is part of the deathban system");
+    //what else would it be you fucks
 
     @Getter private int bitmask;
     @Getter private String name;

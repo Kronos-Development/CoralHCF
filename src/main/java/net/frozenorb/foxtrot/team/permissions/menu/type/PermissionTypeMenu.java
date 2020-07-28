@@ -22,12 +22,14 @@ public class PermissionTypeMenu extends Menu {
     @Getter private final Team team;
     @Getter private final String type;
     private final boolean isRally;
+    private final boolean isDisplay;
 
     public PermissionTypeMenu(Team team, String type) {
         super(type + " access.");
         this.team = team;
         this.type = type;
         this.isRally = type.contains("Rally");
+        this.isDisplay = type.contains("Display");
         setAutoUpdate(true);
     }
 
@@ -37,8 +39,9 @@ public class PermissionTypeMenu extends Menu {
 
         AtomicInteger atomicInteger = new AtomicInteger(0);
 
-        if(isRally) team.getMembers().stream().filter(member -> !team.isOwner(member) && !team.isCaptain(member) && !team.isCoLeader(member)).forEach(member -> buttonMap.put(atomicInteger.getAndIncrement(), new PermissionPlayerButton(team, isRally, member)));
-        else team.getMembers().stream().filter(member -> !team.isOwner(member) && !team.isCaptain(member) && !team.isCoLeader(member)).forEach(member -> buttonMap.put(atomicInteger.getAndIncrement(), new PermissionPlayerButton(team, isRally, member)));
+        if(isRally) team.getMembers().stream().filter(member -> !team.isOwner(member) && !team.isCaptain(member) && !team.isCoLeader(member)).forEach(member -> buttonMap.put(atomicInteger.getAndIncrement(), new PermissionPlayerButton(team, isRally, isDisplay, member)));
+        if(isDisplay) team.getMembers().stream().filter(member -> !team.isOwner(member) && !team.isCaptain(member) && !team.isCoLeader(member)).forEach(member -> buttonMap.put(atomicInteger.getAndIncrement(), new PermissionPlayerButton(team, isDisplay, isRally, member)));
+        else team.getMembers().stream().filter(member -> !team.isOwner(member) && !team.isCaptain(member) && !team.isCoLeader(member)).forEach(member -> buttonMap.put(atomicInteger.getAndIncrement(), new PermissionPlayerButton(team, isRally, isDisplay, member)));
 
         buttonMap.put(size(buttonMap) - 1, new Button() {
             @Override

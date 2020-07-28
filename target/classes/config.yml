@@ -5,22 +5,22 @@ Mongo:
     Username: 'MineHQ'
     Password: ''
 
-networkName: '&6&lMineHQ'
-serverName: HCTeams
-networkWebsite: minehq.com
-statsRoot: minehq.com/hcteams
+networkName: '&b&lCoral'
+serverName: Coral
+networkWebsite: coral.gg
+statsRoot: coral.gg/powers
 
 event:
   mainColor: "&3"
   otherColor: "&7"
 
 tab:
-  serverName: '&6&lHCTeams'
-  sectionColor: '&6'
-  infoColor: '&e'
+  serverName: '&b&lCoral'
+  sectionColor: '&b'
+  infoColor: '&f'
 
 scoreboard:
-  sectionColor: '&6'
+  sectionColor: '&b'
   timeColor: '&f'
 
 nightmare:
@@ -42,6 +42,7 @@ blockRemoval: false
 rodPrevention: false
 skybridgePrevention: false
 reduceArmorDamage: true
+powers: false
 blockEntitiesThroughPortals: true
 archerTagColor: YELLOW
 defaultRelationColor: RED

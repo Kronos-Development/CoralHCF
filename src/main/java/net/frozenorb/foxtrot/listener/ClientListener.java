@@ -62,10 +62,15 @@ public class ClientListener implements Listener {
         String nameTag = (target.hasMetadata("invisible") ? ChatColor.GRAY + "*" : "") + new FoxtrotNametagProvider().fetchNametag(target, viewer).getPrefix() + target.getName();
         List<String> tag = new ArrayList<>();
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(target);
-        if(team != null) tag.add(target.hasMetadata("modmode") ? team.getTeamColor().toString() + "[" + team.getName() + "]" : ChatColor.GOLD + "[" + team.getName(viewer) + ChatColor.GOLD + "]");
-        if(target.hasMetadata("modmode")) tag.add(ChatColor.GRAY + "[Mod Mode]");
-        tag.add(nameTag);
-        return tag;
+        if (team != null) {
+            if (viewer.hasMetadata("modmode")) {
+                tag.add(ChatColor.GOLD + "[" + team.getTeamColor().toString() + team.getName() + ChatColor.GOLD + "]");
+            } else {
+                tag.add(ChatColor.GOLD + "[" + team.getTeamColor().toString() + team.getName(viewer) + ChatColor.GOLD + "]");
+            }
+        }
+            if (target.hasMetadata("modmode")) tag.add(ChatColor.GRAY + "[Mod Mode]");
+            tag.add(nameTag);
+            return tag;
     }
-
 }

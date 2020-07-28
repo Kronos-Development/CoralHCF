@@ -50,7 +50,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.minexd:zoot:1.0">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/lol.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/zoot-1.0-SNAPSHOT.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

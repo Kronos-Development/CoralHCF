@@ -19,6 +19,7 @@ import net.frozenorb.foxtrot.events.region.cavern.CavernHandler;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
 import net.frozenorb.foxtrot.listener.*;
 import net.frozenorb.foxtrot.map.MapHandler;
+import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
 import net.frozenorb.foxtrot.packetborder.PacketBorderThread;
 import net.frozenorb.foxtrot.persist.RedisSaveTask;
 import net.frozenorb.foxtrot.persist.maps.*;
@@ -61,7 +62,7 @@ public class Foxtrot extends JavaPlugin {
 
 	@Getter private ChatHandler chatHandler;
 	@Getter private PvPClassHandler pvpClassHandler;
-	@Getter private CarePackageHandler carePackageHandler;
+	@Getter private PurgatoryHandler purgatoryHandler;
 	@Getter private TeamHandler teamHandler;
 	@Getter private ServerHandler serverHandler;
 	@Getter private MapHandler mapHandler;

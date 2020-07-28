@@ -18,6 +18,7 @@ public class PermissionPlayerButton extends Button {
 
     private final Team team;
     private final boolean isRally;
+    private final boolean isDisplay;
     private final UUID member;
 
     @Override
@@ -29,14 +30,22 @@ public class PermissionPlayerButton extends Button {
     public List<String> getDescription(Player player) {
         List<String> description = new ArrayList<>();
         if (isRally) {
-            if(team.hasRallyPermission(member)) {
+            if (team.hasRallyPermission(member)) {
                 description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + ChatColor.YELLOW + "Allowed");
                 description.add("    " + ChatColor.YELLOW + "Disallowed");
             } else {
                 description.add("    " + ChatColor.YELLOW + "Allowed");
                 description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + ChatColor.YELLOW + "Disallowed");
             }
-        }else {
+        } else if (isDisplay) {
+                if (team.hasDisplayPermission(member)) {
+                    description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + ChatColor.YELLOW + "Allowed");
+                    description.add("    " + ChatColor.YELLOW + "Disallowed");
+                } else {
+                    description.add("    " + ChatColor.YELLOW + "Allowed");
+                    description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + ChatColor.YELLOW + "Disallowed");
+                }
+            }else {
             if(team.hasSubclaimPermission(member)) {
                 description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + ChatColor.YELLOW + "Allowed");
                 description.add("    " + ChatColor.YELLOW + "Disallowed");
@@ -65,7 +74,11 @@ public class PermissionPlayerButton extends Button {
         if(isRally) {
             value = !team.hasRallyPermission(member);
             team.setRallyPermission(player.getUniqueId(), member, value);
-        }else {
+        }if(isDisplay) {
+            value = !team.hasDisplayPermission(member);
+            team.setDisplayPermission(player.getUniqueId(), member, value);
+        }
+        else {
             value = !team.hasSubclaimPermission(member);
             team.setSubclaimPermission(player.getUniqueId(), member, value);
         }

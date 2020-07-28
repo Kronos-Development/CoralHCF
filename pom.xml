@@ -85,7 +85,7 @@
 			<artifactId>zoot</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/lol.jar</systemPath>
+			<systemPath>${project.basedir}/lib/zoot-1.0-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.comphenix.protocol</groupId>

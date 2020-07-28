@@ -17,6 +17,7 @@ import net.frozenorb.foxtrot.chat.enums.ChatMode;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
 import net.frozenorb.foxtrot.persist.maps.DeathbanMap;
 import net.frozenorb.foxtrot.persist.maps.KillsMap;
+import net.frozenorb.foxtrot.settings.Setting;
 import net.frozenorb.foxtrot.team.claims.Claim;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
@@ -71,6 +72,7 @@ public class Team {
     @Getter private Location HQ;
     @Getter private RallyPoint Rally;
     @Getter private CBWaypoint HQWaypoint;
+    @Getter private CBWaypoint TeamHQWaypoint;
     @Getter private double balance;
     @Getter private double DTR;
     @Getter private long DTRCooldown;
@@ -83,6 +85,7 @@ public class Team {
     @Getter private final Set<UUID> invitations = new HashSet<>();
     @Getter private final Set<UUID> subclaimPermissions = new HashSet<>();
     @Getter private final Set<UUID> rallyPermissions = new HashSet<>();
+    @Getter private final Set<UUID> displayPermissions = new HashSet<>();
     @Getter private final Set<ObjectId> allies = new HashSet<>();
     @Getter private final Set<ObjectId> requestedAllies = new HashSet<>();
     @Getter private String announcement;
@@ -191,6 +194,12 @@ public class Team {
         if(this.Rally != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().removeWaypoint(player, this.Rally.getCbWaypoint()));
         if(rally != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().sendWaypoint(player, rally.getCbWaypoint()));
         this.Rally = rally;
+    }
+
+    public void setFactionHQRally(CBWaypoint teamhq) {
+        if (this.TeamHQWaypoint != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().removeWaypoint(player, this.TeamHQWaypoint));
+        if (teamhq != null) getOnlineMembers().forEach(player -> CheatBreakerAPI.getInstance().sendWaypoint(player, teamhq));
+        this.TeamHQWaypoint = teamhq;
     }
 
     public void setHQWaypoint(CBWaypoint rally) {
@@ -366,7 +375,26 @@ public class Team {
         flagForSave();
     }
 
+    public void setDisplayPermission(UUID changer, UUID uuid, boolean allowed) {
+        if(allowed)
+            getDisplayPermissions().add(uuid);
+        else
+            getDisplayPermissions().remove(uuid);
+
+        if (this.loading) return;
+        TeamActionTracker.logActionAsync(this, allowed ? TeamActionType.DISPLAY_PERMISSION_ADD : TeamActionType.DISPLAY_PERMISSION_REMOVE, ImmutableMap.of(
+                "changer", changer.toString(),
+                "uuid", uuid.toString()
+        ));
+
+        flagForSave();
+    }
+
     public boolean hasRallyPermission(UUID uuid) {
+        return isCoLeader(uuid) || isOwner(uuid) || isCaptain(uuid) || getRallyPermissions().contains(uuid);
+    }
+
+    public boolean hasDisplayPermission(UUID uuid) {
         return isCoLeader(uuid) || isOwner(uuid) || isCaptain(uuid) || getRallyPermissions().contains(uuid);
     }
 
@@ -889,7 +917,7 @@ public class Team {
     }
 
     public double getDTRIncrement(int playersOnline, boolean offline) {
-        double dtrPerHour = DTRHandler.getMaxDTR(getSize(), offline);
+        double dtrPerHour = DTRHandler.getMaxDTR(getSize());
         return (dtrPerHour / 60);
     }
 
@@ -898,12 +926,12 @@ public class Team {
     }
 
     public double getMaxDTR(boolean offline) {
-        return (DTRHandler.getMaxDTR(getSize(), offline));
+        return (DTRHandler.getMaxDTR(getSize()));
     }
 
 
     public double getMaxDTR() {
-        return (DTRHandler.getMaxDTR(getSize(), false));
+        return (DTRHandler.getMaxDTR(getSize()));
     }
 
     public void load(BasicDBObject obj) {
@@ -1388,6 +1416,7 @@ public class Team {
             }
 
             player.sendMessage(GRAY_LINE);
+
             return;
         }
 

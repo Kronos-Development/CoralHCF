@@ -40,58 +40,6 @@ public enum  Setting {
         }
     },
 
-    SCOREBOARD_ABILITY_COOLDOWNS(
-            ChatColor.LIGHT_PURPLE + "Ability Cooldowns",
-            ImmutableList.of(
-                    ChatColor.BLUE + "Do you want to see",
-                    ChatColor.BLUE + "ability cooldowns",
-                    ChatColor.BLUE + "on scoreboard?"
-            ),
-            Material.SNOW_BALL,
-            ChatColor.YELLOW + "Show cooldowns",
-            ChatColor.YELLOW + "Hide cooldowns",
-            true
-    ) {
-        @Override
-        public void toggle(Player player) {
-            boolean value = !Foxtrot.getInstance().getAbilityCooldownsMap().isCooldownsToggled(player.getUniqueId());
-
-            Foxtrot.getInstance().getAbilityCooldownsMap().setCooldownsToggled(player.getUniqueId(), value);
-            player.sendMessage(ChatColor.YELLOW + "You are now " + (value ? ChatColor.GREEN + "able" : ChatColor.RED + "unable") + ChatColor.YELLOW + " to see ability cooldowns on scoreboard.");
-        }
-
-        @Override
-        public boolean isEnabled(Player player) {
-            return Foxtrot.getInstance().getAbilityCooldownsMap().isCooldownsToggled(player.getUniqueId());
-        }
-    },
-
-    SCOREBOARD_CLASS_COOLDOWNS(
-            ChatColor.LIGHT_PURPLE + "Class Cooldowns",
-            ImmutableList.of(
-                    ChatColor.BLUE + "Do you want to see",
-                    ChatColor.BLUE + "class cooldowns",
-                    ChatColor.BLUE + "on scoreboard?"
-            ),
-            Material.NETHER_STAR,
-            ChatColor.YELLOW + "Show cooldowns",
-            ChatColor.YELLOW + "Hide cooldowns",
-            true
-    ) {
-        @Override
-        public void toggle(Player player) {
-            boolean value = !Foxtrot.getInstance().getClassCooldownsMap().isCooldownsToggled(player.getUniqueId());
-
-            Foxtrot.getInstance().getClassCooldownsMap().setCooldownsToggled(player.getUniqueId(), value);
-            player.sendMessage(ChatColor.YELLOW + "You are now " + (value ? ChatColor.GREEN + "able" : ChatColor.RED + "unable") + ChatColor.YELLOW + " to see class cooldowns on scoreboard.");
-        }
-
-        @Override
-        public boolean isEnabled(Player player) {
-            return Foxtrot.getInstance().getClassCooldownsMap().isCooldownsToggled(player.getUniqueId());
-        }
-    },
-
     PUBLIC_CHAT(
             ChatColor.LIGHT_PURPLE + "Public Chat",
             ImmutableList.of(
@@ -171,57 +119,7 @@ public enum  Setting {
         }
 
     },
-    TAB_LIST(
-            ChatColor.LIGHT_PURPLE + "Tab List Info",
-            ImmutableList.of(
-                    ChatColor.BLUE + "Do you want to see",
-                    ChatColor.BLUE + "extra info on your",
-                    ChatColor.BLUE + "tab list?"
-            ),
-            Material.ENCHANTED_BOOK,
-            ChatColor.YELLOW + "Show info on tab",
-            ChatColor.YELLOW + "Show default tab",
-            true
-    ) {
 
-        @Override
-        public void toggle(Player player) {
-            TabListMode mode = SettingButton.next(Foxtrot.getInstance().getTabListModeMap().getTabListMode(player.getUniqueId()));
-
-            Foxtrot.getInstance().getTabListModeMap().setTabListMode(player.getUniqueId(), mode);
-            player.sendMessage(ChatColor.YELLOW + "You've set your tab list mode to " + ChatColor.LIGHT_PURPLE + mode.getName() + ChatColor.YELLOW + ".");
-        }
-
-        @Override
-        public boolean isEnabled(Player player) {
-            return true;
-        }
-
-    },
-    DEATH_MESSAGES(
-            ChatColor.LIGHT_PURPLE + "Death Messages",
-            ImmutableList.of(
-                    ChatColor.BLUE + "Do you want to see",
-                    ChatColor.BLUE + "death messages?"
-            ),
-            Material.SKULL_ITEM,
-            ChatColor.YELLOW + "Show messages",
-            ChatColor.YELLOW + "Hide messages",
-            true
-    ) {
-        @Override
-        public void toggle(Player player) {
-            boolean value = !Foxtrot.getInstance().getToggleDeathMessageMap().areDeathMessagesEnabled(player.getUniqueId());
-
-            Foxtrot.getInstance().getToggleDeathMessageMap().setDeathMessagesEnabled(player.getUniqueId(), value);
-            player.sendMessage(ChatColor.YELLOW + "You are now " + (value ? ChatColor.GREEN + "able" : ChatColor.RED + "unable") + ChatColor.YELLOW + " to see death messages.");
-        }
-
-        @Override
-        public boolean isEnabled(Player player) {
-            return Foxtrot.getInstance().getToggleDeathMessageMap().areDeathMessagesEnabled(player.getUniqueId());
-        }
-    },
     AUTOMATICALLY_F_DISPLAY(
             ChatColor.LIGHT_PURPLE + "Automatic Faction Display",
             ImmutableList.of(

@@ -1,12 +1,18 @@
 package net.frozenorb.foxtrot.team.commands.team;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
+import com.cheatbreaker.api.object.CBWaypoint;
 import net.frozenorb.foxtrot.Foxtrot;
+import net.frozenorb.foxtrot.settings.Setting;
+import net.frozenorb.foxtrot.team.RallyPoint;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.qlib.command.Command;
 import net.frozenorb.qlib.command.Param;
 import net.frozenorb.qlib.util.UUIDUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.concurrent.TimeUnit;
 
 public class TeamInfoCommand {
 
@@ -22,9 +28,26 @@ public class TeamInfoCommand {
                 }
 
                 team.sendTeamInfo(sender);
+                if (team.getMembers().contains(sender.getUniqueId())) return;
+
+                team.getOnlineMembers().forEach(player -> {
+                    if(Setting.AUTOMATICALLY_F_DISPLAY.isEnabled(player)) {
+                        CBWaypoint cbWaypoint = new CBWaypoint(team.getName(), team.getHQ().getBlockX(), team.getHQ().getBlockY(), team.getHQ().getBlockZ(), team.getHQ().getWorld().getUID().toString(), -16776961, true, true);
+                        CheatBreakerAPI.getInstance().sendWaypoint(player, cbWaypoint);
+                    } else {
+                        return;
+                    }
+                });
             }
 
         }.runTaskAsynchronously(Foxtrot.getInstance());
+
+        new BukkitRunnable() {
+
+            public void run() {
+                    team.setFactionHQRally(null);
+            }
+        }.runTaskLater(Foxtrot.getInstance(), 20*60*5);
     }
 
 }

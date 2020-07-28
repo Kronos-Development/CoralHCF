@@ -33,7 +33,7 @@ public class SettingButton extends Button {
         description.addAll(setting.getDescription());
         description.add("");
 
-        if (setting != Setting.TAB_LIST) {
+ /**       if (setting != Setting.TAB_LIST) {
             if (setting.isEnabled(player)) {
                 description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + setting.getEnabledText());
                 description.add("    " + setting.getDisabledText());
@@ -53,7 +53,7 @@ public class SettingButton extends Button {
                 }
             }
         }
-
+*/
         return description;
     }
 
