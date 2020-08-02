@@ -25,7 +25,7 @@ public class TeamDisplayCommand {
             return;
         }
 
-        if (!senderTeam.isOwner(sender.getUniqueId()) && !senderTeam.isCoLeader(sender.getUniqueId()) && !senderTeam.hasRallyPermission(sender.getUniqueId())) {
+        if (!senderTeam.isOwner(sender.getUniqueId()) && !senderTeam.isCoLeader(sender.getUniqueId()) && !senderTeam.hasDisplayPermission(sender.getUniqueId())) {
             sender.sendMessage(ChatColor.DARK_AQUA + "You cannot do this, ask your leader if you think this is an error.");
             return;
         }

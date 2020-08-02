@@ -3,6 +3,7 @@ package net.frozenorb.foxtrot.server;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -40,10 +41,12 @@ public class SpawnTagHandler {
         if (isTagged(player)) {
             int secondsTaggedFor = (int) ((spawnTags.get(player.getName()) - System.currentTimeMillis()) / 1000L);
             int newSeconds = Math.min(secondsTaggedFor + seconds, getMaxTagTime());
+            CheatBreakerAPI.getInstance().setCompetitiveGame(player, false);
 
             spawnTags.put(player.getName(), System.currentTimeMillis() + (newSeconds * 1000L));
         } else {
             player.sendMessage(ChatColor.YELLOW + "You have been spawn-tagged for §c" + seconds + " §eseconds!");
+            CheatBreakerAPI.getInstance().setCompetitiveGame(player, true);
             spawnTags.put(player.getName(), System.currentTimeMillis() + (seconds * 1000L));
         }
     }

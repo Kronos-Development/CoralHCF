@@ -141,6 +141,9 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             case "Citadel":
                 displayName = ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "Citadel";
                 break;
+            case "Biohazard":
+                displayName = ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Biohazard";
+                break;
             default:
                 displayName = ChatColor.BLUE.toString() + ChatColor.BOLD + event.getName();
                 break;

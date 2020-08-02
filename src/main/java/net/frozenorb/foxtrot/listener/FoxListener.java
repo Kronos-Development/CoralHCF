@@ -80,6 +80,7 @@ import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockVector;
@@ -497,13 +498,17 @@ public class FoxListener implements Listener {
         SpawnTagHandler.removeTag(event.getEntity());
         Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getEntity());
         Player killer = event.getEntity().getKiller();
-        Profile profile = Profile.getProfiles().get(killer.getUniqueId());
 
         if (Foxtrot.getInstance().getInDuelPredicate().test(event.getEntity())) {
             return;
         }
 
         if (killer != null) {
+
+            Profile profile = Profile.getProfiles().get(killer.getUniqueId());
+                profile.setTokens(profile.getTokens() + 2);
+                profile.save();
+
             Team killerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(killer);
             Location deathLoc = event.getEntity().getLocation();
             int deathX = deathLoc.getBlockX();
@@ -524,10 +529,6 @@ public class FoxListener implements Listener {
 
                 if (hand.getType().name().contains("SWORD") || hand.getType() == BOW) {
                     InventoryUtils.addKill(hand, killer.getDisplayName() + YELLOW + " " + (hand.getType() == BOW ? "shot" : "killed") + " " + event.getEntity().getDisplayName());
-                }
-                if(killer != null) {
-                    profile.setTokens(profile.getTokens() + 2);
-                    profile.save();
                 }
             }
         }
@@ -627,6 +628,8 @@ public class FoxListener implements Listener {
 
             boolean fromReduceDeathban = from.getData() != null && (from.getData().hasDTRBitmask(DTRBitmask.FIVE_MINUTE_DEATHBAN) || from.getData().hasDTRBitmask(DTRBitmask.FIFTEEN_MINUTE_DEATHBAN) || from.getData().hasDTRBitmask(DTRBitmask.SAFE_ZONE));
             boolean toReduceDeathban = to.getData() != null && (to.getData().hasDTRBitmask(DTRBitmask.FIVE_MINUTE_DEATHBAN) || to.getData().hasDTRBitmask(DTRBitmask.FIFTEEN_MINUTE_DEATHBAN) || to.getData().hasDTRBitmask(DTRBitmask.SAFE_ZONE));
+            boolean toBiohazard = to.getData() != null && (to.getData().hasDTRBitmask(DTRBitmask.BIOHAZARD));
+            boolean fromBiohazard = from.getData() != null && (from.getData().hasDTRBitmask(DTRBitmask.BIOHAZARD));
 
             if (fromReduceDeathban && from.getData() != null) {
                 Event fromLinkedKOTH = Foxtrot.getInstance().getEventHandler().getEvent(from.getData().getName());
@@ -665,6 +668,22 @@ public class FoxListener implements Listener {
             // send both
             nowLeaving.send(event.getPlayer());
             nowEntering.send(event.getPlayer());
+
+            if (toBiohazard) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (event.getPlayer().getInventory().getHelmet().getEnchantmentLevel(Enchantment.LUCK) != 10 || event.getPlayer().getInventory().getHelmet() == null) {
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 10000000, 0));
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10000000, 0));
+                        }
+                    }
+                }.runTask(Foxtrot.getInstance());
+            }
+            if (fromBiohazard) {
+                event.getPlayer().removePotionEffect(PotionEffectType.WITHER);
+                event.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
+            }
         }
     }
 

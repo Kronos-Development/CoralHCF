@@ -1,6 +1,8 @@
 package net.frozenorb.foxtrot.server.conditional.staff;
 
 import com.cheatbreaker.api.CheatBreakerAPI;
+import com.cheatbreaker.api.object.CBNotification;
+import com.minexd.zoot.util.CC;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
@@ -15,6 +17,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class ModHandler {
 
@@ -74,6 +77,7 @@ public class ModHandler {
             player.getInventory().setItem(8, StaffItems.GO_VIS);
 
             CheatBreakerAPI.getInstance().giveAllStaffModules(player);
+            CheatBreakerAPI.getInstance().sendNotification(player,new CBNotification("&bStaff Mods: &aEnabled", 2, TimeUnit.SECONDS));
             Bukkit.getPluginManager().callEvent(new ModModeEnterEvent(player));
         } else {
             player.removeMetadata("modmode", Foxtrot.getInstance());
@@ -86,6 +90,7 @@ public class ModHandler {
             if (player.getGameMode() != GameMode.CREATIVE)
                 player.setAllowFlight(false);
             CheatBreakerAPI.getInstance().disableAllStaffModules(player);
+            CheatBreakerAPI.getInstance().sendNotification(player,new CBNotification("&bStaff Mods: &cDisabled", 2, TimeUnit.SECONDS));
             Bukkit.getPluginManager().callEvent(new ModModeExitEvent(player));
         }
 

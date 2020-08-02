@@ -1,6 +1,8 @@
 package net.frozenorb.foxtrot.commands.lff;
 
+import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.commands.lff.menu.LFFMenu;
+import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.qlib.command.Command;
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.ChatColor;
@@ -17,6 +19,11 @@ public class LFFCommand {
 
     @Command(names = {"lookingforfaction", "l4f", "lff"}, permission = "")
     public static void lff(Player player) {
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(player.getUniqueId());
+        if (team.getMembers().contains(player.getUniqueId())) {
+            player.sendMessage(ChatColor.RED + "You cannot issue this command while you're in a faction");
+            return;
+        }
         if(isOnCooldown(player.getUniqueId())) {
             player.sendMessage(ChatColor.RED + "You are currently on cooldown for another " + DurationFormatUtils.formatDurationWords(getCooldownLeft(player.getUniqueId()), true, true) + ".");
             return;

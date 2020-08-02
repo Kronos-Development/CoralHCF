@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.frozenorb.foxtrot.abilities.AbilityHandler;
 import net.frozenorb.foxtrot.chat.ChatHandler;
+import net.frozenorb.foxtrot.crates.CrateHandler;
 import net.frozenorb.foxtrot.deathmessage.DeathMessageHandler;
 import net.frozenorb.foxtrot.elevators.ElevatorListener;
 import net.frozenorb.foxtrot.events.EventHandler;
@@ -62,9 +63,10 @@ public class Foxtrot extends JavaPlugin {
 
 	@Getter private ChatHandler chatHandler;
 	@Getter private PvPClassHandler pvpClassHandler;
-	@Getter private PurgatoryHandler purgatoryHandler;
+	@Getter private CarePackageHandler carePackageHandler;
 	@Getter private TeamHandler teamHandler;
 	@Getter private ServerHandler serverHandler;
+	@Getter private PurgatoryHandler purgatoryHandler;
 	@Getter private MapHandler mapHandler;
 	@Getter private CitadelHandler citadelHandler;
 	@Getter private EventHandler eventHandler;
@@ -81,6 +83,7 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private DeathsMap deathsMap;
 	@Getter private KillsMap killsMap;
 	@Getter private ChatModeMap chatModeMap;
+	@Getter private CrateHandler crateHandler;
 	@Getter private FishingKitMap fishingKitMap;
 	@Getter private ToggleGlobalChatMap toggleGlobalChatMap;
 	@Getter private ToggleLFFMessageMap toggleLFFMessageMap;
@@ -247,7 +250,9 @@ public class Foxtrot extends JavaPlugin {
 		pvpClassHandler = new PvPClassHandler();
 		eventHandler = new EventHandler();
 		conquestHandler = new ConquestHandler();
+		carePackageHandler = new CarePackageHandler();
 		abilityHandler = new AbilityHandler();
+
 
 		if (getConfig().getBoolean("glowstoneMountain", false)) {
 			glowHandler = new GlowHandler();
@@ -298,6 +303,7 @@ public class Foxtrot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new TeamClaimCommand(), this);
 		getServer().getPluginManager().registerEvents(new StatTrakListener(), this);
 		getServer().getPluginManager().registerEvents(new RedstoneListener(), this);
+		getServer().getPluginManager().registerEvents(new StrengthListener(), this);
 
 		if (getServerHandler().isReduceArmorDamage()) {
 			getServer().getPluginManager().registerEvents(new ArmorDamageListener(), this);

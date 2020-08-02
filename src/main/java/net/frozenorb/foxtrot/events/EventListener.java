@@ -1,6 +1,9 @@
 package net.frozenorb.foxtrot.events;
 
+import com.cheatbreaker.api.CheatBreakerAPI;
+import com.cheatbreaker.api.object.CBNotification;
 import com.minexd.zoot.Zoot;
+import com.minexd.zoot.chat.Chat;
 import com.minexd.zoot.profile.Profile;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -28,6 +31,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class EventListener implements Listener {
 
@@ -47,6 +51,10 @@ public class EventListener implements Listener {
             return;
         }
 
+        for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
+            CheatBreakerAPI.getInstance().sendNotification(player, new CBNotification("&8[&3" + Bukkit.getServer().getServerName() + "&8] &b" + event.getEvent().getName() + " is now live!", 10, TimeUnit.SECONDS));
+        }
+
         String[] messages;
 
         switch (event.getEvent().getName()) {
@@ -63,6 +71,22 @@ public class EventListener implements Listener {
 
                 for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
                     player.playSound(player.getLocation(), Sound.WITHER_SPAWN, 1F, 1F);
+                }
+
+                break;
+            case "Biohazard":
+                messages = new String[]{
+                        ChatColor.GREEN + "███████",
+                        ChatColor.GREEN + "█" + ChatColor.DARK_GREEN + "████" + ChatColor.GREEN + "██" + " " + ChatColor.DARK_GREEN + "[Biohazard]",
+                        ChatColor.GREEN + "█" + ChatColor.DARK_GREEN + "█" +ChatColor.GREEN + "███" + ChatColor.DARK_GREEN + "█" + ChatColor.GREEN + "█" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "The Biohazard Event",
+                        ChatColor.GREEN + "█" + ChatColor.DARK_GREEN + "████" + ChatColor.GREEN + "██" + " " + ChatColor.GREEN.toString() + ChatColor.BOLD + "is now active.",
+                        ChatColor.GREEN + "█" + ChatColor.DARK_GREEN + "█" +ChatColor.GREEN + "███" + ChatColor.DARK_GREEN + "█" + ChatColor.GREEN + "█" + " " + ChatColor.DARK_GREEN + "The Cap " + ChatColor.GREEN + "can be contested now.",
+                        ChatColor.GREEN + "█" + ChatColor.DARK_GREEN + "████" + ChatColor.GREEN + "██",
+                        ChatColor.GREEN + "███████"
+                };
+
+                for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
+                    player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1F, 1F);
                 }
 
                 break;

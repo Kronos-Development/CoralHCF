@@ -23,6 +23,7 @@ public class AbilityHandler {
 
         Arrays.asList(
                 new SwitcherAbility(),
+                new GasMaskAbility(),
                 new GrapplingAbility(),
                 new RocketAbility(),
                 new RotateAbility(),

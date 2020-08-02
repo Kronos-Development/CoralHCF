@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.sk89q.worldedit.blocks.BlockType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -18,6 +19,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.material.EnderChest;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.google.common.collect.Lists;
@@ -32,17 +34,19 @@ import net.frozenorb.qlib.redis.RedisCommand;
 import net.md_5.bungee.api.ChatColor;
 import redis.clients.jedis.Jedis;
 
+import static org.bukkit.Material.CHEST;
+import static org.bukkit.Material.ENDER_CHEST;
+
 public class CarePackageHandler implements Listener {
 
     private Location lastCarePackage;
     private World world;
     private static List<ItemStack> loot;
-    
+
     public CarePackageHandler() {
-        
         FrozenCommandHandler.registerClass(this.getClass());
         this.world = Bukkit.getWorlds().get(0);
-        Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 1 * 60 * 20, 15 * 60 * 20);
+        Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 60 * 20, 60 * 20 * 20);
 
         try {
             loot = Lists.newArrayList(qLib.GSON.fromJson(qLib.getInstance().runBackboneRedisCommand(new RedisCommand<String>() {
@@ -69,12 +73,12 @@ public class CarePackageHandler implements Listener {
             redis.set(lookupString, qLib.PLAIN_GSON.toJson(Arrays.stream(sender.getInventory().getContents()).filter(item -> item != null && item.getType() != Material.AIR).collect(Collectors.toList())));
             return null;
         });
-        
+
         loot = Arrays.stream(sender.getInventory().getContents()).filter(item -> item != null && item.getType() != Material.AIR).collect(Collectors.toList());
         sender.sendMessage(ChatColor.GREEN + "Loot updated.");
     }
 
-    public void spawnCarePackage() {
+    private void spawnCarePackage() {
         int x = 0, z = 0;
 
         while (Math.abs(x) <= 100) x = qLib.RANDOM.nextInt(1000) - 500;
@@ -95,43 +99,32 @@ public class CarePackageHandler implements Listener {
             spawnCarePackage();
             return;
         }
-        
+
         Block realBlock = block.getRelative(BlockFace.UP);
-        realBlock.setType(Material.ENDER_CHEST);
+        realBlock.setType(CHEST);
         realBlock.setMetadata("CarePackage", new FixedMetadataValue(Foxtrot.getInstance(), new Object()));
         lastCarePackage = realBlock.getLocation();
 
         Bukkit.getLogger().info("Spawning crate at " + realBlock.getLocation());
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&3[Care Package] &7A &bCare Package &7has spawned at &b" + x + " " + z + "&7."));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bCarePackages&8] &bA &3Crate &bhas spawned at &3" + x + " " + z + "&b."));
         Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), this::removeCarePackage, 10 * 20 * 60);
     }
 
     private void removeCarePackage() {
-        if (lastCarePackage != null && lastCarePackage.getBlock() != null && lastCarePackage.getBlock().getType() == Material.ENDER_CHEST) {
+        if (lastCarePackage != null && lastCarePackage.getBlock() != null && lastCarePackage.getBlock().getType() == CHEST) {
             lastCarePackage.getBlock().setType(Material.AIR);
             lastCarePackage.getBlock().removeMetadata("CarePackage", Foxtrot.getInstance());
-            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&b[Care Package] &7The &bCare Package &7at &7" + lastCarePackage.getBlockX() + " " + lastCarePackage.getBlockZ() + " &7has despawned."));
-            Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), this::spawnCarePackage, 20 * 60 * 20);
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[CarePackages&8] &bThe &3Crate &bat &3" + lastCarePackage.getBlockX() + " " + lastCarePackage.getBlockZ() + " &bhas despawned."));
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.getPlayer().getLocation().getBlockY() >= 45) return;
-        if (LandBoard.getInstance().getTeam(event.getBlock().getLocation()) == null) {
-            if (qLib.RANDOM.nextInt(149) == 0) {
-                event.setCancelled(true);
-                event.getBlock().setType(Material.CHEST);
-
+            if (event.getBlock().getType() == CHEST) {
                 Chest chest = (Chest) event.getBlock().getState();
-
-                event.getPlayer().playSound(chest.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F);
-                event.getPlayer().sendMessage(ChatColor.YELLOW + "Woah! You found a chest.");
-
-                chest.getBlockInventory().setItem(qLib.RANDOM.nextInt(chest.getBlockInventory().getSize()), loot.get(qLib.RANDOM.nextInt(loot.size())));
-                chest.getBlockInventory().setItem(qLib.RANDOM.nextInt(chest.getBlockInventory().getSize()), loot.get(qLib.RANDOM.nextInt(loot.size())));
-                chest.getBlockInventory().setItem(qLib.RANDOM.nextInt(chest.getBlockInventory().getSize()), loot.get(qLib.RANDOM.nextInt(loot.size())));
-            }
+                if (chest.hasMetadata("CarePackage")) event.setCancelled(true);
+                if (event.getBlock().hasMetadata("CarePackage")) event.setCancelled(true);
         }
     }
 
@@ -158,7 +151,7 @@ public class CarePackageHandler implements Listener {
         clickedBlock.removeMetadata("CarePackage", Foxtrot.getInstance());
         clickedBlock.setType(Material.AIR);
         event.setCancelled(true);
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&3[Care Package] &7A &bCrate &7at &b" + clickedBlock.getLocation().getBlockX() + " " + clickedBlock.getLocation().getBlockZ() + " &7has been opened."));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bCarePackages&8] &bA &3Crate &bat &3" + clickedBlock.getLocation().getBlockX() + " " + clickedBlock.getLocation().getBlockZ() + " &bhas been opened."));
     }
 
     @EventHandler

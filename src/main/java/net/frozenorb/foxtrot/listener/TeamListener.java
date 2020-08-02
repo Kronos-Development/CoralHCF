@@ -7,6 +7,8 @@ import net.frozenorb.foxtrot.events.Event;
 import net.frozenorb.foxtrot.events.koth.KOTH;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
 import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
+import net.frozenorb.foxtrot.persist.maps.DeathbanMap;
+import net.frozenorb.foxtrot.server.Deathban;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
@@ -205,7 +207,7 @@ public class TeamListener implements Listener {
             return; // allow players to mine under roads
         }
 
-        if (team.hasDTRBitmask(DTRBitmask.PURGATORY) && purgHandler.getBanCache().containsKey(event.getPlayer().getName())) {
+        if (team.hasDTRBitmask(DTRBitmask.PURGATORY) && Foxtrot.getInstance().getPurgatoryHandler().getBanCache().containsKey(event.getPlayer().getUniqueId())) {
             return;
             // allow players to break purgatory
         }
