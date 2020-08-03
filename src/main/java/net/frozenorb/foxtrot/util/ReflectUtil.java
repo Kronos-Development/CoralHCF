@@ -22,7 +22,8 @@ public class ReflectUtil {
     public static Field getField(Class<?> holder, Class<?> type, String name) {
         try {
             for (Field field : holder.getDeclaredFields()) {
-                if (!field.getName().equalsIgnoreCase(name) || (type != null && field.getType() != type)) continue;
+                if (!field.getName().equalsIgnoreCase(name)
+                        || (type != null && field.getType() != type)) continue;
 
                 field.setAccessible(true);
                 Field modifiers = Field.class.getDeclaredField("modifiers");
@@ -33,7 +34,8 @@ public class ReflectUtil {
             }
 
             for (Field field : holder.getFields()) {
-                if (!field.getName().equalsIgnoreCase(name) || (type != null && field.getType() != type)) continue;
+                if (!field.getName().equalsIgnoreCase(name)
+                        || (type != null && field.getType() != type)) continue;
 
                 field.setAccessible(true);
                 Field modifiers = Field.class.getDeclaredField("modifiers");

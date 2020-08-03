@@ -108,7 +108,10 @@ public class ChatListener implements Listener {
             if (playerTeam == null) {
                 event.getPlayer().sendMessage(ChatColor.RED + "You can't speak in non-public chat if you're not in a team!");
                 return;
-            } else if (finalChatMode == ChatMode.OFFICER && !playerTeam.isCaptain(event.getPlayer().getUniqueId()) && !playerTeam.isCoLeader(event.getPlayer().getUniqueId()) && !playerTeam.isOwner(event.getPlayer().getUniqueId())) {
+            } else if (finalChatMode == ChatMode.OFFICER
+                    && !playerTeam.isCaptain(event.getPlayer().getUniqueId())
+                    && !playerTeam.isCoLeader(event.getPlayer().getUniqueId())
+                    && !playerTeam.isOwner(event.getPlayer().getUniqueId())) {
                 event.getPlayer().sendMessage(ChatColor.RED + "You can't speak in officer chat if you're not an officer!");
                 return;
             }
