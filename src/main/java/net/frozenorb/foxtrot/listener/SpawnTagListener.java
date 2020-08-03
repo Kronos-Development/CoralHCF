@@ -33,7 +33,10 @@ public class SpawnTagListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        if (player.getGameMode() == GameMode.CREATIVE || !SpawnTagHandler.isTagged(player) || Foxtrot.getInstance().getServerHandler().isVeltKitMap() || Foxtrot.getInstance().getServerHandler().isPlaceBlocksInCombat()) {
+        if (player.getGameMode() == GameMode.CREATIVE
+                || !SpawnTagHandler.isTagged(player)
+                || Foxtrot.getInstance().getServerHandler().isVeltKitMap()
+                || Foxtrot.getInstance().getServerHandler().isPlaceBlocksInCombat()) {
             return;
         }
 

@@ -85,7 +85,11 @@ public class BasicPreventionListener implements Listener {
 
     @EventHandler
     public void onCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        if (event.getMessage().toLowerCase().startsWith("/kill") || event.getMessage().toLowerCase().startsWith("/slay") || event.getMessage().toLowerCase().startsWith("/bukkit:kill") || event.getMessage().toLowerCase().startsWith("/bukkit:slay") || event.getMessage().toLowerCase().startsWith("/suicide")) {
+        if (event.getMessage().toLowerCase().startsWith("/kill")
+                || event.getMessage().toLowerCase().startsWith("/slay")
+                || event.getMessage().toLowerCase().startsWith("/bukkit:kill")
+                || event.getMessage().toLowerCase().startsWith("/bukkit:slay")
+                || event.getMessage().toLowerCase().startsWith("/suicide")) {
             if (!event.getPlayer().isOp()) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "No permission.");
@@ -143,7 +147,9 @@ public class BasicPreventionListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
-        if (Foxtrot.getInstance().getServerHandler().isSkybridgePrevention() && 110 < event.getBlock().getLocation().getY() && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+        if (Foxtrot.getInstance().getServerHandler().isSkybridgePrevention()
+                && 110 < event.getBlock().getLocation().getY()
+                && event.getPlayer().getGameMode() != GameMode.CREATIVE) {
             event.getPlayer().sendMessage(ChatColor.RED + "You can't build higher than 110 blocks.");
             event.setCancelled(true);
         }
@@ -151,7 +157,8 @@ public class BasicPreventionListener implements Listener {
 
     @EventHandler
     public void onFish(PlayerInteractEvent event) {
-        if (!Foxtrot.getInstance().getServerHandler().isRodPrevention() || (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
+        if (!Foxtrot.getInstance().getServerHandler().isRodPrevention()
+                || (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
 
@@ -169,7 +176,8 @@ public class BasicPreventionListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH)
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER && (event.getBlock().getType() == Material.BED || event.getBlock().getType() == Material.BED_BLOCK)) {
+        if (event.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER && (event.getBlock().getType() == Material.BED
+                || event.getBlock().getType() == Material.BED_BLOCK)) {
             event.setCancelled(true);
             event.getPlayer().sendMessage(ChatColor.RED + "You cannot place beds in the Nether.");
         }

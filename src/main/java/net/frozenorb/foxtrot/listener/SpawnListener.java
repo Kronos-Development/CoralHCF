@@ -156,7 +156,9 @@ public class  SpawnListener implements Listener {
     // Used for item frames
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player) || event.getEntity().getType() != EntityType.ITEM_FRAME || Foxtrot.getInstance().getServerHandler().isAdminOverride((Player) event.getDamager())) {
+        if (!(event.getEntity() instanceof Player)
+                || event.getEntity().getType() != EntityType.ITEM_FRAME
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride((Player) event.getDamager())) {
             return;
         }
 
@@ -177,7 +179,10 @@ public class  SpawnListener implements Listener {
             } else {
                 final Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
 
-                if (waterBlock.getRelative(BlockFace.NORTH).isLiquid() || waterBlock.getRelative(BlockFace.SOUTH).isLiquid() || waterBlock.getRelative(BlockFace.EAST).isLiquid() || waterBlock.getRelative(BlockFace.WEST).isLiquid()) {
+                if (waterBlock.getRelative(BlockFace.NORTH).isLiquid()
+                        || waterBlock.getRelative(BlockFace.SOUTH).isLiquid()
+                        || waterBlock.getRelative(BlockFace.EAST).isLiquid()
+                        || waterBlock.getRelative(BlockFace.WEST).isLiquid()) {
                     event.setCancelled(true);
                     return;
                 }
@@ -215,7 +220,8 @@ public class  SpawnListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDrop(PlayerDropItemEvent event) {
         Team team = LandBoard.getInstance().getTeam(event.getPlayer().getLocation());
-        if (team != null && team.hasDTRBitmask(DTRBitmask.SAFE_ZONE) && (Foxtrot.getInstance().getServerHandler().isVeltKitMap() || CustomTimerCreateCommand.isSOTWTimer())) {
+        if (team != null && team.hasDTRBitmask(DTRBitmask.SAFE_ZONE) && (Foxtrot.getInstance().getServerHandler().isVeltKitMap()
+                || CustomTimerCreateCommand.isSOTWTimer())) {
             event.getItemDrop().remove();
         }
     }

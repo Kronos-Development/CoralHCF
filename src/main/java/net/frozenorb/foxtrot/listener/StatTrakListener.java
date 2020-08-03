@@ -62,7 +62,9 @@ public class StatTrakListener implements Listener {
                         lore.set(i, replaced);
                     }
                 }
-            } else if( held.getType().name().toLowerCase().contains("axe") && !held.getType().name().toLowerCase().contains("pickaxe") && type.name().toLowerCase().contains("log")) {
+            } else if( held.getType().name().toLowerCase().contains("axe")
+                    && !held.getType().name().toLowerCase().contains("pickaxe")
+                    && type.name().toLowerCase().contains("log")) {
                 if(!containsLine(lore)) {
                     List<String> l = new ArrayList<>();
                     l.add(axeLine);
@@ -169,7 +171,9 @@ public class StatTrakListener implements Listener {
 
     public boolean containsLine( List<String> lore ) {
         for( String line : lore ) {
-            if( line.equalsIgnoreCase(minerLine) || line.equalsIgnoreCase(axeLine) || line.equalsIgnoreCase(spadeLine)) {
+            if( line.equalsIgnoreCase(minerLine)
+                    || line.equalsIgnoreCase(axeLine)
+                    || line.equalsIgnoreCase(spadeLine)) {
                 return true;
             }
         }

@@ -22,7 +22,8 @@ public class RedstoneListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if(event.getClickedBlock() == null || event.getClickedBlock().getType() != Material.LEVER) return;
+        if(event.getClickedBlock() == null
+                || event.getClickedBlock().getType() != Material.LEVER) return;
         Player player = event.getPlayer();
 
         if (leverCooldown.getOrDefault(player.getUniqueId(), 0L) > System.currentTimeMillis()) {

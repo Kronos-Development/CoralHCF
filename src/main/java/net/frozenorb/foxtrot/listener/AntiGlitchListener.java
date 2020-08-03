@@ -58,7 +58,9 @@ public class AntiGlitchListener implements Listener {
     
     @EventHandler(priority = EventPriority.MONITOR)
     public void onVerticalBlockPlaceGlitch(BlockPlaceEvent event) {
-        if (LandBoard.getInstance().getTeam(event.getBlock().getLocation()) != null && event.isCancelled() && !event.getPlayer().hasMetadata("ImmuneFromGlitchCheck")) {
+        if (LandBoard.getInstance().getTeam(event.getBlock().getLocation()) != null
+                && event.isCancelled()
+                && !event.getPlayer().hasMetadata("ImmuneFromGlitchCheck")) {
             event.getPlayer().teleport(event.getPlayer().getLocation());
             event.getPlayer().setNoDamageTicks(0);
         }
@@ -183,7 +185,8 @@ public class AntiGlitchListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
         
-        if (player.getGameMode() == GameMode.CREATIVE || player.getWorld().getEnvironment() != World.Environment.NETHER) {
+        if (player.getGameMode() == GameMode.CREATIVE
+                || player.getWorld().getEnvironment() != World.Environment.NETHER) {
             return;
         }
         
@@ -252,7 +255,9 @@ public class AntiGlitchListener implements Listener {
 
     @EventHandler
     public void denyMinecartSpawns(EntitySpawnEvent event) {
-        if (event.getEntityType() == EntityType.MINECART_TNT || event.getEntityType() == EntityType.MINECART_HOPPER || event.getEntityType() == EntityType.MINECART_CHEST) {
+        if (event.getEntityType() == EntityType.MINECART_TNT
+                || event.getEntityType() == EntityType.MINECART_HOPPER
+                || event.getEntityType() == EntityType.MINECART_CHEST) {
             event.setCancelled(true);
         }
     }

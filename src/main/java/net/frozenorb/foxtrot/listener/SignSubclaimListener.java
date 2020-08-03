@@ -99,7 +99,9 @@ public class SignSubclaimListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onBlockBreakChest(BlockBreakEvent event) {
-        if (!(event.getBlock().getState() instanceof Chest) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation()) || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
+        if (!(event.getBlock().getState() instanceof Chest)
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
             return;
         }
 
@@ -107,7 +109,10 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         for (Sign sign : subclaimSigns(event.getBlock())) {
-            if (!(owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid))) {
+            if (!(owningTeam.isOwner(uuid)
+                    || owningTeam.isCoLeader(uuid)
+                    || owningTeam.isCaptain(uuid)
+                    || owningTeam.hasSubclaimPermission(uuid))) {
                 event.getPlayer().sendMessage(NO_ACCESS);
                 event.setCancelled(true);
             }
@@ -116,7 +121,9 @@ public class SignSubclaimListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onBlockBreakSign(BlockBreakEvent event) {
-        if (!(event.getBlock().getState() instanceof Sign) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation()) || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
+        if (!(event.getBlock().getState() instanceof Sign)
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
             return;
         }
 
@@ -125,7 +132,10 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         if (sign.getLine(0).equals(SUBCLAIM_IDENTIFIER)) {
-            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid);
+            boolean canAccess = owningTeam.isOwner(uuid)
+                    || owningTeam.isCoLeader(uuid)
+                    || owningTeam.isCaptain(uuid)
+                    || owningTeam.hasSubclaimPermission(uuid);
 
             for (int i = 0; i <= 3; i++) {
                 if (sign.getLine(i) != null && sign.getLine(i).equalsIgnoreCase(event.getPlayer().getName())) {
@@ -143,7 +153,10 @@ public class SignSubclaimListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK || !(event.getClickedBlock().getState() instanceof Chest) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getClickedBlock().getLocation()) || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || !(event.getClickedBlock().getState() instanceof Chest)
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getClickedBlock().getLocation())
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
             return;
         }
 
@@ -152,7 +165,10 @@ public class SignSubclaimListener implements Listener {
         UUID uuid = event.getPlayer().getUniqueId();
 
         for (Sign sign : subclaimSigns(event.getClickedBlock())) {
-            boolean canAccess = owningTeam.isOwner(uuid) || owningTeam.isCoLeader(uuid) || owningTeam.isCaptain(uuid) || owningTeam.hasSubclaimPermission(uuid);
+            boolean canAccess = owningTeam.isOwner(uuid)
+                    || owningTeam.isCoLeader(uuid)
+                    || owningTeam.isCaptain(uuid)
+                    || owningTeam.hasSubclaimPermission(uuid);
 
             for (int i = 0; i <= 3; i++) {
                 if (sign.getLine(i) != null && sign.getLine(i).equalsIgnoreCase(event.getPlayer().getName())) {

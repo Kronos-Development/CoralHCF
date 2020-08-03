@@ -134,14 +134,18 @@ public class TeamListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())) {
+        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())) {
             return;
         }
 
         Team team = LandBoard.getInstance().getTeam(event.getBlock().getLocation());
 
         if (!team.isMember(event.getPlayer().getUniqueId())) {
-            if (!DTRBitmask.SAFE_ZONE.appliesAt(event.getBlock().getLocation()) && event.getItemInHand() != null && event.getItemInHand().getType() == Material.WEB && (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap())) {
+            if (!DTRBitmask.SAFE_ZONE.appliesAt(event.getBlock().getLocation())
+                    && event.getItemInHand() != null
+                    && event.getItemInHand().getType() == Material.WEB
+                    && (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap())) {
                 for (Event playableEvent : Foxtrot.getInstance().getEventHandler().getEvents()) {
                     if (!playableEvent.isActive() || !(playableEvent instanceof KOTH)) {
                         continue;
@@ -180,7 +184,9 @@ public class TeamListener implements Listener {
             return;
         }
 
-        if (!team.isCoLeader(event.getPlayer().getUniqueId()) && !team.isCaptain(event.getPlayer().getUniqueId()) && !team.isOwner(event.getPlayer().getUniqueId())) {
+        if (!team.isCoLeader(event.getPlayer().getUniqueId())
+                && !team.isCaptain(event.getPlayer().getUniqueId())
+                && !team.isOwner(event.getPlayer().getUniqueId())) {
             Subclaim subclaim = team.getSubclaim(event.getBlock().getLocation());
 
             if (subclaim != null && !subclaim.isMember(event.getPlayer().getUniqueId())) {
@@ -193,13 +199,16 @@ public class TeamListener implements Listener {
     @EventHandler(ignoreCancelled=true) // normal priority
     public void onBlockBreak(BlockBreakEvent event) {
         PurgatoryHandler purgHandler = Foxtrot.getInstance().getPurgatoryHandler();
-        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())) {
+        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getBlock().getLocation())) {
             return;
         }
 
         Team team = LandBoard.getInstance().getTeam(event.getBlock().getLocation());
 
-        if (event.getBlock().getType() == Material.GLOWSTONE && Foxtrot.getInstance().getGlowHandler().hasGlowMountain() && team.getName().equals(GlowHandler.getGlowTeamName())) {
+        if (event.getBlock().getType() == Material.GLOWSTONE
+                && Foxtrot.getInstance().getGlowHandler().hasGlowMountain()
+                && team.getName().equals(GlowHandler.getGlowTeamName())) {
             return; // don't concern ourselves with glowstone breaks in glowstone mountains
         }
 
@@ -207,7 +216,8 @@ public class TeamListener implements Listener {
             return; // allow players to mine under roads
         }
 
-        if (team.hasDTRBitmask(DTRBitmask.PURGATORY) && Foxtrot.getInstance().getPurgatoryHandler().getBanCache().containsKey(event.getPlayer().getUniqueId())) {
+        if (team.hasDTRBitmask(DTRBitmask.PURGATORY)
+                && Foxtrot.getInstance().getPurgatoryHandler().getBanCache().containsKey(event.getPlayer().getUniqueId())) {
             return;
             // allow players to break purgatory
         }
@@ -237,7 +247,9 @@ public class TeamListener implements Listener {
             return;
         }
 
-        if (!team.isCoLeader(event.getPlayer().getUniqueId()) && !team.isCaptain(event.getPlayer().getUniqueId()) && !team.isOwner(event.getPlayer().getUniqueId())) {
+        if (!team.isCoLeader(event.getPlayer().getUniqueId())
+                && !team.isCaptain(event.getPlayer().getUniqueId())
+                && !team.isOwner(event.getPlayer().getUniqueId())) {
             Subclaim subclaim = team.getSubclaim(event.getBlock().getLocation());
 
             if (subclaim != null && !subclaim.isMember(event.getPlayer().getUniqueId())) {
@@ -292,7 +304,8 @@ public class TeamListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH)
     public void onHangingPlace(HangingPlaceEvent event) {
-        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getEntity().getLocation())) {
+        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getEntity().getLocation())) {
             return;
         }
 
@@ -322,7 +335,8 @@ public class TeamListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked().getType() != EntityType.ITEM_FRAME || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
+        if (event.getRightClicked().getType() != EntityType.ITEM_FRAME
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())) {
             return;
         }
 
@@ -356,7 +370,9 @@ public class TeamListener implements Listener {
             }
         }
 
-        if (damager == null || Foxtrot.getInstance().getServerHandler().isAdminOverride(damager) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getEntity().getLocation())) {
+        if (damager == null
+                || Foxtrot.getInstance().getServerHandler().isAdminOverride(damager)
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(event.getEntity().getLocation())) {
             return;
         }
 
@@ -426,7 +442,8 @@ public class TeamListener implements Listener {
     public void onBucketEmpty(PlayerBucketEmptyEvent event) {
         Location checkLocation = event.getBlockClicked().getRelative(event.getBlockFace()).getLocation();
 
-        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(checkLocation)) {
+        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(checkLocation)) {
             return;
         }
 
@@ -441,7 +458,10 @@ public class TeamListener implements Listener {
             } else {
                 final Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
 
-                if (waterBlock.getRelative(BlockFace.NORTH).isLiquid() || waterBlock.getRelative(BlockFace.SOUTH).isLiquid() || waterBlock.getRelative(BlockFace.EAST).isLiquid() || waterBlock.getRelative(BlockFace.WEST).isLiquid()) {
+                if (waterBlock.getRelative(BlockFace.NORTH).isLiquid()
+                        || waterBlock.getRelative(BlockFace.SOUTH).isLiquid()
+                        || waterBlock.getRelative(BlockFace.EAST).isLiquid()
+                        || waterBlock.getRelative(BlockFace.WEST).isLiquid()) {
                     event.setCancelled(true);
                     return;
                 }
@@ -455,7 +475,8 @@ public class TeamListener implements Listener {
     public void onBucketFill(PlayerBucketFillEvent event) {
         Location checkLocation = event.getBlockClicked().getRelative(event.getBlockFace()).getLocation();
 
-        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer()) || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(checkLocation)) {
+        if (Foxtrot.getInstance().getServerHandler().isAdminOverride(event.getPlayer())
+                || Foxtrot.getInstance().getServerHandler().isUnclaimedOrRaidable(checkLocation)) {
             return;
         }
 
