@@ -72,7 +72,7 @@ public class TeamManageCommand {
     @Command(names = {"manageteam points"}, permission = "foxtrot.manage")
     public static void pointsTeam (Player sender, @Param(name = "team") Team team, @Param(name = "points") int points) {
         team.setPoints(points);
-        sender.sendRawMessage(CC.translate("&eYou set " + team + "'s points to" + points));
+        sender.sendRawMessage(CC.translate("&eYou have set " + team + "'s points to" + points));
     }
 
     @Command(names = {"manageteam rename"}, permission = "foxtrot.manage")
