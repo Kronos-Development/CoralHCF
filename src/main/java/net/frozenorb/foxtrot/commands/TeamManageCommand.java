@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.commands;
 
+import com.minexd.zoot.util.CC;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationContext;
@@ -71,6 +72,7 @@ public class TeamManageCommand {
     @Command(names = {"manageteam points"}, permission = "foxtrot.manage")
     public static void pointsTeam (Player sender, @Param(name = "team") Team team, @Param(name = "points") int points) {
         team.setPoints(points);
+        sender.sendRawMessage(CC.translate("&eYou set " + team + "'s points to" + points));
     }
 
     @Command(names = {"manageteam rename"}, permission = "foxtrot.manage")
