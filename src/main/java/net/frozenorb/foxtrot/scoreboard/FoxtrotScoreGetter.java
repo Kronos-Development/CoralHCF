@@ -79,7 +79,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
         if (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
             StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player.getUniqueId());
 
-            scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + ChatColor.GRAY + "&7(&c" + (stats.getDeaths() == 0 ? "" : Team.DTR_FORMAT.format((double) stats.getKills() / (double) stats.getDeaths() + "&7)" + " " + (stats.getKillstreak() > 0 ? (" &7(" + stats.getKillstreak() + ")") : ""))));
+            scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + "&7(&c" + (stats.getDeaths() == 0 ? "" : Team.DTR_FORMAT.format((double) stats.getKills() / (double) stats.getDeaths() + "&7)" + " " + (stats.getKillstreak() > 0 ? (" &7(" + stats.getKillstreak() + ")") : ""))));
             scores.add(sectionColor + "Deaths&7: " + infoColor + stats.getDeaths());
             scores.add(sectionColor + "Balance&7: " + infoColor + "$" + FrozenEconomyHandler.getBalance(player.getUniqueId()));
         }
