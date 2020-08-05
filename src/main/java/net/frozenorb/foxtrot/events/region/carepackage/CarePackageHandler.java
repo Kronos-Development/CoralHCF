@@ -46,7 +46,7 @@ public class CarePackageHandler implements Listener {
     public CarePackageHandler() {
         FrozenCommandHandler.registerClass(this.getClass());
         this.world = Bukkit.getWorlds().get(0);
-        Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 60 * 20, 60 * 20 * 20);
+        //Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), this::spawnCarePackage, 60 * 20, 60 * 20 * 20);
 
         try {
             loot = Lists.newArrayList(qLib.GSON.fromJson(qLib.getInstance().runBackboneRedisCommand(new RedisCommand<String>() {

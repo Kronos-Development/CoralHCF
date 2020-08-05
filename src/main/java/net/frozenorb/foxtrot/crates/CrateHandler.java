@@ -1,6 +1,8 @@
 package net.frozenorb.foxtrot.crates;
 
 import net.frozenorb.foxtrot.*;
+import net.frozenorb.qlib.qLib;
+import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 import org.bukkit.plugin.*;
 import com.mongodb.*;
 import net.frozenorb.foxtrot.util.*;
@@ -67,13 +69,17 @@ public class CrateHandler implements Listener
                             }
                             else {
                                 player.getInventory().remove(inHand);
-                            }
-                            for (ItemStack is : crate.getItems()) {
+
+                            ItemStack[] is = crate.getItems();
                                 player.getInventory().addItem(is);
                             }
                             new BukkitRunnable() {
                                 public void run() {
                                     player.updateInventory();
+                                    PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles("crit",
+                                            (float)player.getLocation().getX(), (float)player.getLocation().getY(),
+                                            (float)player.getLocation().getZ(),
+                                            0.0f, 0.0f, 0.0f, 1.0f, 0);
                                 }
                             }.runTaskLater(Foxtrot.getInstance(), 1L);
                         }

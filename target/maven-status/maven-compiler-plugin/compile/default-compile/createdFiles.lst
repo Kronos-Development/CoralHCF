@@ -84,6 +84,7 @@ net\frozenorb\foxtrot\team\commands\PowerFactionCommand.class
 net\frozenorb\foxtrot\team\commands\team\TeamDisbandCommand.class
 net\frozenorb\foxtrot\persist\maps\CoalMinedMap.class
 net\frozenorb\foxtrot\map\deathban\DeathbanListener.class
+net\frozenorb\foxtrot\map\stats\command\HologramCreateCommand.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHDeactivateCommand.class
 net\frozenorb\foxtrot\team\menu\button\OpenMuteMenuButton.class
 net\frozenorb\foxtrot\listener\PvPTimerListener$1.class
@@ -182,7 +183,6 @@ net\frozenorb\foxtrot\listener\ClientListener.class
 net\frozenorb\foxtrot\settings\menu\SettingsMenu.class
 net\frozenorb\foxtrot\team\commands\team\TeamDisplayCommand.class
 net\frozenorb\foxtrot\commands\TeamManageCommand.class
-net\frozenorb\foxtrot\commands\SlurpeeCupCommand.class
 net\frozenorb\foxtrot\commands\KitCommand.class
 net\frozenorb\foxtrot\team\TeamHandler$1.class
 net\frozenorb\foxtrot\persist\StringPersistMap$3.class
@@ -566,6 +566,7 @@ net\frozenorb\foxtrot\persist\maps\LapisMinedMap.class
 net\frozenorb\foxtrot\events\region\cavern\CavernHandler.class
 net\frozenorb\foxtrot\team\dtr\DTRBitmaskType.class
 net\frozenorb\foxtrot\chat\enums\ChatMode.class
+net\frozenorb\foxtrot\map\kits\KitListener$1.class
 net\frozenorb\foxtrot\persist\maps\ChatModeMap.class
 net\frozenorb\foxtrot\persist\maps\EmeraldMinedMap.class
 net\frozenorb\foxtrot\team\dtr\DTRBitmask.class

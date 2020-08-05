@@ -140,7 +140,9 @@ public class DamageListener implements Listener {
                         }
                     } else {
                         Foxtrot.getInstance().getKillsMap().setKills(killer.getUniqueId(), Foxtrot.getInstance().getKillsMap().getKills(killer.getUniqueId()) + 1);
-                        
+                        Foxtrot.getInstance().getDeathsMap().setDeaths(event.getEntity().getUniqueId(), Foxtrot.getInstance().getDeathsMap().getDeaths(event.getEntity().getUniqueId()) + 1);
+                        event.getDrops().add(Foxtrot.getInstance().getServerHandler().generateDeathSkull(event.getEntity().getName(), killer.getName()));
+
                         if (Foxtrot.getInstance().getServerHandler().isHardcore()) {
                             event.getDrops().add(Foxtrot.getInstance().getServerHandler().generateDeathSign(event.getEntity().getName(), killer.getName()));
                         }

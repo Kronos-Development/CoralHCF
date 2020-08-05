@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.crates;
 
+import net.frozenorb.qlib.qLib;
 import org.bukkit.inventory.*;
 import java.util.*;
 import org.bukkit.*;
@@ -10,7 +11,7 @@ public class Crate
     private ItemStack[] items;
 
     public Crate(String kitName) {
-        this(kitName, new ItemStack[36]);
+        this(kitName, new ItemStack[1]);
     }
 
     public Crate(String kitName, ItemStack[] items) {

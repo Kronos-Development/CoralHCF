@@ -39,6 +39,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -838,10 +839,31 @@ public class ServerHandler {
         lore.add(sdf.format(new Date()).replace(" AM", "").replace(" PM", ""));
 
         meta.setLore(lore);
-        meta.setDisplayName("§dDeath Sign");
+        meta.setDisplayName("§cDeath Sign");
         deathsign.setItemMeta(meta);
 
         return (deathsign);
+    }
+
+    public ItemStack generateDeathSkull(String killed, String killer) {
+        ItemStack deathSkull = new ItemStack(Material.SKULL_ITEM);
+        SkullMeta skullMeta = (SkullMeta) deathSkull.getItemMeta();
+
+        ArrayList<String> lore = new ArrayList<>();
+
+        lore.add("§4" + killed);
+        lore.add("§eSlain By:");
+        lore.add("§a" + killer);
+
+        DateFormat sdf = new SimpleDateFormat("M/d HH:mm:ss");
+
+        lore.add(sdf.format(new Date()).replace(" AM", "").replace(" PM", ""));
+
+        skullMeta.setOwner(killed);
+        skullMeta.setDisplayName("§cDeath Skull");
+        skullMeta.setLore(lore);
+        deathSkull.setItemMeta(skullMeta);
+        return (deathSkull);
     }
 
     public ItemStack generateKOTHSign(String koth, String capper, EventType eventType) {

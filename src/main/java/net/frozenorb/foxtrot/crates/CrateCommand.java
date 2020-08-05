@@ -46,6 +46,14 @@ public class CrateCommand
         }
     }
 
+    @Command(names = "debugis", permission = "op")
+    public static void onDebug(Player player, @Param(name = "kit") String kit) {
+    Crate crate = Foxtrot.getInstance().getCrateHandler().getCrates().get(kit);
+
+    player.sendMessage(crate.getKitName() + " " + crate.getItems().toString());
+
+    }
+
     @Command(names = { "crate create" }, permission = "op", hidden = true)
     public static void onCreate(Player player, @Param(name = "kit") String kit) {
         Crate crate = new Crate(kit);

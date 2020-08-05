@@ -139,7 +139,7 @@ public class StatsHandler implements Listener {
 
         Bukkit.getPluginManager().registerEvents(this, Foxtrot.getInstance());
 
-        FrozenCommandHandler.registerPackage(Foxtrot.getInstance(), "rip.protocol.hcf.map.stats.command");
+        FrozenCommandHandler.registerPackage(Foxtrot.getInstance(), "net.frozenorb.foxtrot.map.stats.command");
 
         FrozenCommandHandler.registerParameterType(StatsTopCommand.StatsObjective.class, new ParameterType<StatsTopCommand.StatsObjective>() {
 
@@ -186,7 +186,7 @@ public class StatsHandler implements Listener {
         });
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::save, 30 * 20L, 30 * 20L);
-//        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::updateTopKillsMap, 30 * 20L, 30 * 20L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Foxtrot.getInstance(), this::updateTopKillsMap, 30 * 20L, 30 * 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Foxtrot.getInstance(), this::updatePhysicalLeaderboards, 60 * 20L, 60 * 20L);
     }
 
@@ -194,8 +194,8 @@ public class StatsHandler implements Listener {
 
         BukkitTask bukkitTask = Bukkit.getScheduler().runTaskTimer(Foxtrot.getInstance(), () -> {
 
-            StatsEntry stats = get(StatsObjective.KILLS, 1);
-            npc.setName(stats == null || stats.getOwner() == null ? "N/A" : UUIDUtils.name(stats.getOwner()));
+            StatsEntry stats = get(StatsObjective.valueOf(obj), 1);
+            npc.setName(StatsObjective.valueOf(obj).getName());
 
                 if(stats != null) npc.grabSkin(UUIDUtils.name(stats.getOwner()));
                 else npc.grabSkin("MHF_Question");
@@ -227,11 +227,10 @@ public class StatsHandler implements Listener {
             }
             return null;
         });
+
+    }public void addHologramLeaderboard(Hologram hologram, Location location, StatsObjective objective) {
+       leaderboardHolos.put(location, objective);
     }
-//
-//    public void addHologramLeaderboard(Hologram hologram, StatsObjective objective) {
-//        leaderboardHolos.put(objective, hologram);
-//    }
 
     public void setupHologram(Location location, StatsObjective objective) {
         Hologram holo = Holograms.newHologram().at(location).updates().onUpdate(
@@ -271,19 +270,32 @@ public class StatsHandler implements Listener {
     }
 
     private void updateTopKillsMap() {
-        UUID oldFirstPlace = this.topKills.get(1);
-        UUID oldSecondPlace = this.topKills.get(2);
-        UUID oldThirdPlace = this.topKills.get(3);
-
+        final UUID oldFirstPlace = this.topKills.get(1);
+        final UUID oldSecondPlace = this.topKills.get(2);
+        final UUID oldThirdPlace = this.topKills.get(3);
         UUID newFirstPlace = null;
-        if(get(StatsObjective.KILLS, 1) != null)
-            newFirstPlace = get(StatsObjective.KILLS, 1).getOwner();
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 1) != null) {
+            newFirstPlace = this.get(StatsTopCommand.StatsObjective.KILLS, 1).getOwner();
+        }
         UUID newSecondPlace = null;
-        if(get(StatsObjective.KILLS, 2) != null)
-            newSecondPlace = get(StatsObjective.KILLS, 2).getOwner();
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 2) != null) {
+            newSecondPlace = this.get(StatsTopCommand.StatsObjective.KILLS, 2).getOwner();
+        }
         UUID newThirdPlace = null;
-        if(get(StatsObjective.KILLS, 3) != null)
-            newThirdPlace = get(StatsObjective.KILLS, 3).getOwner();
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 3) != null) {
+            newThirdPlace = this.get(StatsTopCommand.StatsObjective.KILLS, 3).getOwner();
+        }
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 1) != null) {
+            this.topKills.put(1, newFirstPlace);
+        }
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 2) != null) {
+            this.topKills.put(2, newSecondPlace);
+        }
+        if (this.get(StatsTopCommand.StatsObjective.KILLS, 3) != null) {
+            this.topKills.put(3, newThirdPlace);
+        }
+        this.firstUpdateComplete = true;
+    }
 
 //        if (!CustomTimerCreateCommand.isSOTWTimer()) {
 //            if (firstUpdateComplete) {
@@ -300,15 +312,6 @@ public class StatsHandler implements Listener {
 //                }
 //            }
 //        }
-        if(get(StatsObjective.KILLS, 1) != null)
-            this.topKills.put(1, newFirstPlace);
-        if(get(StatsObjective.KILLS, 2) != null)
-            this.topKills.put(2, newSecondPlace);
-        if(get(StatsObjective.KILLS, 3) != null)
-            this.topKills.put(3, newThirdPlace);
-
-        this.firstUpdateComplete = true;
-    }
 
     public void updatePhysicalLeaderboards() {
         Iterator<Map.Entry<Location, Integer>> iterator = leaderboardSigns.entrySet().iterator();
@@ -384,7 +387,7 @@ public class StatsHandler implements Listener {
             case DEATHS:
                 return "Top Deaths";
             case HIGHEST_KILLSTREAK:
-                return "Top KillStrk";
+                return "Top Killstreak";
             case TOP_FACTION:
                 return "Top Faction";
             case KD:

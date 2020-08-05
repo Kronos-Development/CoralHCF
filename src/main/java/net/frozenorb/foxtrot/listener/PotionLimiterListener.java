@@ -61,6 +61,7 @@ public class PotionLimiterListener implements Listener {
                 event.setCancelled(true);
             }
         }
+        //Only 33s
 
         if (potion.getType() == PotionType.INSTANT_DAMAGE) {
             event.setCancelled(true);

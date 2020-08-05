@@ -35,7 +35,7 @@ public class StatsTopCommand {
         KILLS("Kills", "k"),
         DEATHS("Deaths", "d"),
         KD("KD", "kdr"),
-        TOP_FACTION("Top Faction", "topfac", "topfaction"),
+        TOP_FACTION("Top Factions", "topfaction", "tf"),
         HIGHEST_KILLSTREAK("Highest Killstreak", "killstreak", "highestkillstreak", "ks", "highestks", "hks");
 
         private String name;

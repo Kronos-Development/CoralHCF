@@ -213,7 +213,6 @@ public class FoxListener implements Listener {
 
             if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
                 event.getPlayer().getInventory().addItem(FIRST_SPAWN_BOOK);
-                event.getPlayer().getInventory().addItem(FIRST_SPAWN_FISHING_ROD);
             }
 
             if (CustomTimerCreateCommand.getCustomTimers().get("&a&lSOTW") == null) {
@@ -674,14 +673,14 @@ public class FoxListener implements Listener {
                     @Override
                     public void run() {
                         if (event.getPlayer().getInventory().getHelmet().getEnchantmentLevel(Enchantment.LUCK) != 10 || event.getPlayer().getInventory().getHelmet() == null) {
-                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 10000000, 0));
+                            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.POISON, 10000000, 0));
                             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 10000000, 0));
                         }
                     }
                 }.runTask(Foxtrot.getInstance());
             }
             if (fromBiohazard) {
-                event.getPlayer().removePotionEffect(PotionEffectType.WITHER);
+                event.getPlayer().removePotionEffect(PotionEffectType.POISON);
                 event.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
             }
         }

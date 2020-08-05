@@ -68,6 +68,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\button\KickPlayerButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\kits\command\KitCommands.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\listener\ClientListener.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\stats\command\HologramCreateCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\KitCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamKickCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\koth\commands\koth\KOTHActivateCommand.java
@@ -311,7 +312,6 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\RallyPoin
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\EcoCheckCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\region\glowmtn\commands\GlowCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\FocusColorMap.java
-C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\SlurpeeCupCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\dtc\DTCListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\EventHandler.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamWithdrawCommand.java

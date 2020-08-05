@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.commands;
 
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.qlib.command.Command;
 import org.bukkit.entity.Player;
@@ -14,5 +15,6 @@ public class ShowStaffCommand {
         } else {
             player.setMetadata("nostaff", new FixedMetadataValue(Foxtrot.getInstance(), true));
         }
+        player.sendMessage(CC.translate(player.hasMetadata("nostaff") ? "&aYou can see staff" : "&cYou cannot see staff"));
     }
 }

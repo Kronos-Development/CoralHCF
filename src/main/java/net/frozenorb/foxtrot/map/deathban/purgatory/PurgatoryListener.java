@@ -110,7 +110,7 @@ public class PurgatoryListener implements Listener {
         final String time = TimeUtils.formatIntoDetailedString(seconds);
 
         if (Foxtrot.getInstance().getServerHandler().isPreEOTW()) {
-            event.getEntity().kickPlayer(ChatColor.YELLOW + "Come back tomorrow for SOTW!");
+            event.getEntity().kickPlayer(ChatColor.RED + "Come back tomorrow for SOTW!");
             return;
         }
 

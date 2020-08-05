@@ -247,6 +247,7 @@ public class Foxtrot extends JavaPlugin {
 
 		chatHandler = new ChatHandler();
 		citadelHandler = new CitadelHandler();
+		crateHandler = new CrateHandler();
 		pvpClassHandler = new PvPClassHandler();
 		eventHandler = new EventHandler();
 		conquestHandler = new ConquestHandler();

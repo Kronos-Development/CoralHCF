@@ -14,14 +14,12 @@ import org.bukkit.block.Skull;
 import org.bukkit.conversations.*;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
+
 public class LeaderboardAddCommand {
 
     @Command(names = {"leaderboard add"}, permission = "op")
     public static void leaderboardAdd(Player sender, @Param(name = "objective") String objectiveName, @Param(name = "place") int place) {
-        if (!Foxtrot.getInstance().getMapHandler().isKitMap() && !Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
-            sender.sendMessage("§cThis is a KitMap only command.");
-            return;
-        }
 
         Block block = sender.getTargetBlock(null, 10);
         StatsObjective objective;
@@ -80,10 +78,11 @@ public class LeaderboardAddCommand {
         npc.spawn();
 
 
-        Foxtrot.getInstance().getMapHandler().getStatsHandler().setupNPC(npc, "objective");
+        Foxtrot.getInstance().getMapHandler().getStatsHandler().setupNPC(npc, objectiveName);
 
     }
 
+    @Command(names = "clearstats", permission = "op")
     public static void clearallstats(Player sender) {
         ConversationFactory factory = new ConversationFactory(Foxtrot.getInstance()).withModality(true).withPrefix(new NullConversationPrefix()).withFirstPrompt(new StringPrompt() {
 

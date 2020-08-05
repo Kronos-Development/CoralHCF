@@ -1,14 +1,21 @@
 package net.frozenorb.foxtrot.map.kits;
 
+import java.sql.Blob;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -16,6 +23,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import com.google.common.collect.Maps;
 
 import net.frozenorb.foxtrot.Foxtrot;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class KitListener implements Listener {
     
@@ -65,7 +76,7 @@ public class KitListener implements Listener {
         }
 
         if (!Foxtrot.getInstance().getMapHandler().getKitManager().canUseKit(player, kit.getName())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou do not own this kit. Purchase it at store.veltpvp.com."));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou do not own this kit. Purchase it at store.coral.gg."));
             return;
         }
 
@@ -73,5 +84,37 @@ public class KitListener implements Listener {
 
         lastClicked.put(player.getUniqueId(), System.currentTimeMillis());
     }
+
+//    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+//    public void onMove(PlayerInteractEvent event) {
+//        Player player = event.getPlayer();
+//        Block block = event.getClickedBlock();
+//
+//        if(block.getType() == Material.STONE_PLATE) {
+//           if (block.getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN) {
+//               player.setVelocity(player.getLocation().getDirection().multiply(7.5).setY(1.5));
+//            }
+//        }
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void helo(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        Location location = event.getTo();
+
+        if (location.getBlock().getType() == Material.STONE_PLATE) {
+            if (location.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN) {
+                player.setVelocity(player.getLocation().getDirection().multiply(7.5).setY(1.5));
+                player.setMetadata("noflag", new FixedMetadataValue(Foxtrot.getInstance(), true));
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.removeMetadata("noflag", Foxtrot.getInstance());
+                    }
+                }.runTaskLater(Foxtrot.getInstance(), 100);
+            }
+        }
+
+
+    }
+
     
 }
