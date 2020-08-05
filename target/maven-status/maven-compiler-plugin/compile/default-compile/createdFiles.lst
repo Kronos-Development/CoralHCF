@@ -84,7 +84,6 @@ net\frozenorb\foxtrot\team\commands\PowerFactionCommand.class
 net\frozenorb\foxtrot\team\commands\team\TeamDisbandCommand.class
 net\frozenorb\foxtrot\persist\maps\CoalMinedMap.class
 net\frozenorb\foxtrot\map\deathban\DeathbanListener.class
-net\frozenorb\foxtrot\map\stats\command\HologramCreateCommand.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHDeactivateCommand.class
 net\frozenorb\foxtrot\team\menu\button\OpenMuteMenuButton.class
 net\frozenorb\foxtrot\listener\PvPTimerListener$1.class
@@ -123,6 +122,7 @@ net\frozenorb\foxtrot\persist\maps\FishingKitMap.class
 net\frozenorb\foxtrot\protocol\ClientCommandPacketAdaper$1.class
 net\frozenorb\foxtrot\map\deathban\purgatory\PurgatoryListener.class
 net\frozenorb\foxtrot\commands\KOTHRewardKeyCommand.class
+net\frozenorb\foxtrot\map\stats\command\LeaderboardHologramsCommand.class
 net\frozenorb\foxtrot\commands\ToggleDeathMessagesCommand.class
 net\frozenorb\foxtrot\scoreboard\FoxtrotScoreGetter.class
 net\frozenorb\foxtrot\team\commands\team\TeamHelpCommand.class

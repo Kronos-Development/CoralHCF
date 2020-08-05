@@ -68,7 +68,6 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\button\KickPlayerButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\kits\command\KitCommands.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\listener\ClientListener.java
-C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\stats\command\HologramCreateCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\KitCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamKickCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\koth\commands\koth\KOTHActivateCommand.java
@@ -211,6 +210,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\settings\menu\
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\util\InventoryUtils.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\ForceLeaderCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\killstreaks\arcanetypes\Strength.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\stats\command\LeaderboardHologramsCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\MapHandler.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\lff\menu\buttons\LFFCompleteButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\util\ChatUtils.java

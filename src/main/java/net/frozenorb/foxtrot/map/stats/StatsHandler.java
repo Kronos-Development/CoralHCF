@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import com.minexd.zoot.Zoot;
 import com.minexd.zoot.hologram.Hologram;
 import com.minexd.zoot.hologram.Holograms;
 import com.minexd.zoot.profile.Profile;
@@ -131,7 +132,7 @@ public class StatsHandler implements Listener {
 
                     setupNPC(npc, "");
                 }
-                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardHolos.size() + " leaderboard npcs.");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[Foxtrot] Loaded " + leaderboardNPCs.size() + " leaderboard npcs.");
             }
 
             return null;
@@ -227,8 +228,18 @@ public class StatsHandler implements Listener {
             }
             return null;
         });
+    }
 
-    }public void addHologramLeaderboard(Hologram hologram, Location location, StatsObjective objective) {
+    public void delete() {
+        qLib.getInstance().runRedisCommand(redis -> {
+            List<String> serializedHolos = leaderboardHolos.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue().name()).collect(Collectors.toList());
+            redis.del(Bukkit.getServerName() + ":" + "leaderboardHolos");
+
+            return null;
+        });
+    }
+
+    public void addHologramLeaderboard(Hologram hologram, Location location, StatsObjective objective) {
        leaderboardHolos.put(location, objective);
     }
 
@@ -249,11 +260,16 @@ public class StatsHandler implements Listener {
                     }
                     lines.add("§7§m---*-----------------*---");
                     hologram.setLines(lines);
+                    Zoot.get().getHologramManager().register(hologram);
                 }
         ).interval(15, TimeUnit.SECONDS).build();
         holo.send();
         leaderboardHolos.put(location, objective);
         activeHolograms.add(holo);
+    }
+    public void removeHologram(int id) {
+        Hologram holo = Zoot.get().getHologramManager().getHolograms().get(id);
+        holo.destroy();
     }
 
     public StatsEntry getStats(Player player) {
