@@ -3,6 +3,7 @@ package net.frozenorb.foxtrot.scoreboard;
 import com.minexd.zoot.Zoot;
 import com.minexd.zoot.ZootAPI;
 import com.minexd.zoot.profile.Profile;
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
 import net.frozenorb.foxtrot.commands.CustomTimerCreateCommand;
@@ -69,6 +70,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             scores.add("&bVanish&7: " + (ModHandler.isVanished(player) ? "&aEnabled" : "&cDisabled"));
             scores.add("&bPlayers&7: &a" + Bukkit.getOnlinePlayers().size());
             scores.add("&bChat: " + chat);
+            scores.add(CC.SB_BAR);
         }
 
         String sectionColor = Foxtrot.getInstance().getServerHandler().getSbSectionColor();
@@ -77,7 +79,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
         if (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
             StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player.getUniqueId());
 
-            scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + (stats.getKillstreak() > 0 ? (" &7(" + stats.getKillstreak() + ")") : ""));
+            scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + ChatColor.GRAY + "&7(&c" + (stats.getDeaths() == 0 ? "" : Team.DTR_FORMAT.format((double) stats.getKills() / (double) stats.getDeaths() + "&7)" + " " + (stats.getKillstreak() > 0 ? (" &7(" + stats.getKillstreak() + ")") : ""))));
             scores.add(sectionColor + "Deaths&7: " + infoColor + stats.getDeaths());
             scores.add(sectionColor + "Balance&7: " + infoColor + "$" + FrozenEconomyHandler.getBalance(player.getUniqueId()));
         }
@@ -135,18 +137,18 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             String displayName;
 
             switch (event.getName()) {
-            case "EOTW":
-                displayName = ChatColor.DARK_RED.toString() + ChatColor.BOLD + "EOTW";
-                break;
-            case "Citadel":
-                displayName = ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "Citadel";
-                break;
-            case "Biohazard":
-                displayName = ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Biohazard";
-                break;
-            default:
-                displayName = ChatColor.BLUE.toString() + ChatColor.BOLD + event.getName();
-                break;
+                case "EOTW":
+                    displayName = ChatColor.DARK_RED.toString() + ChatColor.BOLD + "EOTW";
+                    break;
+                case "Citadel":
+                    displayName = ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "Citadel";
+                    break;
+                case "Biohazard":
+                    displayName = ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Biohazard";
+                    break;
+                default:
+                    displayName = ChatColor.BLUE.toString() + ChatColor.BOLD + event.getName();
+                    break;
             }
 
             if (event.getType() == EventType.DTC) {
@@ -173,21 +175,21 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             scores.add("&6&lArcher Mark&7: &c" + archerMarkScore);
         }
 
-            if (bardEffectScore != null) {
-                scores.add("&a&lBard Effect&7: &c" + bardEffectScore);
-            }
+        if (bardEffectScore != null) {
+            scores.add("&a&lBard Effect&7: &c" + bardEffectScore);
+        }
 
-            if (bardEnergyScore != null) {
-                scores.add("&b&lBard Energy&7: &c" + bardEnergyScore);
-            }
+        if (bardEnergyScore != null) {
+            scores.add("&b&lBard Energy&7: &c" + bardEnergyScore);
+        }
 
-            if (scoutSpeedScore != null) {
-                scores.add("&a&lScout Speed&7: &c" + scoutSpeedScore);
-            }
+        if (scoutSpeedScore != null) {
+            scores.add("&a&lScout Speed&7: &c" + scoutSpeedScore);
+        }
 
-            if (scoutGrapplingScore != null) {
-                scores.add("&6&lScout Grapple&7: &c" + scoutGrapplingScore);
-            }
+        if (scoutGrapplingScore != null) {
+            scores.add("&6&lScout Grapple&7: &c" + scoutGrapplingScore);
+        }
 
         if (fstuckScore != null) {
             scores.add("&4&lStuck&7: &c" + fstuckScore);
