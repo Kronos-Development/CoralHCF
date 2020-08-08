@@ -24,6 +24,7 @@ import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
 import net.frozenorb.foxtrot.packetborder.PacketBorderThread;
 import net.frozenorb.foxtrot.persist.RedisSaveTask;
 import net.frozenorb.foxtrot.persist.maps.*;
+import net.frozenorb.foxtrot.powers.PowersListener;
 import net.frozenorb.foxtrot.protocol.ClientCommandPacketAdaper;
 import net.frozenorb.foxtrot.protocol.SignGUIPacketAdaper;
 import net.frozenorb.foxtrot.pvpclasses.PvPClassHandler;
@@ -199,6 +200,12 @@ public class Foxtrot extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
+		if (getConfig().getBoolean("powers")) {
+			System.out.println("*********************************************");
+			System.out.println("               Powers Mode Enabled");
+			System.out.println("               Have fun cow");
+			System.out.println("*********************************************");
+		}
 
 		// we just define this here while we're testing, if we actually
 		// accept this feature it'll be moved to somewhere better
@@ -284,6 +291,7 @@ public class Foxtrot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnchantmentLimiterListener(), this);
 		getServer().getPluginManager().registerEvents(new EnderpearlCooldownHandler(), this);
 		getServer().getPluginManager().registerEvents(new EndListener(), this);
+		getServer().getPluginManager().registerEvents(new PowersListener(), this);
 		getServer().getPluginManager().registerEvents(new ElevatorListener(), this);
 		getServer().getPluginManager().registerEvents(new FoundDiamondsListener(), this);
 		getServer().getPluginManager().registerEvents(new FoxListener(), this);

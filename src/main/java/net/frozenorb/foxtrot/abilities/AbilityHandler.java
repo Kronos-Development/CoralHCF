@@ -4,12 +4,11 @@ import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.type.*;
-import net.frozenorb.qlib.util.TimeUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class AbilityHandler {
 
@@ -23,7 +22,9 @@ public class AbilityHandler {
 
         Arrays.asList(
                 new SwitcherAbility(),
+                new ShootingAbility(),
                 new GasMaskAbility(),
+                new FlashAbility(),
                 new GrapplingAbility(),
                 new RocketAbility(),
                 new RotateAbility(),

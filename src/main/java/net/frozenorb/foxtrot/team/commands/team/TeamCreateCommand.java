@@ -13,6 +13,7 @@ import net.frozenorb.qlib.command.Type;
 import net.frozenorb.qlib.command.parameter.filter.NormalFilter;
 
 import org.bson.types.ObjectId;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -83,7 +84,7 @@ public class TeamCreateCommand {
 
         Foxtrot.getInstance().getTeamHandler().setupTeam(createdTeam);
 
-        sender.sendMessage(ChatColor.YELLOW + "Team " + ChatColor.BLUE + createdTeam.getName() + ChatColor.YELLOW + " has been " + ChatColor.GREEN + "created" + ChatColor.YELLOW + " by " + sender.getDisplayName());
+        Bukkit.broadcastMessage(ChatColor.YELLOW + "Team " + ChatColor.BLUE + createdTeam.getName() + ChatColor.YELLOW + " has been " + ChatColor.GREEN + "created" + ChatColor.YELLOW + " by " + sender.getDisplayName());
     }
 
 }

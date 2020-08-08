@@ -20,7 +20,7 @@ public class LFFCommand {
     @Command(names = {"lookingforfaction", "l4f", "lff"}, permission = "")
     public static void lff(Player player) {
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(player.getUniqueId());
-        if (team.getMembers().contains(player.getUniqueId())) {
+        if (team != null) {
             player.sendMessage(ChatColor.RED + "You cannot issue this command while you're in a faction");
             return;
         }

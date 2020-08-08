@@ -69,6 +69,7 @@ public class RotateAbility extends AbstractAbility {
 
         Player victim = (Player) event.getEntity();
         Player attacker = (Player) event.getDamager();
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(attacker);
 
         ItemStack itemInHand = attacker.getItemInHand();
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
@@ -77,30 +78,25 @@ public class RotateAbility extends AbstractAbility {
             attacker.sendMessage(ChatColor.RED + "You can't do this is in a Safe-Zone!");
             event.setCancelled(true);
             return;
-        }
-
-        if (DTRBitmask.SAFE_ZONE.appliesAt(victim.getLocation())) {
+        } else if (DTRBitmask.SAFE_ZONE.appliesAt(victim.getLocation())) {
             attacker.sendMessage(ChatColor.RED + "This player is in a Safe-Zone!");
             event.setCancelled(true);
             return;
-        }
-
-        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(attacker);
-        if (team != null && team.isMember(victim.getUniqueId())) {
+        } else if (team != null && team.isMember(victim.getUniqueId())) {
             attacker.sendMessage(ChatColor.RED + "You cannot do this to your teammate!");
             return;
         }
 
-        if (!useAbility(attacker)) return;
-        removeOne(attacker);
+            if (!useAbility(attacker)) return;
+            removeOne(attacker);
 
-        Location loc = victim.getLocation();
-        loc.setYaw(loc.getYaw() + 180);
-        victim.teleport(loc);
+            Location loc = victim.getLocation();
+            loc.setYaw(loc.getYaw() + 180);
+            victim.teleport(loc);
 
-        attacker.sendMessage(ChatColor.YELLOW + "You rotated " + ChatColor.RED + victim.getDisplayName() + ChatColor.YELLOW + "!");
-        victim.sendMessage(ChatColor.YELLOW + "You have been rotated by " + ChatColor.RED + attacker.getDisplayName() + ChatColor.YELLOW + "!");
+            attacker.sendMessage(ChatColor.YELLOW + "You rotated " + ChatColor.RED + victim.getDisplayName() + ChatColor.YELLOW + "!");
+            victim.sendMessage(ChatColor.YELLOW + "You have been rotated by " + ChatColor.RED + attacker.getDisplayName() + ChatColor.YELLOW + "!");
 
-        event.setDamage(0);
+            event.setDamage(0);
     }
 }

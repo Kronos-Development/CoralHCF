@@ -85,12 +85,12 @@ public class GrapplingAbility extends AbstractAbility {
 
     @EventHandler
     public void onPlayerFish(PlayerFishEvent event) {
-        if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH || event.getState() == PlayerFishEvent.State.FISHING) return;
-
         Player player = event.getPlayer();
         ItemStack itemInHand = player.getItemInHand();
-
         if (itemInHand == null || !isSimilar(itemInHand, true)) return;
+
+        if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH || event.getState() == PlayerFishEvent.State.FISHING) return;
+
         if (PvPClassHandler.getPvPClass(player) instanceof ScoutClass) return;
         if (!useAbility(player)) return;
 

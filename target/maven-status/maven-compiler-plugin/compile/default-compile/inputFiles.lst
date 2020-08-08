@@ -120,6 +120,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\F
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\DeathsMap.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\TeamDataCommands.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\PlaytimeCommand.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type\FlashAbility.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\pvpclasses\event\BardRestoreEvent.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\kits\command\KitCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\util\Cuboid.java
@@ -181,6 +182,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\stats\command\LeaderboardAddCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\button\OpenKickMenuButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\SetWorldBufferCommand.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\powers\commands\FightsCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\koth\commands\koth\KOTHDeactivateCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\claims\Claim.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\FDToggleCommand.java
@@ -390,6 +392,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\claims\Vi
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\SetNetherBufferCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\region\cavern\listeners\CavernListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\GoldMinedMap.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\powers\PowersListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\listener\FoxListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\button\DisbandTeamButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\ReloadMapConfigCommand.java
@@ -455,6 +458,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\deathmessage\t
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\TeamHandler.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamNullLeaderCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\subclaim\TeamSubclaimAddPlayerCommand.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type\ShootingAbility.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\LastInvCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\kits\KitListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\LapisMinedMap.java

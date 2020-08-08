@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.map.kits;
 
 import java.sql.Blob;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +18,7 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -95,6 +97,19 @@ public class KitListener implements Listener {
 //               player.setVelocity(player.getLocation().getDirection().multiply(7.5).setY(1.5));
 //            }
 //        }
+
+    private Map<String, Boolean> noDamage = new HashMap<>();
+
+    @EventHandler
+    public void onEntityDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player) || !(event.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
+
+        Player player = (Player) event.getEntity();
+        if (!noDamage.containsKey(player.getName()) || !noDamage.get(player.getName())) return;
+        event.setCancelled(true);
+        noDamage.remove(player.getName());
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void helo(PlayerMoveEvent event) {
         Player player = event.getPlayer();
@@ -110,9 +125,51 @@ public class KitListener implements Listener {
                         player.removeMetadata("noflag", Foxtrot.getInstance());
                     }
                 }.runTaskLater(Foxtrot.getInstance(), 100);
+                noDamage.put(player.getName(), true);
             }
         }
 
+        if (location.getBlock().getType() == Material.WOOD_PLATE) {
+            if (location.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN) {
+                player.setVelocity(player.getLocation().getDirection().multiply(5.5).setY(2));
+                player.setMetadata("noflag", new FixedMetadataValue(Foxtrot.getInstance(), true));
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.removeMetadata("noflag", Foxtrot.getInstance());
+                    }
+                }.runTaskLater(Foxtrot.getInstance(), 100);
+                noDamage.put(player.getName(), true);
+            }
+        }
+
+        if (location.getBlock().getType() == Material.GOLD_PLATE) {
+            if (location.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN) {
+                player.setVelocity(player.getLocation().getDirection().multiply(3.5).setY(5));
+                player.setMetadata("noflag", new FixedMetadataValue(Foxtrot.getInstance(), true));
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.removeMetadata("noflag", Foxtrot.getInstance());
+                    }
+                }.runTaskLater(Foxtrot.getInstance(), 100);
+                noDamage.put(player.getName(), true);
+            }
+        }
+
+        if (location.getBlock().getType() == Material.IRON_PLATE) {
+            if (location.getBlock().getRelative(BlockFace.DOWN).getType() == Material.OBSIDIAN) {
+                player.setVelocity(player.getLocation().getDirection().multiply(1.5).setY(1.5));
+                player.setMetadata("noflag", new FixedMetadataValue(Foxtrot.getInstance(), true));
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.removeMetadata("noflag", Foxtrot.getInstance());
+                    }
+                }.runTaskLater(Foxtrot.getInstance(), 100);
+                noDamage.put(player.getName(), true);
+            }
+        }
 
     }
 

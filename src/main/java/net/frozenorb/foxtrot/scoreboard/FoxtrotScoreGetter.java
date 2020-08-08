@@ -70,7 +70,6 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             scores.add("&bVanish&7: " + (ModHandler.isVanished(player) ? "&aEnabled" : "&cDisabled"));
             scores.add("&bPlayers&7: &a" + Bukkit.getOnlinePlayers().size());
             scores.add("&bChat: " + chat);
-            scores.add(CC.SB_BAR);
         }
 
         String sectionColor = Foxtrot.getInstance().getServerHandler().getSbSectionColor();
@@ -78,10 +77,14 @@ public class FoxtrotScoreGetter implements ScoreGetter {
 
         if (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
             StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player.getUniqueId());
-
-            scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + "&7(&c" + (stats.getDeaths() == 0 ? "" : Team.DTR_FORMAT.format((double) stats.getKills() / (double) stats.getDeaths() + "&7)" + " " + (stats.getKillstreak() > 0 ? (" &7(" + stats.getKillstreak() + ")") : ""))));
-            scores.add(sectionColor + "Deaths&7: " + infoColor + stats.getDeaths());
-            scores.add(sectionColor + "Balance&7: " + infoColor + "$" + FrozenEconomyHandler.getBalance(player.getUniqueId()));
+            if (!ModHandler.isModMode(player)) {
+                scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + (stats.getKD() > 0 ? "&7(&b" + stats.getKD() + "&7)" : ""));
+                if (stats.getKillstreak() > 0) {
+                    scores.add(sectionColor + "Killstreak&7: " + infoColor + stats.getKillstreak());
+                }
+                scores.add(sectionColor + "Deaths&7: " + infoColor + stats.getDeaths());
+                scores.add(sectionColor + "Balance&7: " + infoColor + "$" + FrozenEconomyHandler.getBalance(player.getUniqueId()));
+            }
         }
 
         if (spawnTagScore != null) {
@@ -89,7 +92,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
         }
 
         if (homeScore != null) {
-            scores.add("&9&lHome§7: **&9" + homeScore);
+            scores.add("&9&lHome§7: &9" + homeScore);
         }
 
         if (appleScore != null) {
