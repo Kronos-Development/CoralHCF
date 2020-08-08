@@ -14,7 +14,7 @@ public class EnderpearlCooldownAppliedEvent extends Event {
 	private static HandlerList handlerList = new HandlerList();
 
 	@Getter
-	private final Player player;
+	private Player player;
 
 	@Getter
 	@Setter

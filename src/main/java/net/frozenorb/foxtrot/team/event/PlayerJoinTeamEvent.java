@@ -13,8 +13,8 @@ public class PlayerJoinTeamEvent extends Event {
 
 	@Getter private static HandlerList handlerList = new HandlerList();
 
-	private final Player player;
-	private final Team team;
+	private Player player;
+	private Team team;
 
 	@Override
 	public HandlerList getHandlers() {

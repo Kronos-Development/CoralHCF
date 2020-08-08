@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public interface RegionMoveHandler {
 
-    public static final RegionMoveHandler ALWAYS_TRUE = new RegionMoveHandler() {
+    public static RegionMoveHandler ALWAYS_TRUE = new RegionMoveHandler() {
 
         @Override
         public boolean handleMove(PlayerMoveEvent event) {
@@ -16,7 +16,7 @@ public interface RegionMoveHandler {
 
     };
 
-    public static final RegionMoveHandler PVP_TIMER = new RegionMoveHandler() {
+    public static RegionMoveHandler PVP_TIMER = new RegionMoveHandler() {
 
         @Override
         public boolean handleMove(PlayerMoveEvent event) {

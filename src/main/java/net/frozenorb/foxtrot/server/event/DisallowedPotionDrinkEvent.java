@@ -11,7 +11,7 @@ public class DisallowedPotionDrinkEvent extends PlayerEvent {
 
     @Getter private static HandlerList handlerList = new HandlerList();
 
-    @Getter private final Potion potion;
+    @Getter private Potion potion;
     @Getter @Setter private boolean allowed = false;
 
     public DisallowedPotionDrinkEvent(Player who, Potion potion) {

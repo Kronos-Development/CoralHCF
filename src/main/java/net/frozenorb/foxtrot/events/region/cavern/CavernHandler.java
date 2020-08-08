@@ -17,7 +17,7 @@ import net.minecraft.util.org.apache.commons.io.FileUtils;
 public class CavernHandler {
 
     private static File file;
-    @Getter private final static String cavernTeamName = "Cavern";
+    @Getter private static String cavernTeamName = "Cavern";
     @Getter @Setter private Cavern cavern;
 
     public CavernHandler() {

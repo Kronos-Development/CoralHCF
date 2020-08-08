@@ -16,7 +16,7 @@ import net.frozenorb.qlib.command.Command;
 
 public class KOTHScheduleCommand {
 
-    public static final DateFormat KOTH_DATE_FORMAT = new SimpleDateFormat("EEE h:mm a");
+    public static DateFormat KOTH_DATE_FORMAT = new SimpleDateFormat("EEE h:mm a");
 
     // Make this pretty.
     @Command(names={ "KOTH Schedule" }, permission="")

@@ -60,7 +60,7 @@ public abstract class StringPersistMap<T> {
         });
     }
 
-    protected void updateValueSync(final String key, final T value) {
+    protected void updateValueSync(String key, T value) {
         wrappedMap.put(key, value);
 
         qLib.getInstance().runRedisCommand(new RedisCommand<Object>() {
@@ -79,7 +79,7 @@ public abstract class StringPersistMap<T> {
         });
     }
 
-    protected void updateValueAsync(final String key, T value) {
+    protected void updateValueAsync(String key, T value) {
         wrappedMap.put(key, value);
 
         new BukkitRunnable() {

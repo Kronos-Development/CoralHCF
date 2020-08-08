@@ -54,14 +54,14 @@ import net.frozenorb.qlib.util.ItemUtils;
 @RequiredArgsConstructor
 public class VisualClaim implements Listener {
 
-    public static final int MAP_RADIUS = 50;
-    public static final Material[] MAP_MATERIALS = { Material.DIAMOND_BLOCK,
+    public static int MAP_RADIUS = 50;
+    public static Material[] MAP_MATERIALS = { Material.DIAMOND_BLOCK,
             Material.GOLD_BLOCK, Material.LOG, Material.BRICK, Material.WOOD,
             Material.REDSTONE_BLOCK, Material.LAPIS_BLOCK, Material.CHEST,
             Material.MELON_BLOCK, Material.STONE, Material.COBBLESTONE,
             Material.COAL_BLOCK, Material.DIAMOND_ORE, Material.COAL_ORE,
             Material.GOLD_ORE, Material.REDSTONE_ORE, Material.FURNACE };
-    public static final BlockFace[] NESW_BLOCKS = { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
+    public static BlockFace[] NESW_BLOCKS = { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
 
     @Getter private static Map<String, VisualClaim> currentMaps = new HashMap<>();
     @Getter private static Map<String, VisualClaim> currentSubclaimMaps = new HashMap<>();
@@ -388,7 +388,7 @@ public class VisualClaim implements Listener {
         return (touchingClaims);
     }
 
-    public void setLoc(int locationId, final Location clicked) {
+    public void setLoc(int locationId, Location clicked) {
         Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(player);
 
         if (playerTeam == null) {
@@ -459,7 +459,7 @@ public class VisualClaim implements Listener {
                     return;
                 }
 
-                final Claim claimClone = new Claim(resizing);
+                Claim claimClone = new Claim(resizing);
 
                 applyResize(claimClone, clicked);
 

@@ -18,7 +18,7 @@ public class SettingButton extends Button {
 
     private static String forkedBy = "vaperion";
 
-    private final Setting setting;
+    private Setting setting;
 
     @Override
     public String getName(Player player) {

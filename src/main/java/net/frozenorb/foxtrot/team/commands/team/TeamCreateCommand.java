@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
 
 public class TeamCreateCommand {
 
-    public static final Pattern ALPHA_NUMERIC = Pattern.compile("[^a-zA-Z0-9]");
-    private static final Set<String> disallowedTeamNames = ImmutableSet.of("list", "Glowstone");
+    public static Pattern ALPHA_NUMERIC = Pattern.compile("[^a-zA-Z0-9]");
+    private static Set<String> disallowedTeamNames = ImmutableSet.of("list", "Glowstone");
 
     @Command(names = {"team create", "t create", "f create", "faction create", "fac create"}, permission = "")
     public static void teamCreate(Player sender, @Param(name = "team") @Type(NormalFilter.class ) String team) {

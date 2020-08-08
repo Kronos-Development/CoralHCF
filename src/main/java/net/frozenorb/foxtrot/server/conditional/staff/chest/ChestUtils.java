@@ -13,14 +13,14 @@ public class ChestUtils
 {
     private static Field windowField;
 
-    public static void openSilently(final Player p, final Chest c) {
+    public static void openSilently(Player p, Chest c) {
         try {
             p.sendMessage(ChatColor.RED + "Opening chest silently...");
-            final EntityPlayer player = ((CraftPlayer)p).getHandle();
-            final IInventory inventory = ((CraftInventory)c.getInventory()).getInventory();
+            EntityPlayer player = ((CraftPlayer)p).getHandle();
+            IInventory inventory = ((CraftInventory)c.getInventory()).getInventory();
             player.nextContainerCounter();
-            final int counter = ChestUtils.windowField.getInt(player);
-            final SilentContainerChest silentChest = new SilentContainerChest((IInventory)player.inventory, inventory);
+            int counter = ChestUtils.windowField.getInt(player);
+            SilentContainerChest silentChest = new SilentContainerChest((IInventory)player.inventory, inventory);
             player.playerConnection.sendPacket(new PacketPlayOutOpenWindow(counter, 0, inventory.getInventoryName(), inventory.getSize(), inventory.k_()));
             player.activeContainer = silentChest;
             player.activeContainer.windowId = counter;

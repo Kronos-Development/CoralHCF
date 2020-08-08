@@ -40,7 +40,7 @@ import java.util.*;
 
 public class CombatLoggerListener implements Listener {
 
-    public static final String COMBAT_LOGGER_METADATA = "CombatLogger";
+    public static String COMBAT_LOGGER_METADATA = "CombatLogger";
     @Getter private Set<Entity> combatLoggers = new HashSet<>();
 
     @EventHandler
@@ -348,7 +348,7 @@ public class CombatLoggerListener implements Listener {
             ItemStack[] armor = event.getPlayer().getInventory().getArmorContents();
             ItemStack[] inv = event.getPlayer().getInventory().getContents();
 
-            final Villager villager = (Villager) event.getPlayer().getWorld().spawnEntity(event.getPlayer().getLocation(), EntityType.VILLAGER);
+            Villager villager = (Villager) event.getPlayer().getWorld().spawnEntity(event.getPlayer().getLocation(), EntityType.VILLAGER);
 
             villager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 100));
             //villager.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 100));
@@ -509,7 +509,7 @@ public class CombatLoggerListener implements Listener {
     }
 
     private void spoofWebsiteData(Player killed, Player killer) {
-        final BasicDBObject playerDeath = new BasicDBObject();
+        BasicDBObject playerDeath = new BasicDBObject();
 
         if (killer != null) {
             playerDeath.append("healthLeft", (int) killer.getHealth());

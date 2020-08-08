@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class EnchantmentLimiterListener implements Listener {
 
-    public static final ImmutableSet<Character> ITEM_NAME_CHARACTER_BLACKLIST = ImmutableSet.of(
+    public static ImmutableSet<Character> ITEM_NAME_CHARACTER_BLACKLIST = ImmutableSet.of(
             '卍'
     );
 

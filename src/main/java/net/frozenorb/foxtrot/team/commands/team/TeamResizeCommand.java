@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class TeamResizeCommand {
 
-    public static final ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_AXE);
+    public static ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_AXE);
 
     static {
         ItemMeta meta = SELECTION_WAND.getItemMeta();
@@ -41,7 +41,7 @@ public class TeamResizeCommand {
 
     //TODO: Remove permission node to deploy
     @Command(names={ "team resize", "t resize", "f resize", "faction resize", "fac resize" }, permission="op")
-    public static void teamResize(final Player sender) {
+    public static void teamResize(Player sender) {
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(sender);
 
         if (team == null) {

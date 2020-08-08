@@ -24,7 +24,7 @@ import java.util.Arrays;
 
 public class TeamClaimCommand implements Listener {
 
-    public static final ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_HOE);
+    public static ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_HOE);
 
     static {
         ItemMeta meta = SELECTION_WAND.getItemMeta();
@@ -48,7 +48,7 @@ public class TeamClaimCommand implements Listener {
     }
 
     @Command(names={ "team claim", "t claim", "f claim", "faction claim", "fac claim" }, permission="")
-    public static void teamClaim(final Player sender) {
+    public static void teamClaim(Player sender) {
         if (Foxtrot.getInstance().getDeathbanMap().isDeathbanned(sender.getUniqueId())) {
             sender.sendMessage(ChatColor.RED + "You can't do this while you are deathbanned.");
             return;

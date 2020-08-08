@@ -16,7 +16,7 @@ import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.util.ExperienceManager;
 import net.frozenorb.qlib.command.Command;
 
-public final class BottleCommand implements Listener {
+public class BottleCommand implements Listener {
 
     public BottleCommand() {
         Bukkit.getPluginManager().registerEvents(this, Foxtrot.getInstance());

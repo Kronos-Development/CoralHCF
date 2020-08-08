@@ -110,14 +110,14 @@ import net.frozenorb.qlib.economy.FrozenEconomyHandler;
 @SuppressWarnings("deprecation")
 public class FoxListener implements Listener {
 
-    private static final Map<BlockVector, UUID> pressurePlates = new ConcurrentHashMap<>();
-    public static final ItemStack FIRST_SPAWN_BOOK = new ItemStack(WRITTEN_BOOK);
-    public static final ItemStack FIRST_SPAWN_FISHING_ROD = new ItemStack(FISHING_ROD);
-    public static final Set<PotionEffectType> DEBUFFS = ImmutableSet.of(PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.WEAKNESS, PotionEffectType.HARM, PotionEffectType.WITHER);
-    public static final Set<Material> NO_INTERACT_WITH = ImmutableSet.of(LAVA_BUCKET, WATER_BUCKET, BUCKET);
-    public static final Set<Material> ATTACK_DISABLING_BLOCKS = ImmutableSet.of(GLASS, WOOD_DOOR, IRON_DOOR, FENCE_GATE);
-    public static final Set<Material> NO_INTERACT = ImmutableSet.of(FENCE_GATE, FURNACE, BURNING_FURNACE, BREWING_STAND, CHEST, HOPPER, DISPENSER, WOODEN_DOOR, STONE_BUTTON, WOOD_BUTTON, TRAPPED_CHEST, TRAP_DOOR, LEVER, DROPPER, ENCHANTMENT_TABLE, BED_BLOCK, ANVIL, BEACON);
-    private static final List<UUID> processingTeleportPlayers = new CopyOnWriteArrayList<>();
+    private static Map<BlockVector, UUID> pressurePlates = new ConcurrentHashMap<>();
+    public static ItemStack FIRST_SPAWN_BOOK = new ItemStack(WRITTEN_BOOK);
+    public static ItemStack FIRST_SPAWN_FISHING_ROD = new ItemStack(FISHING_ROD);
+    public static Set<PotionEffectType> DEBUFFS = ImmutableSet.of(PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.WEAKNESS, PotionEffectType.HARM, PotionEffectType.WITHER);
+    public static Set<Material> NO_INTERACT_WITH = ImmutableSet.of(LAVA_BUCKET, WATER_BUCKET, BUCKET);
+    public static Set<Material> ATTACK_DISABLING_BLOCKS = ImmutableSet.of(GLASS, WOOD_DOOR, IRON_DOOR, FENCE_GATE);
+    public static Set<Material> NO_INTERACT = ImmutableSet.of(FENCE_GATE, FURNACE, BURNING_FURNACE, BREWING_STAND, CHEST, HOPPER, DISPENSER, WOODEN_DOOR, STONE_BUTTON, WOOD_BUTTON, TRAPPED_CHEST, TRAP_DOOR, LEVER, DROPPER, ENCHANTMENT_TABLE, BED_BLOCK, ANVIL, BEACON);
+    private static List<UUID> processingTeleportPlayers = new CopyOnWriteArrayList<>();
 
     static {
         BookMeta bookMeta = (BookMeta) FIRST_SPAWN_BOOK.getItemMeta();
@@ -177,7 +177,7 @@ public class FoxListener implements Listener {
             BlockVector vector = event.getFrom().toVector().toBlockVector();
     
             if (pressurePlates.containsKey(vector) && event.getPlayer().getUniqueId().equals(pressurePlates.get(vector))) {
-                final Block block = event.getFrom().getBlock();
+                Block block = event.getFrom().getBlock();
                 pressurePlates.remove(vector);
     
                 new BukkitRunnable() {
@@ -383,7 +383,7 @@ public class FoxListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onSignInteract(final PlayerInteractEvent event) {
+    public void onSignInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (event.getClickedBlock().getState() instanceof Sign) {
                 Sign s = (Sign) event.getClickedBlock().getState();
@@ -493,7 +493,7 @@ public class FoxListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerDeath(final PlayerDeathEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
         SpawnTagHandler.removeTag(event.getEntity());
         Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getEntity());
         Player killer = event.getEntity().getKiller();

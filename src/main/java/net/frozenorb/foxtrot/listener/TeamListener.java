@@ -47,7 +47,7 @@ public class TeamListener implements Listener {
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
-        final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
 
         if (team != null && team.getMaxOnline() > 0 && team.getOnlineMemberAmount() >= team.getMaxOnline()) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER, ChatColor.YELLOW + "Your team currently has too many players logged in. Try again later!");
@@ -55,9 +55,9 @@ public class TeamListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerJoin(final PlayerJoinEvent event) {
+    public void onPlayerJoin(PlayerJoinEvent event) {
 
-        final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
 
         if (team != null) {
             for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
@@ -456,7 +456,7 @@ public class TeamListener implements Listener {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.YELLOW + "You cannot build in " + owner.getName(event.getPlayer()) + ChatColor.YELLOW + "'s territory!");
             } else {
-                final Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
+                Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
 
                 if (waterBlock.getRelative(BlockFace.NORTH).isLiquid()
                         || waterBlock.getRelative(BlockFace.SOUTH).isLiquid()

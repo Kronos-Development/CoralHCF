@@ -141,7 +141,7 @@ public class KitManager {
         
         userKits.get(player).put(kitName, kit);
         
-        final Kit finalKit = kit;
+        Kit finalKit = kit;
         
         Bukkit.getScheduler().runTaskAsynchronously(Foxtrot.getInstance(), () -> {
             qLib.getInstance().runRedisCommand((redis) -> {

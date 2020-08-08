@@ -12,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TeamOpClaimCommand {
 
     @Command(names={ "team opclaim", "t opclaim", "f opclaim", "faction opclaim", "fac opclaim" }, permission="worldedit.*")
-    public static void teamOpClaim(final Player sender) {
+    public static void teamOpClaim(Player sender) {
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(sender);
 
         if (team == null) {

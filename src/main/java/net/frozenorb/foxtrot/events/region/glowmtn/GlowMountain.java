@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class GlowMountain {
 
-    @Getter private final Set<BlockVector> glowstone = new HashSet<>();
+    @Getter private Set<BlockVector> glowstone = new HashSet<>();
     @Getter @Setter private int remaining = 0; // We don't need a whole set for numbers???
 
     public void scan() {

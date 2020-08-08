@@ -9,7 +9,7 @@ public enum TabListMode {
     DETAILED_WITH_FACTION_INFO("Detailed w/ Team List"),
     VANILLA("Vanilla");
 
-    private final String name;
+    private String name;
 
     public String getName() {
         return name;

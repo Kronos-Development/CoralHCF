@@ -39,16 +39,16 @@ public class BardClass extends PvPClass implements Listener {
             This is therefore commented with // CUSTOM
      */
 
-    public static final Map<Material, BardEffect> BARD_CLICK_EFFECTS = new HashMap<>();
-    public static final Map<Material, BardEffect> BARD_PASSIVE_EFFECTS = new HashMap<>();
+    public static Map<Material, BardEffect> BARD_CLICK_EFFECTS = new HashMap<>();
+    public static Map<Material, BardEffect> BARD_PASSIVE_EFFECTS = new HashMap<>();
 
     @Getter private static Map<String, Long> lastEffectUsage = new ConcurrentHashMap<>();
     @Getter private static Map<String, Float> energy = new ConcurrentHashMap<>();
 
-    public static final int BARD_RANGE = 25;
-    public static final int EFFECT_COOLDOWN = 10 * 1000;
-    public static final float MAX_ENERGY = 120;
-    public static final float ENERGY_REGEN_PER_SECOND = 1;
+    public static int BARD_RANGE = 25;
+    public static int EFFECT_COOLDOWN = 10 * 1000;
+    public static float MAX_ENERGY = 120;
+    public static float ENERGY_REGEN_PER_SECOND = 1;
 
     public BardClass() {
         super("Bard", 15, null);

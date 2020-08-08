@@ -21,7 +21,7 @@ public class LandBoard implements Listener {
 
     private static LandBoard instance;
     @Getter @Setter private boolean claimsEnabled = true;
-    private final Map<String, Multimap<CoordinateSet, Map.Entry<Claim, Team>>> buckets = new ConcurrentHashMap<>();
+    private Map<String, Multimap<CoordinateSet, Map.Entry<Claim, Team>>> buckets = new ConcurrentHashMap<>();
 
     public LandBoard() {
         for (World world : Foxtrot.getInstance().getServer().getWorlds()) {

@@ -22,7 +22,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Kit {
 
-    private final String name;
+    private String name;
 
     private ItemStack icon;
 

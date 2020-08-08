@@ -33,9 +33,9 @@ import net.frozenorb.qlib.command.Command;
 
 public class TeamStuckCommand implements Listener {
 
-    private static final double MAX_DISTANCE = 5;
+    private static double MAX_DISTANCE = 5;
 
-    private static final Set<Integer> warn = new HashSet<>();
+    private static Set<Integer> warn = new HashSet<>();
 
     static {
         warn.add(300);
@@ -62,7 +62,7 @@ public class TeamStuckCommand implements Listener {
     private static List<String> damaged = Lists.newArrayList();
 
     @Command(names={ "team stuck", "t stuck", "f stuck", "faction stuck", "fac stuck", "stuck", "team unstuck", "t unstuck", "f unstuck", "faction unstuck", "fac unstuck", "unstuck"}, permission="")
-    public static void teamStuck(final Player sender) {
+    public static void teamStuck(Player sender) {
         if (Foxtrot.getInstance().getDeathbanMap().isDeathbanned(sender.getUniqueId())) {
             sender.sendMessage(ChatColor.RED + "You can't do this while you are deathbanned.");
             return;

@@ -21,7 +21,7 @@ import net.frozenorb.foxtrot.team.Team;
 
 public class FoundDiamondsListener implements Listener {
 
-    public static final Set<BlockFace> CHECK_FACES = ImmutableSet.of(
+    public static Set<BlockFace> CHECK_FACES = ImmutableSet.of(
             BlockFace.NORTH,
             BlockFace.SOUTH,
             BlockFace.EAST,

@@ -17,7 +17,7 @@ import java.util.List;
 public class GlowHandler {
 
     private static File file;
-    @Getter private final static String glowTeamName = "Glowstone";
+    @Getter private static String glowTeamName = "Glowstone";
     @Getter @Setter private GlowMountain glowMountain;
 
     public GlowHandler() {

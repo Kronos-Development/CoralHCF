@@ -19,10 +19,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class PermissionTypeMenu extends Menu {
 
-    @Getter private final Team team;
-    @Getter private final String type;
-    private final boolean isRally;
-    private final boolean isDisplay;
+    @Getter private Team team;
+    @Getter private String type;
+    private boolean isRally;
+    private boolean isDisplay;
 
     public PermissionTypeMenu(Team team, String type) {
         super(type + " access.");

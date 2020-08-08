@@ -8,12 +8,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.concurrent.TimeUnit;
 
-public final class ServerFakeFreezeTask extends BukkitRunnable {
+public class ServerFakeFreezeTask extends BukkitRunnable {
 
-    public static final double SPIKE_MIN_MOD = 2.0;
-    public static final double STABLE_MIN_MOD = 1.3;
-    public static final long STABLE_MIN_TIME = TimeUnit.MINUTES.toMillis(3);
-    public static final int MIN_PLAYERS_TO_FREEZE = 50;
+    public static double SPIKE_MIN_MOD = 2.0;
+    public static double STABLE_MIN_MOD = 1.3;
+    public static long STABLE_MIN_TIME = TimeUnit.MINUTES.toMillis(3);
+    public static int MIN_PLAYERS_TO_FREEZE = 50;
 
     private RollingAverage oneMinLatencyAvg = new RollingAverage(60);
     private RollingAverage healLatencyAvg;

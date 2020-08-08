@@ -17,7 +17,7 @@ public class ClientCommandPacketAdaper extends PacketAdapter {
     }
 
     @Override
-    public void onPacketReceiving(final PacketEvent event) {
+    public void onPacketReceiving(PacketEvent event) {
         if (event.getPacket().getClientCommands().read(0) == EnumWrappers.ClientCommand.PERFORM_RESPAWN) {
             if (!Foxtrot.getInstance().getDeathbanMap().isDeathbanned(event.getPlayer().getUniqueId())) {
                 return;
@@ -30,7 +30,7 @@ public class ClientCommandPacketAdaper extends PacketAdapter {
 
             long unbannedOn = Foxtrot.getInstance().getDeathbanMap().getDeathban(event.getPlayer().getUniqueId());
             long left = unbannedOn - System.currentTimeMillis();
-            final String time = TimeUtils.formatIntoDetailedString((int) left / 1000);
+            String time = TimeUtils.formatIntoDetailedString((int) left / 1000);
             event.setCancelled(true);
 
             new BukkitRunnable() {

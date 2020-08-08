@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class LFFCompleteButton extends Button {
 
-    private final LFFMenu lffMenu;
+    private LFFMenu lffMenu;
 
     @Override
     public String getName(Player player) {

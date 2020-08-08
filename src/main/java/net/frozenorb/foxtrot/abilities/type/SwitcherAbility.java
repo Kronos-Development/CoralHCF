@@ -75,6 +75,7 @@ public class SwitcherAbility extends AbstractAbility {
         if (!(snowball.getShooter() instanceof Player)) return;
 
         Player shooter = (Player) snowball.getShooter();
+        Player damaged = (Player) event.getEntity();
         ItemStack itemInHand = shooter.getItemInHand();
 
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
@@ -85,6 +86,7 @@ public class SwitcherAbility extends AbstractAbility {
             return;
         }
 
+        //Checking if the shooter is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(shooter.getLocation())) {
             event.setCancelled(true);
             shooter.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
@@ -92,10 +94,17 @@ public class SwitcherAbility extends AbstractAbility {
             return;
         }
 
+        //Checking if the shooter has PVP-Timer if so we cancel the ability
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(shooter.getUniqueId())) {
             event.setCancelled(true);
             shooter.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
             shooter.updateInventory();
+            return;
+        }
+
+        //Checking if the opponent has a PVP-TIMER if so we cancel the ability
+        if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(damaged.getUniqueId())) {
+            shooter.sendMessage(CC.translate("&c&lWARNING! &eThis player currently has their &aPVP Timer&e!"));
             return;
         }
 

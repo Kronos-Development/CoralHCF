@@ -19,8 +19,8 @@ import java.util.List;
 import static net.frozenorb.foxtrot.elevators.ElevatorUtil.findValidLocation;
 
 public class ElevatorListener implements Listener {
-    private static final List<String> signOperators = Arrays.asList("up", "down");
-    private static final List<Material> signMaterials = Arrays.asList(Material.SIGN_POST, Material.WALL_SIGN);
+    private static List<String> signOperators = Arrays.asList("up", "down");
+    private static List<Material> signMaterials = Arrays.asList(Material.SIGN_POST, Material.WALL_SIGN);
 
     @EventHandler
     public void onSignInteract(PlayerInteractEvent event) {
@@ -28,7 +28,7 @@ public class ElevatorListener implements Listener {
                 || !signMaterials.contains(event.getClickedBlock().getType())) {
             return;
         }
-        final BlockState blockState = event.getClickedBlock().getState();
+        BlockState blockState = event.getClickedBlock().getState();
 
         if (!(blockState instanceof Sign)) {
             return;
@@ -40,8 +40,8 @@ public class ElevatorListener implements Listener {
             return;
         }
 
-        final float oldyaw = event.getPlayer().getLocation().getYaw();
-        final float oldpitch = event.getPlayer().getLocation().getPitch();
+        float oldyaw = event.getPlayer().getLocation().getYaw();
+        float oldpitch = event.getPlayer().getLocation().getPitch();
 
         Location teleportLocation = findValidLocation(event.getClickedBlock().getLocation(), ElevatorDirection.valueOf(sign.getLine(1).toLowerCase()));
 

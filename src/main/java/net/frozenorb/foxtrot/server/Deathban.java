@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public final class Deathban {
+public class Deathban {
 
     private static Map<String, Integer> deathban = new LinkedHashMap<>();
     private static int defaultMinutes = 240;

@@ -17,16 +17,16 @@ import java.util.Map;
 
 public class InventoryUtils {
 
-    public static final SimpleDateFormat DEATH_TIME_FORMAT = new SimpleDateFormat("MM.dd.yy HH:mm");
-    public static final String KILLS_LORE_IDENTIFIER = ChatColor.YELLOW.toString() + ChatColor.BOLD + "Kills: " + ChatColor.WHITE.toString() + ChatColor.BOLD;
+    public static SimpleDateFormat DEATH_TIME_FORMAT = new SimpleDateFormat("MM.dd.yy HH:mm");
+    public static String KILLS_LORE_IDENTIFIER = ChatColor.YELLOW.toString() + ChatColor.BOLD + "Kills: " + ChatColor.WHITE.toString() + ChatColor.BOLD;
 
-    public static final ItemStack CROWBAR;
-    public static final ItemStack ANTIDOTE = ItemBuilder.of(Material.POTION).data((short) 8196).name(ChatColor.GREEN + "Antidote").setLore(new ArrayList<>()).addToLore(ChatColor.GRAY + "Drink to relieve yourself of potion debuffs.").build();
+    public static ItemStack CROWBAR;
+    public static ItemStack ANTIDOTE = ItemBuilder.of(Material.POTION).data((short) 8196).name(ChatColor.GREEN + "Antidote").setLore(new ArrayList<>()).addToLore(ChatColor.GRAY + "Drink to relieve yourself of potion debuffs.").build();
 
-    public static final String CROWBAR_NAME = ChatColor.RED + "Crowbar";
+    public static String CROWBAR_NAME = ChatColor.RED + "Crowbar";
 
-    public static final int CROWBAR_PORTALS = 6;
-    public static final int CROWBAR_SPAWNERS = 1;
+    public static int CROWBAR_PORTALS = 6;
+    public static int CROWBAR_SPAWNERS = 1;
 
     static {
         CROWBAR = new ItemStack(Material.DIAMOND_HOE);

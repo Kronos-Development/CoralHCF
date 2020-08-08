@@ -16,7 +16,7 @@ import net.frozenorb.foxtrot.team.claims.Claim;
 
 public class Cavern {
     
-    @Getter private final Map<String, String> ores = Maps.newHashMap();
+    @Getter private Map<String, String> ores = Maps.newHashMap();
     @Getter @Setter private int remaining = 0; // We don't need a whole set for numbers???
     
     public void scan() {

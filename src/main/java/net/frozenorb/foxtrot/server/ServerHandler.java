@@ -66,69 +66,69 @@ public class ServerHandler {
 
     // NEXT MAP //
     // http://minecraft.gamepedia.com/Potion#Data_value_table
-    private final Map<PotionType, PotionStatus> potionStatus = new HashMap<>();
+    private Map<PotionType, PotionStatus> potionStatus = new HashMap<>();
 
-    @Getter private static final Map<String, Logout> tasks = new HashMap<>();
+    @Getter private static Map<String, Logout> tasks = new HashMap<>();
 
     @Getter private IServerPermissions permissions;
     @Getter private ConditionalHandler conditionalHandler;
 
-    @Getter private final String networkName;
-    @Getter private final String serverName;
-    @Getter private final String networkWebsite;
-    @Getter private final String statsWebsiteRoot;
+    @Getter private String networkName;
+    @Getter private String serverName;
+    @Getter private String networkWebsite;
+    @Getter private String statsWebsiteRoot;
 
-    @Getter private final String tabServerName;
-    @Getter private final String tabSectionColor;
-    @Getter private final String tabInfoColor;
+    @Getter private String tabServerName;
+    @Getter private String tabSectionColor;
+    @Getter private String tabInfoColor;
 
-    @Getter private final String sbSectionColor;
-    @Getter private final String sbTimeColor;
+    @Getter private String sbSectionColor;
+    @Getter private String sbTimeColor;
 
-    @Getter private final String eventMainColor;
-    @Getter private final String eventOtherColor;
+    @Getter private String eventMainColor;
+    @Getter private String eventOtherColor;
 
-    @Getter private final double startingBalance;
+    @Getter private double startingBalance;
 
-    @Getter private final boolean squads;
-    @Getter private final boolean idleCheckEnabled;
-    @Getter private final boolean startingTimerEnabled;
-    @Getter private final boolean forceInvitesEnabled;
-    @Getter private final boolean uhcHealing;
-    @Getter private final boolean passiveTagEnabled;
-    @Getter private final boolean allowBoosting;
-    @Getter private final boolean waterPlacementInClaimsAllowed;
-    @Getter private final boolean blockRemovalEnabled;
+    @Getter private boolean squads;
+    @Getter private boolean idleCheckEnabled;
+    @Getter private boolean startingTimerEnabled;
+    @Getter private boolean forceInvitesEnabled;
+    @Getter private boolean uhcHealing;
+    @Getter private boolean passiveTagEnabled;
+    @Getter private boolean allowBoosting;
+    @Getter private boolean waterPlacementInClaimsAllowed;
+    @Getter private boolean blockRemovalEnabled;
 
-    @Getter private final boolean rodPrevention;
-    @Getter private final boolean skybridgePrevention;
+    @Getter private boolean rodPrevention;
+    @Getter private boolean skybridgePrevention;
 
-    @Getter private final boolean teamHQInEnemyClaims;
+    @Getter private boolean teamHQInEnemyClaims;
 
-    @Getter private final Set<Betrayer> betrayers = new HashSet<>();
+    @Getter private Set<Betrayer> betrayers = new HashSet<>();
 
-    @Getter private static final Map<String, Long> homeTimer = new ConcurrentHashMap<>();
+    @Getter private static Map<String, Long> homeTimer = new ConcurrentHashMap<>();
 
     @Getter @Setter private boolean EOTW = false;
     @Getter @Setter private boolean PreEOTW = false;
 
-    @Getter private final boolean reduceArmorDamage;
-    @Getter private final boolean blockEntitiesThroughPortals;
+    @Getter private boolean reduceArmorDamage;
+    @Getter private boolean blockEntitiesThroughPortals;
 
-    @Getter private final ChatColor archerTagColor;
-    @Getter private final ChatColor stunTagColor;
-    @Getter private final ChatColor defaultRelationColor;
+    @Getter private ChatColor archerTagColor;
+    @Getter private ChatColor stunTagColor;
+    @Getter private ChatColor defaultRelationColor;
 
-    @Getter private final int maxProtection, maxPower, maxSharpness;
+    @Getter private int maxProtection, maxPower, maxSharpness;
 
-    @Getter private final boolean velt;
-    @Getter private final boolean veltKitMap;
+    @Getter private boolean velt;
+    @Getter private boolean veltKitMap;
 
-    @Getter private final boolean hardcore;
-    @Getter private final boolean placeBlocksInCombat;
+    @Getter private boolean hardcore;
+    @Getter private boolean placeBlocksInCombat;
 
-    @Getter private final boolean customHelp;
-    @Getter private final String helpSectionColor, helpEntryColor, helpInfoColor;
+    @Getter private boolean customHelp;
+    @Getter private String helpSectionColor, helpEntryColor, helpInfoColor;
 
     public ServerHandler() {
         try {
@@ -341,7 +341,7 @@ public class ServerHandler {
         return (!potionStatus.containsKey(type) || potionStatus.get(type).maxLevel == -1 || potionStatus.get(type).maxLevel >= amplifier);
     }
 
-    public void startLogoutSequence(final Player player) {
+    public void startLogoutSequence(Player player) {
         player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "Logging out... " +ChatColor.YELLOW + "Please wait" + ChatColor.RED+ " 30" + ChatColor.YELLOW + " seconds.");
 
         BukkitTask taskid = new BukkitRunnable() {
@@ -508,7 +508,7 @@ public class ServerHandler {
         return (Math.min(max, ban));
     }
 
-    public void beginHQWarp(final Player player, final Team team, int warmup, boolean charge) {
+    public void beginHQWarp(Player player, Team team, int warmup, boolean charge) {
         Team inClaim = LandBoard.getInstance().getTeam(player.getLocation());
 
         // quick fix
@@ -561,12 +561,12 @@ public class ServerHandler {
 
         homeTimer.put(player.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(warmup));
 
-        final int finalWarmup = warmup;
+        int finalWarmup = warmup;
 
         new BukkitRunnable() {
 
             int time = finalWarmup;
-            final Location startLocation = player.getLocation();
+            Location startLocation = player.getLocation();
             double startHealth = player.getHealth();
 
             @Override
@@ -624,9 +624,9 @@ public class ServerHandler {
         }.runTaskTimer(Foxtrot.getInstance(), 20L, 20L);
     }
 
-    private final Map<UUID, Long> playerDamageRestrictMap = Maps.newHashMap();
+    private Map<UUID, Long> playerDamageRestrictMap = Maps.newHashMap();
 
-    public void disablePlayerAttacking(final Player player, int seconds) {
+    public void disablePlayerAttacking(Player player, int seconds) {
         if (seconds == 10) {
             player.sendMessage(ChatColor.GRAY + "You cannot attack for " + seconds + " seconds.");
         }
@@ -887,9 +887,9 @@ public class ServerHandler {
         return (kothsign);
     }
 
-    private final HashMap<Sign, BukkitRunnable> showSignTasks = new HashMap<>();
+    private HashMap<Sign, BukkitRunnable> showSignTasks = new HashMap<>();
 
-    public void showSignPacket(Player player, final Sign sign, String... lines) {
+    public void showSignPacket(Player player, Sign sign, String... lines) {
         player.sendSignChange(sign.getLocation(), lines);
 
         if (showSignTasks.containsKey(sign)) {
@@ -931,9 +931,9 @@ public class ServerHandler {
     @AllArgsConstructor
     private class PotionStatus {
 
-        private final boolean drinkables;
-        private final boolean splash;
-        private final int maxLevel;
+        private boolean drinkables;
+        private boolean splash;
+        private int maxLevel;
 
     }
 

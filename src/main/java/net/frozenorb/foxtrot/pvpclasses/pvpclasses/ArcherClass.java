@@ -37,12 +37,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ArcherClass extends PvPClass {
 
-	private static final int MARK_SECONDS = 5;
+	private static int MARK_SECONDS = 5;
 
-	private static final Map<String, Long> lastSpeedUsage = new HashMap<>();
-	private static final Map<String, Long> lastJumpUsage = new HashMap<>();
-	@Getter private static final Map<String, Long> markedPlayers = new ConcurrentHashMap<>();
-	@Getter private static final Map<String, Set<Pair<String, Long>>> markedBy = new HashMap<>();
+	private static Map<String, Long> lastSpeedUsage = new HashMap<>();
+	private static Map<String, Long> lastJumpUsage = new HashMap<>();
+	@Getter private static Map<String, Long> markedPlayers = new ConcurrentHashMap<>();
+	@Getter private static Map<String, Set<Pair<String, Long>>> markedBy = new HashMap<>();
 
 	public ArcherClass() {
 		super("Archer", 15, Arrays.asList(Material.SUGAR, Material.FEATHER));
@@ -80,7 +80,7 @@ public class ArcherClass extends PvPClass {
 	public void onEntityArrowHit(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
 			Arrow arrow = (Arrow) event.getDamager();
-			final Player victim = (Player) event.getEntity();
+			Player victim = (Player) event.getEntity();
 
 			if (!(arrow.getShooter() instanceof Player)) {
 				return;
@@ -141,7 +141,7 @@ public class ArcherClass extends PvPClass {
 
 					victim.removePotionEffect(invis.getType());
 
-					final PotionEffect invisFinal = invis;
+					PotionEffect invis= invis;
 
 					/* Handle returning their invisibility after the archer tag is done */
 					if (playerClass instanceof MinerClass) {

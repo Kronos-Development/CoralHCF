@@ -8,11 +8,11 @@ import org.bukkit.ChatColor;
 
 public class ConquestHandler {
 
-    public static final String PREFIX = ChatColor.YELLOW + "[Conquest]";
+    public static String PREFIX = ChatColor.YELLOW + "[Conquest]";
 
-    public static final int POINTS_DEATH_PENALTY = 20;
-    public static final String KOTH_NAME_PREFIX = "Conquest-";
-    public static final int TIME_TO_CAP = 30;
+    public static int POINTS_DEATH_PENALTY = 20;
+    public static String KOTH_NAME_PREFIX = "Conquest-";
+    public static int TIME_TO_CAP = 30;
 
     @Getter @Setter private ConquestGame game;
 

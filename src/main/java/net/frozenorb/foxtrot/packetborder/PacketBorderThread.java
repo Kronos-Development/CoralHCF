@@ -21,8 +21,8 @@ import org.bukkit.entity.Player;
 
 public class PacketBorderThread extends Thread {
 
-    public static final int REGION_DISTANCE = 8;
-    public static final int REGION_DISTANCE_SQUARED = REGION_DISTANCE * REGION_DISTANCE;
+    public static int REGION_DISTANCE = 8;
+    public static int REGION_DISTANCE_SQUARED = REGION_DISTANCE * REGION_DISTANCE;
 
     private static Map<String, Map<Location, Long>> sentBlockChanges = new HashMap<>();
 

@@ -29,9 +29,9 @@ public class PurgatoryHandler {
     private Location purgatoryLocation;
 
     @Getter private Map<Material, Integer> priceMap;
-    @Getter private final Map<Vector, Material> mineMap;
+    @Getter private Map<Vector, Material> mineMap;
 
-    @Getter private final Map<String, Boolean> banCache;
+    @Getter private Map<String, Boolean> banCache;
 
     @Getter private ItemStack pickaxe = ItemBuilder
             .of(Material.IRON_PICKAXE)

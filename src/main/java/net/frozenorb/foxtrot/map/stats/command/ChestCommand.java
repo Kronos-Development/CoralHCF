@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class ChestCommand {
 
-    @Getter private static final Set<UUID> BYPASS = new HashSet<>();
+    @Getter private static Set<UUID> BYPASS = new HashSet<>();
 
     @Command(names = {"chest"}, permission = "")
     public static void chest(Player sender) {

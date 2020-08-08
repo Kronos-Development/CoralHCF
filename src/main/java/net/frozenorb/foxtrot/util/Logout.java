@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Logout {
 
-    private final int taskId;
-    private final long logoutTime;
+    private int taskId;
+    private long logoutTime;
 }

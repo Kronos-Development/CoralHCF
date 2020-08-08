@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class DeathsCommand {
 
-    private final static DateFormat FORMAT = new SimpleDateFormat("M dd yyyy h:mm a");
+    private static DateFormat FORMAT = new SimpleDateFormat("M dd yyyy h:mm a");
 
     @Command(names={ "deaths" }, permission="foxtrot.deaths")
     public static void deaths(Player sender, @Param(name="player") UUID player) {

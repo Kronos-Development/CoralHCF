@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventorySerialization {
 
-	private static final Type TYPE = new TypeToken<ItemStack[]>() {}.getType();
+	private static Type TYPE = new TypeToken<ItemStack[]>() {}.getType();
 
 	public static BasicDBObject serialize(ItemStack[] armor, ItemStack[] inventory) {
 		BasicDBList armorDBObject = serialize(armor);

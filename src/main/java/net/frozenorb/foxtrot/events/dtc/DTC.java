@@ -26,7 +26,7 @@ public class DTC implements Event {
     @Getter @Setter boolean active;
 
     @Getter private int currentPoints = 0;
-    @Getter final private int startingPoints = 175;
+    @Getter private int startingPoints = 175;
 
     @Getter private long lastBlockBreak = -1L;
     @Getter private long lastPointIncrease = -1L;

@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class MinerClass extends PvPClass implements Listener {
 
-    private static final int Y_HEIGHT = 20;
+    private static int Y_HEIGHT = 20;
 
     private Map<String, Integer> noDamage = new HashMap<>();
     @Getter private Map<String, Integer> invis = new HashMap<>();

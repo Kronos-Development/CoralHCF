@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class TeamPointBreakDownCommand {
 
 	@Command(names = { "team pointbr", "team pbr", "t pointbr", "t pbr" }, permission = "op")
-	public static void teamPointBreakDown(Player player, @Param(name="team", defaultValue="self") final Team team) {
+	public static void teamPointBreakDown(Player player, @Param(name="team", defaultValue="self") Team team) {
 		player.sendMessage(ChatColor.GOLD + "Point Breakdown of " + team.getName());
 
 		for (String info : team.getPointBreakDown()) {

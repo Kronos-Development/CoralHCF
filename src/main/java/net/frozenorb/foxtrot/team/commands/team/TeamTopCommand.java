@@ -21,7 +21,7 @@ import net.frozenorb.qlib.util.UUIDUtils;
 public class TeamTopCommand {
 
     @Command(names={ "team top", "t top", "f top", "faction top", "fac top" }, permission="")
-    public static void teamList(final CommandSender sender) {
+    public static void teamList(CommandSender sender) {
         // This is sort of intensive so we run it async (cause who doesn't love async!)
         new BukkitRunnable() {
 

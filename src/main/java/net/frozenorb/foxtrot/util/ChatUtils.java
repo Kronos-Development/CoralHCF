@@ -6,9 +6,9 @@ import org.bukkit.ChatColor;
 import java.util.*;
 
 @NoArgsConstructor
-public final class ChatUtils {
+public class ChatUtils {
 
-    private static final List<ChatColor> chatColor = new ArrayList<>();
+    private static List<ChatColor> chatColor = new ArrayList<>();
 
     public static ChatColor randomChatColor() {
         return chatColor.get(new Random().nextInt(chatColor.size()));

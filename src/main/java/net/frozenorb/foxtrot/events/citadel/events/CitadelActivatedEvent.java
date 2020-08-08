@@ -5,7 +5,7 @@ import org.bukkit.event.HandlerList;
 
 public class CitadelActivatedEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
 
     public HandlerList getHandlers() {
         return handlers;

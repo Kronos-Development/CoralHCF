@@ -12,10 +12,10 @@ import org.bukkit.event.HandlerList;
 @RequiredArgsConstructor
 public class CrowbarSpawnerBreakEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
+	private static HandlerList handlers = new HandlerList();
 
-	@Getter private final Player player;
-	@Getter private final Block block;
+	@Getter private Player player;
+	@Getter private Block block;
 	@Getter @Setter private boolean cancelled;
 
 	public HandlerList getHandlers() {

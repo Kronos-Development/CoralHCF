@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 
 public class PortalTrapListener implements Listener {
 
-    public static final BlockFace[] FACES = new BlockFace[]{
+    public static BlockFace[] FACES = new BlockFace[]{
             BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST
     };
     private Map<UUID, Long> lastMessaged = new HashMap<>();
 
     @EventHandler
-    public void onPortal(final PlayerPortalEvent event) {
+    public void onPortal(PlayerPortalEvent event) {
         if (event.getCause() != PlayerTeleportEvent.TeleportCause.NETHER_PORTAL) return;
 
         new BukkitRunnable() {
@@ -77,8 +77,8 @@ public class PortalTrapListener implements Listener {
     }
 
     @EventHandler
-    public void onPortalCreate(final PortalCreateEvent event) {
-        final List<Block> blocks = new ArrayList<>(event.getBlocks());
+    public void onPortalCreate(PortalCreateEvent event) {
+        List<Block> blocks = new ArrayList<>(event.getBlocks());
 
         for (Block block : event.getBlocks()) {
             if (block.getType() != Material.AIR && block.getType() != Material.FIRE) blocks.remove(block);

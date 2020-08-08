@@ -73,7 +73,7 @@ public class TeamCommand {
         sender.sendMessage(msg);
     }
 
-    private static final String[] HCTEAMS_HELP = {
+    private static String[] HCTEAMS_HELP = {
 
         "§7§m-----------------------------------------------------",
                 "§9§lTeam Help §7- §eTeam Help",

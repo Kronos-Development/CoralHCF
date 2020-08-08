@@ -140,7 +140,7 @@ public class EventListener implements Listener {
                 break;
         }
         
-        final String[] messagesFinal = messages;
+        String[] messages= messages;
 
         new BukkitRunnable() {
 
@@ -159,19 +159,19 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onKOTHCaptured(final EventCapturedEvent event) {
+    public void onKOTHCaptured(EventCapturedEvent event) {
         if (event.getEvent().isHidden()) {
             return;
         }
 
-        final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
         String teamName = ChatColor.GOLD + "[" + ChatColor.YELLOW + "-" + ChatColor.GOLD + "]";
 
         if (team != null) {
             teamName = ChatColor.GOLD + "[" + ChatColor.YELLOW + team.getName() + ChatColor.GOLD + "]";
         }
 
-        final String[] filler = {"", "", "", "", "", ""};
+        String[] filler = {"", "", "", "", "", ""};
         String[] messages;
 
         String main = Foxtrot.getInstance().getServerHandler().getEventMainColor();
@@ -255,7 +255,7 @@ public class EventListener implements Listener {
             }
         }
 
-        final String[] messagesFinal = messages;
+        String[] messages= messages;
 
         new BukkitRunnable() {
 
@@ -274,7 +274,7 @@ public class EventListener implements Listener {
             Foxtrot.getInstance().getLogger().info(message);
         }
 
-        final BasicDBObject dbObject = new BasicDBObject();
+        BasicDBObject dbObject = new BasicDBObject();
 
         dbObject.put("EventName", event.getEvent().getName());
         dbObject.put("EventType", event.getEvent().getType().name());
@@ -315,7 +315,7 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onKOTHControlLost(final KOTHControlLostEvent event) {
+    public void onKOTHControlLost(KOTHControlLostEvent event) {
         if (event.getKOTH().getRemainingCapTime() <= (event.getKOTH().getCapTime() - 30)) {
             Foxtrot.getInstance().getServer().broadcastMessage(ChatColor.GOLD + "[KingOfTheHill] Control of " + ChatColor.YELLOW + event.getKOTH().getName() + ChatColor.GOLD + " lost.");
         }

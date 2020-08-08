@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
-public final class PotionUtils {
+public class PotionUtils {
 
-    private static final Map<PotionEffectType, String> displayNames = new HashMap<>();
+    private static Map<PotionEffectType, String> displayNames = new HashMap<>();
 
     public static String getName(PotionEffectType type) {
         return displayNames.get(type);

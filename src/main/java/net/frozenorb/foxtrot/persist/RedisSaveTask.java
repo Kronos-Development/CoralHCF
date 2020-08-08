@@ -19,7 +19,7 @@ public class RedisSaveTask extends BukkitRunnable {
         save(null, false);
     }
 
-    public static int save(final CommandSender issuer, final boolean forceAll) {
+    public static int save(CommandSender issuer, boolean forceAll) {
         long startMs = System.currentTimeMillis();
         int teamsSaved = qLib.getInstance().runRedisCommand(redis -> {
 

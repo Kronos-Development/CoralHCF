@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class IdleCheckRunnable extends BukkitRunnable {
 
-    private static final int MINUTES = 15;
+    private static int MINUTES = 15;
 
     @Override
     public void run() {

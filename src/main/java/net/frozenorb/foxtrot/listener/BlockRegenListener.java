@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BlockRegenListener implements Listener {
 
-    private static final Set<Material> REGEN = ImmutableSet.of(
+    private static Set<Material> REGEN = ImmutableSet.of(
             Material.COBBLESTONE,
             Material.DIRT,
             Material.WOOD,

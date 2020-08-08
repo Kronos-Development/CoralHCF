@@ -83,14 +83,14 @@ public class PocketBardAbility extends AbstractAbility {
             player.updateInventory();
             return;
         }
-
+        //Checking if the player is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(player.getLocation())) {
             event.setCancelled(true);
-            player.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
+            player.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             player.updateInventory();
             return;
         }
-
+        //Checking if the player has PVP-Timer if so we cancel the ability
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(player.getUniqueId())) {
             event.setCancelled(true);
             player.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));

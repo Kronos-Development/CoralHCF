@@ -177,7 +177,7 @@ public class  SpawnListener implements Listener {
             if (!Foxtrot.getInstance().getServerHandler().isWaterPlacementInClaimsAllowed()) {
                 event.setCancelled(true);
             } else {
-                final Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
+                Block waterBlock = event.getBlockClicked().getRelative(event.getBlockFace());
 
                 if (waterBlock.getRelative(BlockFace.NORTH).isLiquid()
                         || waterBlock.getRelative(BlockFace.SOUTH).isLiquid()

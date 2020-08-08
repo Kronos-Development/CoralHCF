@@ -18,7 +18,7 @@ import java.util.UUID;
 public class RedstoneListener implements Listener {
 
     @Getter
-    private final Map<UUID, Long> leverCooldown = new HashMap<>();
+    private Map<UUID, Long> leverCooldown = new HashMap<>();
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {

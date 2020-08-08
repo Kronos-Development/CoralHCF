@@ -65,7 +65,7 @@ public class PlaytimeMap extends PersistMap<Long> {
         updateValueSync(update, playtime);
     }
 
-    private static final long HOUR_IN_MS = 3_600_000L;
+    private static long HOUR_IN_MS = 3_600_000L;
 
     private long calculateNextRewardTime(UUID uuid) {
         return System.currentTimeMillis() + ((HOUR_IN_MS * 2) - (((getPlaytime(uuid) * 1000L) + getCurrentSession(uuid)) % (HOUR_IN_MS * 2)));

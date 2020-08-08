@@ -10,9 +10,9 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import java.util.*;
 
 public class Cuboid implements Iterable<Block>, Cloneable, ConfigurationSerializable {
-    protected final String worldName;
-    protected final int x1, y1, z1;
-    protected final int x2, y2, z2;
+    protected String worldName;
+    protected int x1, y1, z1;
+    protected int x2, y2, z2;
 
     /**
      * Construct a Cuboid given two Location objects which represent any two corners of the Cuboid.

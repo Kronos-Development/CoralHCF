@@ -29,7 +29,7 @@ import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
 public class KOTHRewardKeyListener implements Listener {
 
     @EventHandler
-    public void onPlayerInteract(final PlayerInteractEvent event) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null
                 || event.getItem() == null
                 || event.getClickedBlock().getType() != Material.ENDER_CHEST
@@ -76,7 +76,7 @@ public class KOTHRewardKeyListener implements Listener {
 
         Chest chest = (Chest) block.getState();
         ItemStack[] lootTables = chest.getBlockInventory().getContents();
-        final List<ItemStack> loot = new ArrayList<>();
+        List<ItemStack> loot = new ArrayList<>();
         int given = 0;
         int tries = 0;
         int tier = NumberUtils.toInt(stack.getItemMeta().getLore().get(3).replaceAll("[^\\d.]", ""));
@@ -101,7 +101,7 @@ public class KOTHRewardKeyListener implements Listener {
             loot.add(chosenItem);
         }
 
-        final StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
 
         for (ItemStack itemStack : loot) {
             String displayName = itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName() ? ChatColor.RED.toString() + ChatColor.ITALIC + ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()) : ChatColor.BLUE.toString() + itemStack.getAmount() + "x " + ChatColor.YELLOW + WordUtils.capitalize(itemStack.getType().name().replace("_", " ").toLowerCase());

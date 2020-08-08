@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 public class RegenUtils {
 
-    private static final Set<Location> allEntries = new HashSet<>();
+    private static Set<Location> allEntries = new HashSet<>();
 
     public static void schedule(Block block, int amount, TimeUnit unit, Callback<Block> onRegen, Predicate<Block> willRegen) {
         int seconds = (int) unit.toSeconds(amount);

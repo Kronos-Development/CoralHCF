@@ -48,9 +48,9 @@ import java.util.UUID;
 
 public class UHCListener implements Listener {
 
-    private static final String BELOW_NAME_OBJECTIVE_NAME = "BelowName";
-    private static final char HEART_CHAR = '❤';
-    private static final DecimalFormat HEARTS_FORMAT = new DecimalFormat("#.#");
+    private static String BELOW_NAME_OBJECTIVE_NAME = "BelowName";
+    private static char HEART_CHAR = '❤';
+    private static DecimalFormat HEARTS_FORMAT = new DecimalFormat("#.#");
 
     private static Field aField = null;
     private static Field bField = null;

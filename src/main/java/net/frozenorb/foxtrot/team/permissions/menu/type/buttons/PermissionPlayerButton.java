@@ -16,10 +16,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PermissionPlayerButton extends Button {
 
-    private final Team team;
-    private final boolean isRally;
-    private final boolean isDisplay;
-    private final UUID member;
+    private Team team;
+    private boolean isRally;
+    private boolean isDisplay;
+    private UUID member;
 
     @Override
     public String getName(Player player) {

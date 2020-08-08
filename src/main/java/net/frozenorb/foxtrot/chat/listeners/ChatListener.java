@@ -63,7 +63,7 @@ public class ChatListener implements Listener {
         ChatMode forcedChatMode = ChatMode.findFromForcedPrefix(event.getMessage().charAt(0));
         ChatMode finalChatMode;
 
-        // If they provided us with a forced chat mode, we have to remove it from the final message.
+        // If they provided us with a forced chat mode, we have to remove it from the message.
         // We also .trim() the message because people will do things like '! hi', which just looks annoying in chat.
         if (forcedChatMode != null) {
             String trimmed = event.getMessage().substring(1).trim();

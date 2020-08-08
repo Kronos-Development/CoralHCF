@@ -30,7 +30,7 @@ public abstract class PvPClass implements Listener {
     @Getter int warmup;
     @Getter List<Material> consumables;
     
-    private static final Table<UUID, PotionEffectType, PotionEffect> restores = HashBasedTable.create();
+    private static Table<UUID, PotionEffectType, PotionEffect> restores = HashBasedTable.create();
 
     public PvPClass(String name, int warmup, List<Material> consumables) {
         this.name = name;
@@ -81,7 +81,7 @@ public abstract class PvPClass implements Listener {
                 armor.getBoots() != null);
     }
 
-    public static void smartAddPotion(final Player player, PotionEffect potionEffect, boolean persistOldValues, PvPClass pvpClass) {
+    public static void smartAddPotion(Player player, PotionEffect potionEffect, boolean persistOldValues, PvPClass pvpClass) {
         setRestoreEffect(player, potionEffect);
     }
 

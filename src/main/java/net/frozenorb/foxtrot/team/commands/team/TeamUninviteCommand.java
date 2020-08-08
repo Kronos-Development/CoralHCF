@@ -18,13 +18,13 @@ import java.util.UUID;
 public class TeamUninviteCommand {
 
     @Command(names={ "team uninvite", "t uninvite", "f uninvite", "faction uninvite", "fac uninvite", "team revoke", "t revoke", "f revoke", "faction revoke", "fac revoke" }, permission="")
-    public static void teamUninvite(final Player sender, @Param(name="all | player") final String allPlayer) {
+    public static void teamUninvite(Player sender, @Param(name="all | player") String allPlayer) {
         if (Foxtrot.getInstance().getDeathbanMap().isDeathbanned(sender.getUniqueId())) {
             sender.sendMessage(ChatColor.RED + "You can't do this while you are deathbanned.");
             return;
         }
 
-        final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(sender);
+        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(sender);
 
         if (team == null) {
             sender.sendMessage(ChatColor.GRAY + "You are not on a team!");
@@ -39,7 +39,7 @@ public class TeamUninviteCommand {
                 new BukkitRunnable() {
 
                     public void run() {
-                        final UUID nameUUID = UUIDUtils.uuid(allPlayer);
+                        UUID nameUUID = UUIDUtils.uuid(allPlayer);
 
                         new BukkitRunnable() {
 

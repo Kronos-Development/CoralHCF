@@ -11,7 +11,7 @@ import net.frozenorb.foxtrot.events.Event;
 
 public class EventCapturedEvent extends PlayerEvent implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
 
     @Getter private Event event;
     @Getter @Setter private boolean cancelled;

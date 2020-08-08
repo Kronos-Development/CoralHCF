@@ -15,7 +15,7 @@ import static org.bukkit.ChatColor.*;
 
 public class BetrayerInfoCommand {
 
-    private final static SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy HH:mm:ss z");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy HH:mm:ss z");
 
     @Command(names = {"betrayer info"}, permission = "")
     public static void betrayerList(Player sender, @Param(name = "player") UUID player) {

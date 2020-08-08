@@ -6,14 +6,14 @@ import java.util.Arrays;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 
-public final class ExperienceManager {
+public class ExperienceManager {
 
     private static int hardMaxLevel = 100000;
 
     private static int xpTotalToReachLevel[];
 
-    private final WeakReference<Player> player;
-    private final String playerName;
+    private WeakReference<Player> player;
+    private String playerName;
 
     static {
         initLookupTables(25);

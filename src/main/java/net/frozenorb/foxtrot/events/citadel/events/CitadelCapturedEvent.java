@@ -8,7 +8,7 @@ import lombok.Getter;
 
 public class CitadelCapturedEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
 
     @Getter private ObjectId capper;
 

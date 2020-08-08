@@ -9,7 +9,7 @@ import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.qlib.command.Command;
 
-public final class TellLocationCommand {
+public class TellLocationCommand {
 
     @Command(names = {"telllocation", "tl"}, permission = "")
     public static void tellLocation(Player sender) {

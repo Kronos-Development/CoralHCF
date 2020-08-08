@@ -65,7 +65,7 @@ public abstract class PersistMap<T> {
         });
     }
     
-    protected void updateValueSync(final UUID key, final T value) {
+    protected void updateValueSync(UUID key, T value) {
         wrappedMap.put(key, value);
 
         qLib.getInstance().runRedisCommand(new RedisCommand<T>() {
@@ -99,7 +99,7 @@ public abstract class PersistMap<T> {
         });
     }
     
-    protected void updateValueAsync(final UUID key, T value) {
+    protected void updateValueAsync(UUID key, T value) {
         wrappedMap.put(key, value);
         
         new BukkitRunnable() {

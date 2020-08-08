@@ -17,7 +17,7 @@ import net.frozenorb.qlib.util.TimeUtils;
 public class DeathbanListener implements Listener {
 
     @EventHandler
-    public void onPlayerDeath(final PlayerDeathEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
         LastInvCommand.recordInventory(event.getEntity());
 
         EnderpearlCooldownHandler.getEnderpearlCooldown().remove(event.getEntity().getName()); // cancel enderpearls
@@ -37,7 +37,7 @@ public class DeathbanListener implements Listener {
         int seconds = (int) Foxtrot.getInstance().getServerHandler().getDeathban(event.getEntity());
         Foxtrot.getInstance().getDeathbanMap().deathban(event.getEntity().getUniqueId(), seconds);
 
-        final String time = TimeUtils.formatIntoDetailedString(seconds);
+        String time = TimeUtils.formatIntoDetailedString(seconds);
 
         new BukkitRunnable() {
 
@@ -76,7 +76,7 @@ public class DeathbanListener implements Listener {
 
         long unbannedOn = Foxtrot.getInstance().getDeathbanMap().getDeathban(event.getPlayer().getUniqueId());
         long left = unbannedOn - System.currentTimeMillis();
-        final String time = TimeUtils.formatIntoDetailedString((int) left / 1000);
+        String time = TimeUtils.formatIntoDetailedString((int) left / 1000);
 
         if (Foxtrot.getInstance().getServerHandler().isPreEOTW()) {
             player.sendMessage(ChatColor.RED + "Come back tomorrow for SOTW.");

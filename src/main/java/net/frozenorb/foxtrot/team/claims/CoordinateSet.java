@@ -2,9 +2,9 @@ package net.frozenorb.foxtrot.team.claims;
 
 public class CoordinateSet {
 
-    public static final int BITS = 6;
-    private final int x;
-    private final int z;
+    public static int BITS = 6;
+    private int x;
+    private int z;
 
     public CoordinateSet(int x, int z) {
         this.x = x >> BITS;

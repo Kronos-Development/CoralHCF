@@ -33,7 +33,7 @@ public class WebsiteListener implements Listener {
     
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent event) {
-        final BasicDBObject playerDeath = new BasicDBObject();
+        BasicDBObject playerDeath = new BasicDBObject();
 
         playerDeath.put("_id", UUID.randomUUID().toString().substring(0, 7));
         

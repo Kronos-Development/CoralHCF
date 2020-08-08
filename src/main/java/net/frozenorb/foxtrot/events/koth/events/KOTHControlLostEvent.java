@@ -10,7 +10,7 @@ import net.frozenorb.foxtrot.events.koth.KOTH;
 @AllArgsConstructor
 public class KOTHControlLostEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
 
     @Getter private KOTH KOTH;
 

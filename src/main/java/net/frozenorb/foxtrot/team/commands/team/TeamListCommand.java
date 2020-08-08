@@ -14,7 +14,7 @@ import java.util.*;
 public class TeamListCommand {
 
     @Command(names={ "team list", "t list", "f list", "faction list", "fac list" }, permission="")
-    public static void teamList(final Player sender, @Param(name="page", defaultValue="1") final int page) {
+    public static void teamList(Player sender, @Param(name="page", defaultValue="1") int page) {
         // This is sort of intensive so we run it async (cause who doesn't love async!)
         new BukkitRunnable() {
 

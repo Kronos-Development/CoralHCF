@@ -11,7 +11,7 @@ public class BackstabKillEvent extends PlayerEvent {
 
     @Getter private static HandlerList handlerList = new HandlerList();
 
-    @Getter private final Player killed;
+    @Getter private Player killed;
     @Getter @Setter private boolean allowed = false;
 
     public BackstabKillEvent(Player who, Player killed) {

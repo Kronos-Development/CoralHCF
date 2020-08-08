@@ -24,7 +24,7 @@ public class TeamMuteCommand {
     @Getter private static Map<UUID, String> teamMutes = new HashMap<>();
 
     @Command(names={ "team mute", "t mute", "f mute", "faction mute", "fac mute" }, permission="foxtrot.mutefaction")
-    public static void teamMute(Player sender, @Param(name="team") final Team team, @Param(name="time") int time, @Param(name="reason", wildcard=true) String reason) {
+    public static void teamMute(Player sender, @Param(name="team") Team team, @Param(name="time") int time, @Param(name="reason", wildcard=true) String reason) {
         int timeSeconds = time * 60;
 
         for (UUID player : team.getMembers()) {

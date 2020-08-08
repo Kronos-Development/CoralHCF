@@ -11,8 +11,8 @@ public class PlayerKilledEvent extends Event {
 
 	private static HandlerList handlerList = new HandlerList();
 
-	@Getter private final Player killer;
-	@Getter private final Player victim;
+	@Getter private Player killer;
+	@Getter private Player victim;
 
 	public HandlerList getHandlers() {
 		return (handlerList);

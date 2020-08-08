@@ -19,8 +19,8 @@ import net.frozenorb.qlib.command.Param;
 
 public class        CannonCommand {
 
-    public static final int SPAWN_CANNON_MAX_DISTANCE = 600;
-    public static final int SPAWN_CANNON_MIN_DISTANCE = 100;
+    public static int SPAWN_CANNON_MAX_DISTANCE = 600;
+    public static int SPAWN_CANNON_MIN_DISTANCE = 100;
 
     @Command(names={ "cannon" }, permission="")
     public static void cannon(Player sender) {
@@ -80,7 +80,7 @@ public class        CannonCommand {
         spawnCannon(sender, x, z);
     }
 
-    public static void spawnCannon(final Player player, final int x, final int z) {
+    public static void spawnCannon(Player player, int x, int z) {
         player.sendMessage(ChatColor.YELLOW + "Cannoning to " + ChatColor.GREEN + x + ", " + z + ChatColor.YELLOW + ".");
 
         new BukkitRunnable() {

@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class PermissionsMenu extends Menu {
 
-    private final Team team;
+    private Team team;
 
     public PermissionsMenu(Team team) {
         super("Team Permission nodes");

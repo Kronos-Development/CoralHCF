@@ -97,8 +97,8 @@ public class FlashAbility extends AbstractAbility {
         if (!(event.getEntity().getShooter() instanceof Player)) {
             return;
         }
-        final Projectile entity = event.getEntity();
-        final Player player = (Player)entity.getShooter();
+        Projectile entity = event.getEntity();
+        Player player = (Player)entity.getShooter();
         ItemStack itemInHand = player.getItemInHand();
 
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
@@ -146,23 +146,24 @@ public class FlashAbility extends AbstractAbility {
         Location victimLoc = damaged.getLocation();
         Location attackerLoc = attacker.getLocation();
 
+        //Checking if the attacker is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(attackerLoc)) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             return;
         }
-
+        //Checking if the victim player is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(victimLoc)) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player is in a &aSafe-Zone&e!"));
             return;
         }
-
+        //Checking if the attacker has PVP-Timer if so we cancel the ability
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(attacker.getUniqueId())) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
             return;
         }
-
+        //Checking if the opponent has a PVP-TIMER if so we cancel the ability
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(damaged.getUniqueId())) {
-            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player currently hsa their &aPVP Timer&e!"));
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player currently has their &aPVP Timer&e!"));
             return;
         }
 

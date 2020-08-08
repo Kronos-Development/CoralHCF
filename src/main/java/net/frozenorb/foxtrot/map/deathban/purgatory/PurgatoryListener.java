@@ -87,7 +87,7 @@ public class PurgatoryListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerDeath(final PlayerDeathEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
         LastInvCommand.recordInventory(event.getEntity());
 
         EnderpearlCooldownHandler.getEnderpearlCooldown().remove(event.getEntity().getName());
@@ -107,7 +107,7 @@ public class PurgatoryListener implements Listener {
         int seconds = (int) Foxtrot.getInstance().getServerHandler().getDeathban(event.getEntity());
         Foxtrot.getInstance().getDeathbanMap().deathban(event.getEntity().getUniqueId(), seconds);
 
-        final String time = TimeUtils.formatIntoDetailedString(seconds);
+        String time = TimeUtils.formatIntoDetailedString(seconds);
 
         if (Foxtrot.getInstance().getServerHandler().isPreEOTW()) {
             event.getEntity().kickPlayer(ChatColor.RED + "Come back tomorrow for SOTW!");

@@ -286,9 +286,9 @@ public class StatsHandler implements Listener {
     }
 
     private void updateTopKillsMap() {
-        final UUID oldFirstPlace = this.topKills.get(1);
-        final UUID oldSecondPlace = this.topKills.get(2);
-        final UUID oldThirdPlace = this.topKills.get(3);
+        UUID oldFirstPlace = this.topKills.get(1);
+        UUID oldSecondPlace = this.topKills.get(2);
+        UUID oldThirdPlace = this.topKills.get(3);
         UUID newFirstPlace = null;
         if (this.get(StatsTopCommand.StatsObjective.KILLS, 1) != null) {
             newFirstPlace = this.get(StatsTopCommand.StatsObjective.KILLS, 1).getOwner();

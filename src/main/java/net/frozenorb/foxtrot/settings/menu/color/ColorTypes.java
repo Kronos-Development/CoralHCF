@@ -12,6 +12,6 @@ public enum ColorTypes {
     FOCUS("Focus"),
     ARCHER_TAG("Archer Tag");
 
-    private final String displayName;
+    private String displayName;
 
 }

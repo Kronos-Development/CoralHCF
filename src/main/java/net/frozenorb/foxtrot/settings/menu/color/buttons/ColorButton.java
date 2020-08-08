@@ -16,9 +16,9 @@ import java.util.List;
 
 public class ColorButton extends Button {
 
-    private final ColorTypes colorTypes;
+    private ColorTypes colorTypes;
 
-    private final List<ChatColor> colorList = new ArrayList<>(Arrays.asList(
+    private List<ChatColor> colorList = new ArrayList<>(Arrays.asList(
             ChatColor.DARK_BLUE, ChatColor.BLUE, ChatColor.DARK_AQUA, ChatColor.AQUA, ChatColor.WHITE, ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE,
             ChatColor.DARK_GRAY, ChatColor.GRAY, ChatColor.DARK_RED, ChatColor.RED, ChatColor.DARK_GREEN, ChatColor.GREEN, ChatColor.YELLOW, ChatColor.GOLD
     ));

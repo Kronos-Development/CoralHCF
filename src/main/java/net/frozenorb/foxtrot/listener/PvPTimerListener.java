@@ -45,7 +45,7 @@ public class PvPTimerListener implements Listener {
 
             event.getEntity().setItemStack(itemStack);
 
-            final int id = event.getEntity().getEntityId();
+            int id = event.getEntity().getEntityId();
 
             droppedItems.add(id);
 

@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 public class CitadelHandler {
 
-    public static final String PREFIX = ChatColor.DARK_PURPLE + "[Citadel]";
+    public static String PREFIX = ChatColor.DARK_PURPLE + "[Citadel]";
 
     private File citadelInfo;
     @Getter private Set<ObjectId> cappers;

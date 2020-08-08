@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerItemDamageEvent;
 
 public class ArmorDamageListener implements Listener {
 
-    private static final Random random = new Random();
+    private static Random random = new Random();
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL)
     public void onItemDamage(PlayerItemDamageEvent e) {

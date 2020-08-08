@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
  public class EventActivatedEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
+    private static HandlerList handlers = new HandlerList();
 
     @Getter private net.frozenorb.foxtrot.events.Event event;
 

@@ -29,7 +29,7 @@ import java.util.Map;
 public class TeamSubclaimCommand implements Listener {
 
     @Getter private static Map<String, Selection> selections = new HashMap<>();
-    public static final ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_SPADE);
+    public static ItemStack SELECTION_WAND = new ItemStack(Material.WOOD_SPADE);
 
     static {
         ItemMeta meta = SELECTION_WAND.getItemMeta();

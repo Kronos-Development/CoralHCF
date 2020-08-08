@@ -124,7 +124,7 @@ public class AntiGlitchListener implements Listener {
             return;
         }
         
-        final Player player = (Player) event.getExited();
+        Player player = (Player) event.getExited();
         Location location = player.getLocation();
         
         while (location.getBlock().getType().isSolid()) {
@@ -141,7 +141,7 @@ public class AntiGlitchListener implements Listener {
             }
         }
         
-        final Location locationFinal = location;
+        Location location= location;
         
         new BukkitRunnable() {
             
@@ -196,7 +196,7 @@ public class AntiGlitchListener implements Listener {
         }
     }
     
-    private static final ImmutableSet<BlockFace> SURROUNDING = ImmutableSet.of(SELF, NORTH, NORTH_EAST, NORTH_WEST, SOUTH, SOUTH_EAST, SOUTH_WEST, EAST, WEST, UP);
+    private static ImmutableSet<BlockFace> SURROUNDING = ImmutableSet.of(SELF, NORTH, NORTH_EAST, NORTH_WEST, SOUTH, SOUTH_EAST, SOUTH_WEST, EAST, WEST, UP);
     
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void denyDismountClipping(VehicleExitEvent event) {
@@ -222,7 +222,7 @@ public class AntiGlitchListener implements Listener {
             }
         }
         
-        final Location finalLocation = pLoc;
+        Location finalLocation = pLoc;
         // Teleport player to the safe location on the next tick.
         Bukkit.getScheduler().runTask(Foxtrot.getInstance(), () -> player.teleport(finalLocation));
     }

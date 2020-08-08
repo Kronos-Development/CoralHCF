@@ -56,11 +56,11 @@ import java.util.List;
 public class Team {
 
     // Constants //
-    public static final DecimalFormat DTR_FORMAT = new DecimalFormat("0.00");
-    public static final String GRAY_LINE = ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat("-", 53);
-    public static final ChatColor ALLY_COLOR = ChatColor.BLUE;
-    public static final int MAX_CLAIMS = 2;
-    public static final int MAX_FORCE_INVITES = 5;
+    public static DecimalFormat DTR_FORMAT = new DecimalFormat("0.00");
+    public static String GRAY_LINE = ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat("-", 53);
+    public static ChatColor ALLY_COLOR = ChatColor.BLUE;
+    public static int MAX_CLAIMS = 2;
+    public static int MAX_FORCE_INVITES = 5;
 
     // Internal //
     @Getter private boolean needsSave = false;
@@ -76,18 +76,18 @@ public class Team {
     @Getter private double balance;
     @Getter private double DTR;
     @Getter private long DTRCooldown;
-    @Getter private final List<Claim> claims = new ArrayList<>();
-    @Getter private final List<Subclaim> subclaims = new ArrayList<>();
+    @Getter private List<Claim> claims = new ArrayList<>();
+    @Getter private List<Subclaim> subclaims = new ArrayList<>();
     @Getter private UUID owner = null;
-    @Getter private final Set<UUID> members = new HashSet<>();
-    @Getter private final Set<UUID> captains = new HashSet<>();
-    @Getter private final Set<UUID> coleaders = new HashSet<>();
-    @Getter private final Set<UUID> invitations = new HashSet<>();
-    @Getter private final Set<UUID> subclaimPermissions = new HashSet<>();
-    @Getter private final Set<UUID> rallyPermissions = new HashSet<>();
-    @Getter private final Set<UUID> displayPermissions = new HashSet<>();
-    @Getter private final Set<ObjectId> allies = new HashSet<>();
-    @Getter private final Set<ObjectId> requestedAllies = new HashSet<>();
+    @Getter private Set<UUID> members = new HashSet<>();
+    @Getter private Set<UUID> captains = new HashSet<>();
+    @Getter private Set<UUID> coleaders = new HashSet<>();
+    @Getter private Set<UUID> invitations = new HashSet<>();
+    @Getter private Set<UUID> subclaimPermissions = new HashSet<>();
+    @Getter private Set<UUID> rallyPermissions = new HashSet<>();
+    @Getter private Set<UUID> displayPermissions = new HashSet<>();
+    @Getter private Set<ObjectId> allies = new HashSet<>();
+    @Getter private Set<ObjectId> requestedAllies = new HashSet<>();
     @Getter private String announcement;
     @Getter private int maxOnline = -1;
     @Getter private boolean powerFaction = false;
@@ -103,10 +103,10 @@ public class Team {
     @Getter private int spawnersInClaim = 0;
     @Getter private int spentPoints = 0; // points spent on faction upgrades (kinda aids)
 
-	@Getter private final Map<String, Integer> upgradeToTier = new HashMap<>();
+	@Getter private Map<String, Integer> upgradeToTier = new HashMap<>();
 
     @Getter private int forceInvites = MAX_FORCE_INVITES;
-    @Getter private final Set<UUID> historicalMembers = new HashSet<>(); // this will store all players that were once members
+    @Getter private Set<UUID> historicalMembers = new HashSet<>(); // this will store all players that were once members
 
     // Not persisted //
     @Getter @Setter private ChatColor teamColor;
@@ -473,7 +473,7 @@ public class Team {
     }
 
     public void rename(String newName) {
-        final String oldName = name;
+        String oldName = name;
 
         Foxtrot.getInstance().getTeamHandler().removeTeam(this);
 
@@ -603,13 +603,13 @@ public class Team {
 
         // Iterate through chunks' tile entities rather than every block
         for (Claim claim : getClaims()) {
-            final World world = Bukkit.getWorld(claim.getWorld());
-            final Location minPoint = claim.getMinimumPoint();
-            final Location maxPoint = claim.getMaximumPoint();
-            final int minChunkX = ((int) minPoint.getX()) >> 4;
-            final int minChunkZ = ((int) minPoint.getZ()) >> 4;
-            final int maxChunkX = ((int) maxPoint.getX()) >> 4;
-            final int maxChunkZ = ((int) maxPoint.getZ()) >> 4;
+            World world = Bukkit.getWorld(claim.getWorld());
+            Location minPoint = claim.getMinimumPoint();
+            Location maxPoint = claim.getMaximumPoint();
+            int minChunkX = ((int) minPoint.getX()) >> 4;
+            int minChunkZ = ((int) minPoint.getZ()) >> 4;
+            int maxChunkX = ((int) maxPoint.getX()) >> 4;
+            int maxChunkZ = ((int) maxPoint.getZ()) >> 4;
 
             for (int chunkX = minChunkX; chunkX < maxChunkX + 1; chunkX++) {
                 for (int chunkZ = minChunkZ; chunkZ < maxChunkZ + 1; chunkZ++) {
@@ -621,7 +621,7 @@ public class Team {
                             // Even though we're iterating through chunks' tile entities
                             // we need to make sure that the block's location is within
                             // the claim (because claims don't have to align with chunks)
-                            final Location loc = blockState.getLocation();
+                            Location loc = blockState.getLocation();
 
                             if (loc.getX() >= minPoint.getX() && loc.getZ() >= minPoint.getZ() &&
                                 loc.getX() <= maxPoint.getX() && loc.getZ() <= maxPoint.getZ()) {

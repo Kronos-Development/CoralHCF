@@ -5,7 +5,7 @@ import net.frozenorb.foxtrot.team.commands.team.TeamTopCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public final class FoxConstants {
+public class FoxConstants {
 
     public static String teamChatFormat(Player player, String message) {
         return (ChatColor.DARK_AQUA + "(Team) " + player.getName() + ": " + ChatColor.YELLOW + message);

@@ -77,18 +77,20 @@ public class NauseaAbility extends AbstractAbility {
         ItemStack itemInHand = attacker.getItemInHand();
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
 
+        //Checking if the attacker is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(attacker.getLocation())) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             event.setCancelled(true);
             return;
         }
 
+        //Checking if the victim player is in Safe-ZONE if so we cancel the ability
         if (DTRBitmask.SAFE_ZONE.appliesAt(victim.getLocation())) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player is in a &aSafe-Zone&e!"));
             event.setCancelled(true);
             return;
         }
-
+        //Checking if the attacker hits there teammates with the ability and if so we cancel it
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(attacker);
         if (team != null && team.isMember(victim.getUniqueId())) {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eYou cannot do this to your teammate!"));

@@ -9,10 +9,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Betrayer {
 
-    private final UUID uuid;
-    private final UUID addedBy;
-    private final String reason;
-    private final long time;
+    private UUID uuid;
+    private UUID addedBy;
+    private String reason;
+    private long time;
 
     public Betrayer(UUID uuid, UUID addedBy, String reason) {
         this(uuid, addedBy, reason, System.currentTimeMillis());
