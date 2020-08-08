@@ -1,10 +1,13 @@
 package net.frozenorb.foxtrot.abilities.type;
 
 import com.google.common.collect.Lists;
+import com.minexd.zoot.util.CC;
+import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
 import net.frozenorb.foxtrot.pvpclasses.PvPClass;
 import net.frozenorb.foxtrot.pvpclasses.pvpclasses.BardClass;
 import net.frozenorb.foxtrot.pvpclasses.pvpclasses.bard.BardEffect;
+import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.foxtrot.util.PotionUtils;
 import net.frozenorb.qlib.util.ItemBuilder;
 import org.bukkit.ChatColor;
@@ -81,11 +84,28 @@ public class PocketBardAbility extends AbstractAbility {
             return;
         }
 
+        if (DTRBitmask.SAFE_ZONE.appliesAt(player.getLocation())) {
+            event.setCancelled(true);
+            player.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
+            player.updateInventory();
+            return;
+        }
+
+        if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(player.getUniqueId())) {
+            event.setCancelled(true);
+            player.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
+            player.updateInventory();
+            return;
+        }
+
         event.setCancelled(true);
         removeOne(player);
         player.updateInventory();
 
-        BardEffect bardEffect = new ArrayList<>(BardClass.BARD_CLICK_EFFECTS.values().stream().filter(bardEffect1 -> bardEffect1.getPotionEffect() != null && bardEffect1.getPotionEffect().getType() != PotionEffectType.WITHER && bardEffect1.getPotionEffect().getType() != PotionEffectType.SPEED && bardEffect1.getPotionEffect().getType() != PotionEffectType.JUMP).collect(Collectors.toList())).get(new Random().nextInt(BardClass.BARD_PASSIVE_EFFECTS.values().size()));
+        BardEffect bardEffect = new ArrayList<>(BardClass.BARD_CLICK_EFFECTS.values().stream().filter(bardEffect1 -> bardEffect1.getPotionEffect() != null
+                && bardEffect1.getPotionEffect().getType() != PotionEffectType.WITHER
+                && bardEffect1.getPotionEffect().getType() != PotionEffectType.SPEED
+                && bardEffect1.getPotionEffect().getType() != PotionEffectType.JUMP).collect(Collectors.toList())).get(new Random().nextInt(BardClass.BARD_PASSIVE_EFFECTS.values().size()));
 
         player.sendMessage(ChatColor.YELLOW + "Your " + getDisplayName() + ChatColor.YELLOW + " has given you " + ChatColor.WHITE + PotionUtils.getName(bardEffect.getPotionEffect().getType())  + " " + (bardEffect.getPotionEffect().getAmplifier() + 1) + ChatColor.YELLOW + "!");
         PvPClass.smartAddPotion(player, bardEffect.getPotionEffect(), true, null);

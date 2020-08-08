@@ -41,12 +41,12 @@ public class ShootingAbility extends AbstractAbility {
 
     @Override
     public String getDisplayName() {
-        return ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Mentorn's Firecracker";
+        return ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Firecracker";
     }
 
     @Override
     public String getScoreboardName() {
-        return ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Mentorn's Firecracker";
+        return ChatColor.DARK_AQUA + ChatColor.BOLD.toString() + "Firecracker";
     }
 
     @Override

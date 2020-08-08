@@ -89,7 +89,14 @@ public class KitMapListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         String command = event.getMessage().toLowerCase();
-        if (command.startsWith("/pv") || command.startsWith("/playervault") || command.startsWith("pv") || command.startsWith("playervaults") || command.startsWith("/vault") || command.startsWith("vault") || command.startsWith("vc") || command.startsWith("/vc")) {
+        if (command.startsWith("/pv")
+                || command.startsWith("/playervault")
+                || command.startsWith("pv")
+                || command.startsWith("playervaults")
+                || command.startsWith("/vault")
+                || command.startsWith("vault")
+                || command.startsWith("vc")
+                || command.startsWith("/vc")) {
             if (SpawnTagHandler.isTagged(event.getPlayer())) {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(ChatColor.RED + "You can't /pv in combat.");

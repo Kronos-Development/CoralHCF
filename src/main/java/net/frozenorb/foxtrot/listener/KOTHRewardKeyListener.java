@@ -30,8 +30,14 @@ public class KOTHRewardKeyListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(final PlayerInteractEvent event) {
-        if (event.getClickedBlock() == null || event.getItem() == null || event.getClickedBlock().getType() != Material.ENDER_CHEST || !DTRBitmask.SAFE_ZONE.appliesAt(event.getClickedBlock().getLocation()) || !InventoryUtils.isSimilar(event.getItem(), ChatColor.RED + "KOTH Reward Key")) {
-            if (event.getClickedBlock() != null && event.getClickedBlock().getType() == Material.ENDER_CHEST && DTRBitmask.SAFE_ZONE.appliesAt(event.getClickedBlock().getLocation())) {
+        if (event.getClickedBlock() == null
+                || event.getItem() == null
+                || event.getClickedBlock().getType() != Material.ENDER_CHEST
+                || !DTRBitmask.SAFE_ZONE.appliesAt(event.getClickedBlock().getLocation())
+                || !InventoryUtils.isSimilar(event.getItem(), ChatColor.RED + "KOTH Reward Key")) {
+            if (event.getClickedBlock() != null
+                    && event.getClickedBlock().getType() == Material.ENDER_CHEST
+                    && DTRBitmask.SAFE_ZONE.appliesAt(event.getClickedBlock().getLocation())) {
                 openKothLoot(event.getPlayer(), event.getClickedBlock());
             }
             

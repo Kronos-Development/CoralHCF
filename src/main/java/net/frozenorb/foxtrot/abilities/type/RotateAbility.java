@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.abilities.type;
 
 import com.google.common.collect.Lists;
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
 import net.frozenorb.foxtrot.team.Team;
@@ -75,15 +76,17 @@ public class RotateAbility extends AbstractAbility {
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
 
         if (DTRBitmask.SAFE_ZONE.appliesAt(attacker.getLocation())) {
-            attacker.sendMessage(ChatColor.RED + "You can't do this is in a Safe-Zone!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             event.setCancelled(true);
             return;
+
         } else if (DTRBitmask.SAFE_ZONE.appliesAt(victim.getLocation())) {
-            attacker.sendMessage(ChatColor.RED + "This player is in a Safe-Zone!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player is in a &aSafe-Zone&e!"));
             event.setCancelled(true);
             return;
+
         } else if (team != null && team.isMember(victim.getUniqueId())) {
-            attacker.sendMessage(ChatColor.RED + "You cannot do this to your teammate!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eYou cannot do this to your teammate!"));
             return;
         }
 

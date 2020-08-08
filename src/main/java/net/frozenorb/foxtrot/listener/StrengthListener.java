@@ -13,8 +13,10 @@ import org.bukkit.potion.PotionEffectType;
 public class StrengthListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
+
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
+
             Player p = (Player)event.getDamager();
             if (p.hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
                 for (PotionEffect eff : p.getActivePotionEffects()) {
@@ -24,10 +26,12 @@ public class StrengthListener implements Listener {
                     if (event.getDamage() / div <= 1.0) {
                         dmg = (eff.getAmplifier() + 1) * 3 + 1;
                     }
+
                     else {
                         double strongdmg = 1.5;
                         dmg = (int)(event.getDamage() / div + (int)((strongdmg + 1 ) * strongdmg));
                     }
+
                     event.setDamage(dmg);
                     break;
                 }

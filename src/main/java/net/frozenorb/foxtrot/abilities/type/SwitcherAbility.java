@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.abilities.type;
 
 import com.google.common.collect.Lists;
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
 import net.frozenorb.foxtrot.team.Team;
@@ -86,14 +87,14 @@ public class SwitcherAbility extends AbstractAbility {
 
         if (DTRBitmask.SAFE_ZONE.appliesAt(shooter.getLocation())) {
             event.setCancelled(true);
-            shooter.sendMessage(ChatColor.RED + "You can't do this is in a Safe-Zone!");
+            shooter.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             shooter.updateInventory();
             return;
         }
 
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(shooter.getUniqueId())) {
             event.setCancelled(true);
-            shooter.sendMessage(ChatColor.RED + "You can't do this while you have PVP Timer!");
+            shooter.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
             shooter.updateInventory();
             return;
         }

@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.abilities.type;
 
 import com.google.common.collect.Lists;
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbilityHandler;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
@@ -146,22 +147,22 @@ public class FlashAbility extends AbstractAbility {
         Location attackerLoc = attacker.getLocation();
 
         if (DTRBitmask.SAFE_ZONE.appliesAt(attackerLoc)) {
-            attacker.sendMessage(ChatColor.RED + "You can't do this is in a Safe-Zone!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
             return;
         }
 
         if (DTRBitmask.SAFE_ZONE.appliesAt(victimLoc)) {
-            attacker.sendMessage(ChatColor.RED + "This player is in a Safe-Zone!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player is in a &aSafe-Zone&e!"));
             return;
         }
 
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(attacker.getUniqueId())) {
-            attacker.sendMessage(ChatColor.RED + "You can't do this while you have PVP Timer!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
             return;
         }
 
         if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(damaged.getUniqueId())) {
-            attacker.sendMessage(ChatColor.RED + "This player currently has their PVP Timer!");
+            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player currently hsa their &aPVP Timer&e!"));
             return;
         }
 
@@ -174,11 +175,6 @@ public class FlashAbility extends AbstractAbility {
                 world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
                 world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
                 world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
-//                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
-//                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
-//                world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
-//                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
-//                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
                 damaged.playSound(damaged.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 0);
             }
         }.runTask(Foxtrot.getInstance());

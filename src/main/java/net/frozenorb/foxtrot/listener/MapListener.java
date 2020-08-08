@@ -51,7 +51,10 @@ public class MapListener implements Listener {
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true) // This is actually 'Lowest', but Bukkit calls listeners LOWEST -> HIGHEST, so HIGHEST is what's actually called last. #BukkitBeLike
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!Foxtrot.getInstance().getMapHandler().isFastSmeltEnabled() || event.getPlayer().getItemInHand() == null || !event.getPlayer().getItemInHand().getType().name().contains("PICKAXE") || event.getPlayer().getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH)) {
+        if (!Foxtrot.getInstance().getMapHandler().isFastSmeltEnabled()
+                || event.getPlayer().getItemInHand() == null
+                || !event.getPlayer().getItemInHand().getType().name().contains("PICKAXE")
+                || event.getPlayer().getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH)) {
             return;
         }
 
@@ -110,7 +113,10 @@ public class MapListener implements Listener {
         }
         
         ItemStack inHand = ((Player) shooter).getItemInHand();
-        if (inHand != null && inHand.getType() == Material.EXP_BOTTLE && inHand.hasItemMeta() && inHand.getItemMeta().hasLore() && inHand.getItemMeta().getLore().size() == 1) {
+        if (inHand != null && inHand.getType() == Material.EXP_BOTTLE
+                && inHand.hasItemMeta()
+                && inHand.getItemMeta().hasLore()
+                && inHand.getItemMeta().getLore().size() == 1) {
             String number = ChatColor.stripColor(inHand.getItemMeta().getLore().get(0)).replace("XP: ", "").replaceAll(",", "");
             Integer xp = Integer.valueOf(number);
             thrown.setMetadata("XP", new FixedMetadataValue(Foxtrot.getInstance(), xp));

@@ -37,6 +37,7 @@ public class AbilityCommands {
 
         sender.sendMessage(ChatColor.GRAY.toString() + ChatColor.STRIKETHROUGH + StringUtils.repeat('-', 35));
         sender.sendMessage(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Abilities");
+
         for (AbstractAbility ability : Foxtrot.getInstance().getAbilityHandler().getAbilities()) {
             sender.sendMessage("");
             sender.sendMessage(ability.getDisplayName() + ChatColor.GRAY + " (ID: " + ability.getId() + ")");

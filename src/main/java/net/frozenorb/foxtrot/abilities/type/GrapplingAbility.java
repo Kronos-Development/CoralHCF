@@ -161,17 +161,4 @@ public class GrapplingAbility extends AbstractAbility {
         v.setZ(z);
         e.setVelocity(v);
     }
-
-    /*public Vector getVector(Entity entity, Location target) {
-        Location entityLoc = entity.getLocation();
-        double distance = target.distance(entityLoc);
-        double gravity = -0.08;
-
-        return entity.getVelocity()
-                .clone()
-                .setX((1.0+0.07*distance) * (target.getX() - entityLoc.getX())/distance)
-                .setY((1.0+0.07*distance) * (target.getY() - entityLoc.getY())/distance - 0.525*gravity*distance)
-                .setZ((1.0+0.07*distance) * (target.getZ() - entityLoc.getZ())/distance).multiply(1.15);
-    }*/
-
 }
