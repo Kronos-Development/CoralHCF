@@ -14,8 +14,8 @@ public class FullTeamBypassEvent extends Event {
 
 	@Getter private static HandlerList handlerList = new HandlerList();
 
-	private Player player;
-	private Team team;
+	private final Player player;
+	private final Team team;
 	@Setter private boolean allowBypass = false;
 	@Setter private int extraSlots = 0;
 

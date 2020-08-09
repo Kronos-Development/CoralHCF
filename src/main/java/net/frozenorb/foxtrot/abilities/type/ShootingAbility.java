@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.abilities.type;
 
 import com.google.common.collect.Lists;
 import com.minexd.zoot.util.CC;
+import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
 import net.frozenorb.qlib.util.ItemBuilder;
 import org.bukkit.ChatColor;
@@ -12,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -70,6 +72,7 @@ public class ShootingAbility extends AbstractAbility {
 
         Player player = (Player) event.getEntity();
         if (!noDamage.containsKey(player.getName()) || !noDamage.get(player.getName())) return;
+        if(player.hasMetadata("noflag")) player.removeMetadata("noflag", Foxtrot.getInstance());
         event.setCancelled(true);
         noDamage.remove(player.getName());
 
@@ -89,6 +92,7 @@ public class ShootingAbility extends AbstractAbility {
         }
 
         player.setVelocity(player.getLocation().getDirection().multiply(2.5).setY(1));
+        player.setMetadata("noflag", new FixedMetadataValue(Foxtrot.getInstance(), true));
         noDamage.put(player.getName(), true);
         removeOne(player);
         addUse(player);

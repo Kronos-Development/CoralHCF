@@ -23,6 +23,7 @@ net\frozenorb\foxtrot\team\TeamHandler.class
 net\frozenorb\foxtrot\persist\maps\OppleMap.class
 net\frozenorb\foxtrot\persist\maps\WrappedBalanceMap.class
 net\frozenorb\foxtrot\team\commands\team\TeamPromoteCommand.class
+net\frozenorb\foxtrot\powers\PowersHandler.class
 net\frozenorb\foxtrot\team\menu\DTRMenu.class
 net\frozenorb\foxtrot\persist\maps\DiamondMinedMap.class
 net\frozenorb\foxtrot\listener\FoxListener$2.class

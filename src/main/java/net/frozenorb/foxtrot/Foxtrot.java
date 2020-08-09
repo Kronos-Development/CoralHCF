@@ -24,6 +24,7 @@ import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
 import net.frozenorb.foxtrot.packetborder.PacketBorderThread;
 import net.frozenorb.foxtrot.persist.RedisSaveTask;
 import net.frozenorb.foxtrot.persist.maps.*;
+import net.frozenorb.foxtrot.powers.PowersHandler;
 import net.frozenorb.foxtrot.powers.PowersListener;
 import net.frozenorb.foxtrot.protocol.ClientCommandPacketAdaper;
 import net.frozenorb.foxtrot.protocol.SignGUIPacketAdaper;
@@ -77,6 +78,7 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private AbilityHandler abilityHandler;
 
 	@Getter private PlaytimeMap playtimeMap;
+	@Getter private PowersHandler powersHandler;
 	@Getter private OppleMap oppleMap;
 	@Getter private DeathbanMap deathbanMap;
 	@Getter private PvPTimerMap PvPTimerMap;

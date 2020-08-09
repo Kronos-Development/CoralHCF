@@ -89,6 +89,7 @@ public class FlashAbility extends AbstractAbility {
 
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
         player.launchProjectile(Snowball.class);
+        useAbility(player);
         addUse(player);
     }
 
@@ -166,8 +167,6 @@ public class FlashAbility extends AbstractAbility {
             attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player currently has their &aPVP Timer&e!"));
             return;
         }
-
-        useAbility((Player) snowball.getShooter());
 
         new BukkitRunnable() {
             public void run() {

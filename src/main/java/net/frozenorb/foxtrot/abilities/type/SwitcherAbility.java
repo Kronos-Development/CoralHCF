@@ -10,6 +10,7 @@ import net.frozenorb.qlib.util.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Egg;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
@@ -40,7 +41,7 @@ public class SwitcherAbility extends AbstractAbility {
     @Override
     public ItemStack getItem() {
         return ItemBuilder
-                .of(Material.SNOW_BALL)
+                .of(Material.EGG)
                 .build();
     }
 
@@ -69,9 +70,9 @@ public class SwitcherAbility extends AbstractAbility {
 
     @EventHandler
     public void onLaunch(ProjectileLaunchEvent event) {
-        if (!(event.getEntity() instanceof Snowball)) return;
+        if (!(event.getEntity() instanceof Egg)) return;
 
-        Snowball snowball = (Snowball) event.getEntity();
+        Egg snowball = (Egg) event.getEntity();
         if (!(snowball.getShooter() instanceof Player)) return;
 
         Player shooter = (Player) snowball.getShooter();
@@ -116,7 +117,7 @@ public class SwitcherAbility extends AbstractAbility {
         if (!(event.getDamager() instanceof Snowball)) return;
         if (!(event.getEntity() instanceof Player)) return;
 
-        Snowball snowball = (Snowball) event.getDamager();
+        Egg snowball = (Egg) event.getDamager();
         if (!snowball.hasMetadata("switcher")) return;
         if (!(snowball.getShooter() instanceof Player)) return;
 

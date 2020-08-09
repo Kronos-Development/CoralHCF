@@ -55,7 +55,7 @@ import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.util.MaterialUtils;
 
 public class AntiGlitchListener implements Listener {
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onVerticalBlockPlaceGlitch(BlockPlaceEvent event) {
         if (LandBoard.getInstance().getTeam(event.getBlock().getLocation()) != null
@@ -65,15 +65,15 @@ public class AntiGlitchListener implements Listener {
             event.getPlayer().setNoDamageTicks(0);
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onBoatMove(VehicleMoveEvent event) {
         Location from = event.getFrom();
         Location to = event.getTo();
-        
+
         if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ())
             return;
-        
+
         Block block = to.getBlock();
         if (block.getType() == Material.FENCE_GATE) {
             event.getVehicle().teleport(from);
@@ -83,15 +83,15 @@ public class AntiGlitchListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onPlayerBoatMove(PlayerMoveEvent event) {
         Location from = event.getFrom();
         Location to = event.getTo();
-        
+
         if (from.getBlockX() == to.getBlockX() && from.getBlockZ() == to.getBlockZ())
             return;
-        
+
         Player player = event.getPlayer();
         if (player.getVehicle() != null && player.getVehicle() instanceof Boat) {
             if (to.getBlock().getType() == Material.FENCE_GATE) {
@@ -100,14 +100,14 @@ public class AntiGlitchListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onBlockPistonRetract(BlockPistonRetractEvent event) {
         if (event.getBlock().getType().name().contains("RAIL")) {
             event.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onBlockPistonExtend(BlockPistonExtendEvent event) {
         for (Block block : event.getBlocks()) {
@@ -123,90 +123,90 @@ public class AntiGlitchListener implements Listener {
         if (!(event.getExited() instanceof Player)) {
             return;
         }
-        
-        Player player = (Player) event.getExited();
+
+        final Player player = (Player) event.getExited();
         Location location = player.getLocation();
-        
+
         while (location.getBlock().getType().isSolid()) {
             location.add(0, 1, 0);
             if (location.getBlockY() == 255) {
                 break;
             }
         }
-        
+
         while (location.getBlock().getType().isSolid()) {
             location.subtract(0, 1, 0);
             if (location.getBlockY() == 1) {
                 break;
             }
         }
-        
-        Location location= location;
-        
+
+        final Location locationFinal = location;
+
         new BukkitRunnable() {
-            
+
             public void run() {
                 player.teleport(locationFinal);
             }
-            
+
         }.runTaskLater(Foxtrot.getInstance(), 1L);
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onVehicleEnter(VehicleEnterEvent event) {
-        
+
         if (event.getVehicle() instanceof Horse || event.getVehicle() instanceof Minecart) {
             return;
         }
-        
+
         event.setCancelled(true);
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDeath(EntityDeathEvent event) {
         if (event.getEntity().getWorld().getEnvironment() != World.Environment.NETHER) {
             return;
         }
-        
+
         if (event.getEntity() instanceof Skeleton) {
             Iterator<ItemStack> iterator = event.getDrops().iterator();
-            
+
             while (iterator.hasNext()) {
                 ItemStack item = iterator.next();
-                
+
                 if (item.getType() == Material.SKULL_ITEM) {
                     iterator.remove();
                 }
             }
         }
     }
-    
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        
+
         if (player.getGameMode() == GameMode.CREATIVE
                 || player.getWorld().getEnvironment() != World.Environment.NETHER) {
             return;
         }
-        
+
         if (event.getBlock().getType() == Material.MOB_SPAWNER) {
             event.setCancelled(true);
             player.sendMessage(ChatColor.RED + "You aren't allowed to place mob spawners in the nether.");
         }
     }
-    
-    private static ImmutableSet<BlockFace> SURROUNDING = ImmutableSet.of(SELF, NORTH, NORTH_EAST, NORTH_WEST, SOUTH, SOUTH_EAST, SOUTH_WEST, EAST, WEST, UP);
-    
+
+    private static final ImmutableSet<BlockFace> SURROUNDING = ImmutableSet.of(SELF, NORTH, NORTH_EAST, NORTH_WEST, SOUTH, SOUTH_EAST, SOUTH_WEST, EAST, WEST, UP);
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void denyDismountClipping(VehicleExitEvent event) {
         // Do nothing if exited was not a player.
         if (!(event.getExited() instanceof Player))
             return;
-        
+
         // Do nothing if player has permission.
         Player player = (Player) event.getExited();
-        
+
         // Locate a safe position to teleport the player.
         Location pLoc = player.getLocation();
         Location vLoc = event.getVehicle().getLocation();
@@ -221,31 +221,31 @@ public class AntiGlitchListener implements Listener {
                 pLoc.subtract(0, 1, 0);
             }
         }
-        
-        Location finalLocation = pLoc;
+
+        final Location finalLocation = pLoc;
         // Teleport player to the safe location on the next tick.
         Bukkit.getScheduler().runTask(Foxtrot.getInstance(), () -> player.teleport(finalLocation));
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void denyDismountClipping(CreatureSpawnEvent event) {
         // Do nothing if entity is not a horse.
         if (event.getEntityType() != EntityType.HORSE)
             return;
-        
+
         if (Foxtrot.getInstance().getServerHandler().isHardcore()) {
             return;
         }
 
         event.setCancelled(true);
     }
-    
+
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void denyDismountGlitching(PlayerDeathEvent event) {
         if (event.getEntity().isInsideVehicle())
             event.getEntity().getVehicle().remove();
     }
-    
+
     @EventHandler
     public void denyMinecartExploding(ExplosionPrimeEvent event) {
         if (event.getEntityType() == EntityType.MINECART_TNT) {

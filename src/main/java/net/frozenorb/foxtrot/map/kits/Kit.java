@@ -22,7 +22,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class Kit {
 
-    private String name;
+    private final String name;
 
     private ItemStack icon;
 
@@ -40,7 +40,7 @@ public class Kit {
         inventoryContents = inventory.getContents();
         armorContents = inventory.getArmorContents();
     }
-    
+
     public Kit clone() {
         Kit kit = new Kit(this.getName());
         kit.setIcon(this.icon);

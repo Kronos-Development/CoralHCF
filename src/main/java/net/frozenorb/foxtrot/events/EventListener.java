@@ -38,13 +38,13 @@ public class EventListener implements Listener {
     public EventListener() {
         Bukkit.getLogger().info("Creating indexes...");
         DBCollection mongoCollection = Foxtrot.getInstance().getMongoPool().getDB(Foxtrot.MONGO_DB_NAME).getCollection("KOTHCaptures");
-        
+
         mongoCollection.createIndex(new BasicDBObject("Capper", 1));
         mongoCollection.createIndex(new BasicDBObject("CapperTeam", 1));
         mongoCollection.createIndex(new BasicDBObject("EventName", 1));
         Bukkit.getLogger().info("Creating indexes done.");
     }
-    
+
     @EventHandler
     public void onKOTHActivated(EventActivatedEvent event) {
         if (event.getEvent().isHidden()) {
@@ -139,8 +139,8 @@ public class EventListener implements Listener {
 
                 break;
         }
-        
-        String[] messages= messages;
+
+        final String[] messagesFinal = messages;
 
         new BukkitRunnable() {
 
@@ -159,19 +159,19 @@ public class EventListener implements Listener {
     }
 
     @EventHandler
-    public void onKOTHCaptured(EventCapturedEvent event) {
+    public void onKOTHCaptured(final EventCapturedEvent event) {
         if (event.getEvent().isHidden()) {
             return;
         }
 
-        Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
+        final Team team = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
         String teamName = ChatColor.GOLD + "[" + ChatColor.YELLOW + "-" + ChatColor.GOLD + "]";
 
         if (team != null) {
             teamName = ChatColor.GOLD + "[" + ChatColor.YELLOW + team.getName() + ChatColor.GOLD + "]";
         }
 
-        String[] filler = {"", "", "", "", "", ""};
+        final String[] filler = {"", "", "", "", "", ""};
         String[] messages;
 
         String main = Foxtrot.getInstance().getServerHandler().getEventMainColor();
@@ -255,7 +255,7 @@ public class EventListener implements Listener {
             }
         }
 
-        String[] messages= messages;
+        final String[] messagesFinal = messages;
 
         new BukkitRunnable() {
 
@@ -274,7 +274,7 @@ public class EventListener implements Listener {
             Foxtrot.getInstance().getLogger().info(message);
         }
 
-        BasicDBObject dbObject = new BasicDBObject();
+        final BasicDBObject dbObject = new BasicDBObject();
 
         dbObject.put("EventName", event.getEvent().getName());
         dbObject.put("EventType", event.getEvent().getType().name());
@@ -311,11 +311,11 @@ public class EventListener implements Listener {
                     }
                 });
             }
-    }.runTaskAsynchronously(Foxtrot.getInstance());
+        }.runTaskAsynchronously(Foxtrot.getInstance());
     }
 
     @EventHandler
-    public void onKOTHControlLost(KOTHControlLostEvent event) {
+    public void onKOTHControlLost(final KOTHControlLostEvent event) {
         if (event.getKOTH().getRemainingCapTime() <= (event.getKOTH().getCapTime() - 30)) {
             Foxtrot.getInstance().getServer().broadcastMessage(ChatColor.GOLD + "[KingOfTheHill] Control of " + ChatColor.YELLOW + event.getKOTH().getName() + ChatColor.GOLD + " lost.");
         }

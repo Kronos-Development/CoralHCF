@@ -37,12 +37,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ArcherClass extends PvPClass {
 
-	private static int MARK_SECONDS = 5;
+	private static final int MARK_SECONDS = 5;
 
-	private static Map<String, Long> lastSpeedUsage = new HashMap<>();
-	private static Map<String, Long> lastJumpUsage = new HashMap<>();
-	@Getter private static Map<String, Long> markedPlayers = new ConcurrentHashMap<>();
-	@Getter private static Map<String, Set<Pair<String, Long>>> markedBy = new HashMap<>();
+	private static final Map<String, Long> lastSpeedUsage = new HashMap<>();
+	private static final Map<String, Long> lastJumpUsage = new HashMap<>();
+	@Getter private static final Map<String, Long> markedPlayers = new ConcurrentHashMap<>();
+	@Getter private static final Map<String, Set<Pair<String, Long>>> markedBy = new HashMap<>();
 
 	public ArcherClass() {
 		super("Archer", 15, Arrays.asList(Material.SUGAR, Material.FEATHER));
@@ -51,10 +51,10 @@ public class ArcherClass extends PvPClass {
 	@Override
 	public boolean qualifies(PlayerInventory armor) {
 		return wearingAllArmor(armor) &&
-		       armor.getHelmet().getType() == Material.LEATHER_HELMET &&
-		       armor.getChestplate().getType() == Material.LEATHER_CHESTPLATE &&
-		       armor.getLeggings().getType() == Material.LEATHER_LEGGINGS &&
-		       armor.getBoots().getType() == Material.LEATHER_BOOTS;
+				armor.getHelmet().getType() == Material.LEATHER_HELMET &&
+				armor.getChestplate().getType() == Material.LEATHER_CHESTPLATE &&
+				armor.getLeggings().getType() == Material.LEATHER_LEGGINGS &&
+				armor.getBoots().getType() == Material.LEATHER_BOOTS;
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class ArcherClass extends PvPClass {
 	public void onEntityArrowHit(EntityDamageByEntityEvent event) {
 		if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
 			Arrow arrow = (Arrow) event.getDamager();
-			Player victim = (Player) event.getEntity();
+			final Player victim = (Player) event.getEntity();
 
 			if (!(arrow.getShooter() instanceof Player)) {
 				return;
@@ -117,11 +117,11 @@ public class ArcherClass extends PvPClass {
 
 			if (PvPClassHandler.hasKitOn(victim, this)) {
 				shooter.sendMessage(ChatColor.YELLOW + "[" + ChatColor.BLUE + "Arrow Range" + ChatColor.YELLOW + " (" + ChatColor.RED + (int) distance + ChatColor.YELLOW + ")] " + ChatColor.RED + "Cannot mark other Archers. " +
-				                    ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
+						ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
 			} else if (pullback >= 0.5F) {
 				shooter.sendMessage(
 						ChatColor.YELLOW + "[" + ChatColor.BLUE + "Arrow Range" + ChatColor.YELLOW + " (" + ChatColor.RED + (int) distance + ChatColor.YELLOW + ")] " + ChatColor.GOLD + "Marked player for " + MARK_SECONDS + " seconds. " +
-						ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
+								ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
 
 				// Only send the message if they're not already marked.
 				if (!isMarked(victim)) {
@@ -141,7 +141,7 @@ public class ArcherClass extends PvPClass {
 
 					victim.removePotionEffect(invis.getType());
 
-					PotionEffect invis= invis;
+					final PotionEffect invisFinal = invis;
 
 					/* Handle returning their invisibility after the archer tag is done */
 					if (playerClass instanceof MinerClass) {
@@ -177,7 +177,7 @@ public class ArcherClass extends PvPClass {
 				}.runTaskLater(Foxtrot.getInstance(), (MARK_SECONDS * 20) + 5);
 			} else {
 				shooter.sendMessage(ChatColor.YELLOW + "[" + ChatColor.BLUE + "Arrow Range" + ChatColor.YELLOW + " (" + ChatColor.RED + (int) distance + ChatColor.YELLOW + ")] " + ChatColor.RED + "Bow wasn't fully drawn back. " +
-				                    ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
+						ChatColor.BLUE.toString() + ChatColor.BOLD + "(" + damage / 2 + " heart" + ((damage / 2 == 1) ? "" : "s") + ")");
 			}
 		}
 	}
