@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SettingButton extends Button {
 
-    private static String forkedBy = "vaperion";
-
     private Setting setting;
 
     @Override

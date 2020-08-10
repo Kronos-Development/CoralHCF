@@ -637,6 +637,7 @@ net\frozenorb\foxtrot\events\EventListener$2.class
 net\frozenorb\foxtrot\events\conquest\ConquestHandler.class
 net\frozenorb\foxtrot\persist\maps\DeathbanMap.class
 net\frozenorb\foxtrot\team\commands\team\TeamShadowMuteCommand$1.class
+net\frozenorb\foxtrot\listener\MarsListener.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHListCommand.class
 net\frozenorb\foxtrot\server\conditional\staff\StaffCommands.class
 net\frozenorb\foxtrot\commands\lff\menu\buttons\LFFKitButton.class

@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.scoreboard;
 
 import com.minexd.zoot.Zoot;
 import com.minexd.zoot.ZootAPI;
+import com.minexd.zoot.chat.Chat;
 import com.minexd.zoot.profile.Profile;
 import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
@@ -149,6 +150,9 @@ public class FoxtrotScoreGetter implements ScoreGetter {
                 case "Biohazard":
                     displayName = ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Biohazard";
                     break;
+                case "Mars":
+                    displayName = ChatColor.GOLD.toString() + ChatColor.BOLD + "Mars";
+                    break;
                 default:
                     displayName = ChatColor.BLUE.toString() + ChatColor.BOLD + event.getName();
                     break;
@@ -157,7 +161,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             if (event.getType() == EventType.DTC) {
                 scores.add(displayName + "&7: &c" + ((DTC) event).getCurrentPoints());
             } else {
-                scores.add(displayName + "&7: &c" + ScoreFunction.TIME_SIMPLE.apply((float) ((KOTH) event).getRemainingCapTime()));
+                scores.add(displayName + "&7: " + (event.getName() == "Mars" ? "&6" : "&c") + ScoreFunction.TIME_SIMPLE.apply((float) ((KOTH) event).getRemainingCapTime()));
             }
         }
 
@@ -171,7 +175,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
 
 
         if(Foxtrot.getInstance().getAbilityHandler().isOnCooldown(player.getUniqueId())) {
-            scores.add(ChatColor.GOLD.toString() + ChatColor.BOLD + "Ability&7: &c" + (ScoreFunction.TIME_FANCY.apply(Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000F)));
+            scores.add(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Ability&7: &c" + (ScoreFunction.TIME_FANCY.apply(Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000F)));
         }
 
         if (archerMarkScore != null) {

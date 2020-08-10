@@ -943,6 +943,7 @@ public class Team {
         if (obj.containsKey("Members")) for (Object member : (BasicDBList) obj.get("Members")) addMember(UUID.fromString((String) member));
         if (obj.containsKey("SubclaimPermissions")) for (Object sub : (BasicDBList) obj.get("SubclaimPermissions")) getSubclaimPermissions().add(UUID.fromString((String) sub));
         if (obj.containsKey("RallyPermissions")) for (Object rally : (BasicDBList) obj.get("RallyPermissions")) getRallyPermissions().add(UUID.fromString((String) rally));
+        if (obj.containsKey("DisplayPermissions")) for (Object rally : (BasicDBList) obj.get("DisplayPermissions")) getDisplayPermissions().add(UUID.fromString((String) rally));
         if (obj.containsKey("Invitations")) for (Object invite : (BasicDBList) obj.get("Invitations")) getInvitations().add(UUID.fromString((String) invite));
         if (obj.containsKey("DTR")) setDTR(obj.getDouble("DTR"));
         if (obj.containsKey("DTRCooldown")) setDTRCooldown(obj.getDate("DTRCooldown").getTime());
@@ -1265,6 +1266,7 @@ public class Team {
         teamString.append("Invited:").append(invites.toString().replace("\n", "")).append('\n');
         teamString.append("SubclaimPerms:").append(subclaimPerms.toString().replace("\n", "")).append('\n');
         teamString.append("RallyPerms:").append(rallyPerms.toString().replace("\n", "")).append('\n');
+        teamString.append("DisplayPerms:").append(displayPermissions.toString().replace("\n", "")).append('\n');
         teamString.append("Subclaims:").append(getSubclaims().toString().replace("\n", "")).append('\n');
         teamString.append("Claims:").append(getClaims().toString().replace("\n", "")).append('\n');
         teamString.append("Allies:").append(getAllies().toString()).append('\n');

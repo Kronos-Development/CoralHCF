@@ -18,8 +18,6 @@ import net.frozenorb.qlib.util.TimeUtils;
 
 public class CustomTimerCreateCommand {
 
-    private String forkedBy = "vaperion";
-
     @Getter private static Map<String, Long> customTimers = new HashMap<>();
     private static Set<UUID> sotwEnabled = Sets.newHashSet();
 
