@@ -70,14 +70,16 @@ public class TeamManageCommand {
     }
 
     @Command(names = {"manageteam points"}, permission = "foxtrot.manage")
-    public static void pointsTeam (Player sender, @Param(name = "team") Team team, @Param(name = "points") int points) {
-        team.setPoints(points);
-        sender.sendRawMessage(CC.translate("&eYou have set " + team + "'s points to" + points));
+    public static void pointsTeam (Player sender, @Param(name = "team") Team team) {
+        conversationDouble(sender, "§eEnter a new Points amount for " + team.getName() + ".", (d) -> {
+            team.setPoints(d.intValue());
+            sender.sendRawMessage(CC.translate("&eYou have set " + team.getName() + "'s points to" + d.intValue()));
+        });
     }
 
     @Command(names = {"manageteam rename"}, permission = "foxtrot.manage")
     public static void renameTeam(Player sender, @Param(name = "team") Team team) {
-        conversationString(sender, "§aEnter a new name for " + team.getName() + ".", (name) -> {
+        conversationString(sender, "§eEnter a new name for " + team.getName() + ".", (name) -> {
             String oldName = team.getName();
             team.rename(name);
             sender.sendRawMessage(ChatColor.GRAY + oldName + " now has a name of " + team.getName());

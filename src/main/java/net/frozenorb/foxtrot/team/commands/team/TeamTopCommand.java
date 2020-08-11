@@ -49,19 +49,17 @@ public class TeamTopCommand {
                     FancyMessage teamMessage = new FancyMessage();
 
                     Team team = teamEntry.getKey();
-                    
-                    teamMessage.text(index + ". ").color(ChatColor.GRAY).then();
+
+                    teamMessage.text(String.valueOf(index) + ". ").color(ChatColor.GRAY).then();
                     teamMessage.text(teamEntry.getKey().getName()).color(sender instanceof Player && teamEntry.getKey().isMember(((Player) sender).getUniqueId()) ? ChatColor.GREEN : ChatColor.RED)
                     .tooltip((sender instanceof Player && teamEntry.getKey().isMember(((Player) sender).getUniqueId()) ? ChatColor.GREEN : ChatColor.RED).toString() + teamEntry.getKey().getName() + "\n" +
-                    ChatColor.AQUA + "Leader: " + ChatColor.GRAY + UUIDUtils.name(teamEntry.getKey().getOwner()) + "\n\n" +
-                            ChatColor.AQUA + "Balance: " + ChatColor.GRAY + "$" + team.getBalance() + "\n" +
-                    ChatColor.AQUA + "Kills: " + ChatColor.GRAY.toString() + team.getKills() + "\n" +
-                            ChatColor.AQUA + "Deaths: " + ChatColor.GRAY.toString() + team.getDeaths() + "\n\n" +
-                    ChatColor.AQUA + "KOTH Captures: " + ChatColor.GRAY.toString() + team.getKothCaptures() + "\n" +
-                            ChatColor.AQUA + "Diamonds Mined: " + ChatColor.GRAY.toString() + team.getDiamondsMined() + "\n\n" +
                      ChatColor.GREEN + "Click to view team info").command("/t who " + teamEntry.getKey().getName()).then();
-                    teamMessage.text(" - ").color(ChatColor.YELLOW).then();
-                    teamMessage.text(teamEntry.getValue().toString()).color(ChatColor.GRAY);
+                    teamMessage.text(" ").color(ChatColor.YELLOW).then();
+                    if (Foxtrot.getInstance().getConfig().getBoolean("squads") || Foxtrot.getInstance().getConfig().getBoolean("powers")) {
+                        teamMessage.text(team.getTierPrefix(team));
+                    } else {
+                        teamMessage.text(teamEntry.getValue().toString()).color(ChatColor.GRAY);
+                    }
 
                     teamMessage.send(sender);
                 }

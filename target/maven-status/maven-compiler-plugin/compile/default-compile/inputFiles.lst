@@ -67,9 +67,11 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type\PocketBardAbility.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\button\KickPlayerButton.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\kits\command\KitCommands.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\enums\Upgrades.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\listener\ClientListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\KitCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamKickCommand.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\upgrades\command\TeamUpgradesCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\koth\commands\koth\KOTHActivateCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\listener\MarsListener.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\nametag\FoxtrotNametagProvider.java
@@ -111,6 +113,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\permissio
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\deathmessage\trackers\GeneralTracker.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\team\TeamListCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\menu\ConfirmMenu.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\enums\Tier.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\chat\ChatHandler.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\events\citadel\commands\CitadelSaveLoottableCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\SetBalCommand.java
@@ -120,6 +123,7 @@ C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\map\killstreak
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\protocol\ClientCommandPacketAdaper.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\FirstJoinMap.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\persist\maps\DeathsMap.java
+C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\upgrades\menu\TeamUpgradesMenu.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\team\commands\TeamDataCommands.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\commands\PlaytimeCommand.java
 C:\Users\faili\Desktop\coralf\src\main\java\net\frozenorb\foxtrot\abilities\type\FlashAbility.java

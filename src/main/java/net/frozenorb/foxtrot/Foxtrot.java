@@ -130,6 +130,16 @@ public class Foxtrot extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		if (Bukkit.getPluginManager().getPlugin("Helium").getName().toLowerCase() == null) {
+			System.out.println("*********************************************");
+			System.out.println("               ATTENTION");
+			System.out.println("YOU NEED THE PROPER RANK CORE TO RUN THIS PLUGIN");
+			System.out.println("Contact Cody if issues occur.");
+			System.out.println("*********************************************");
+			this.getServer().shutdown();
+			return;
+		}
+
 		if (Bukkit.getServerName().contains(" ")) {
 			System.out.println("*********************************************");
 			System.out.println("               ATTENTION");
@@ -191,6 +201,7 @@ public class Foxtrot extends JavaPlugin {
 			world.setGameRuleValue("doFireTick", "false");
 			world.setGameRuleValue("mobGriefing", "false");
 			world.setGameRuleValue("doMobGriefing", "false");
+			System.out.println("ok this should work");
 		}
 
 		if (getConfig().getBoolean("legions")) {
@@ -205,7 +216,6 @@ public class Foxtrot extends JavaPlugin {
 		if (getConfig().getBoolean("powers")) {
 			System.out.println("*********************************************");
 			System.out.println("               Powers Mode Enabled");
-			System.out.println("               Have fun cow");
 			System.out.println("*********************************************");
 		}
 
@@ -256,6 +266,7 @@ public class Foxtrot extends JavaPlugin {
 
 		chatHandler = new ChatHandler();
 		citadelHandler = new CitadelHandler();
+		powersHandler = new PowersHandler();
 		crateHandler = new CrateHandler();
 		pvpClassHandler = new PvPClassHandler();
 		eventHandler = new EventHandler();

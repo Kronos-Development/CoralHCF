@@ -87,6 +87,8 @@ net\frozenorb\foxtrot\team\commands\team\TeamDisbandCommand.class
 net\frozenorb\foxtrot\persist\maps\CoalMinedMap.class
 net\frozenorb\foxtrot\map\deathban\DeathbanListener.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHDeactivateCommand.class
+net\frozenorb\foxtrot\team\enums\Tier.class
+net\frozenorb\foxtrot\team\upgrades\command\TeamUpgradesCommand.class
 net\frozenorb\foxtrot\team\menu\button\OpenMuteMenuButton.class
 net\frozenorb\foxtrot\listener\PvPTimerListener$1.class
 net\frozenorb\foxtrot\crates\CrateHandler.class
@@ -103,6 +105,7 @@ net\frozenorb\foxtrot\team\commands\team\TeamRenameCommand.class
 net\frozenorb\foxtrot\util\MapUtil.class
 net\frozenorb\foxtrot\team\claims\VisualClaim$2.class
 net\frozenorb\foxtrot\team\commands\ForceKickCommand.class
+net\frozenorb\foxtrot\team\upgrades\menu\TeamUpgradesMenu$1.class
 net\frozenorb\foxtrot\persist\StringPersistMap$1.class
 net\frozenorb\foxtrot\chat\listeners\ChatListener$1.class
 net\frozenorb\foxtrot\events\conquest\commands\conquestadmin\ConquestAdminStartCommand.class
@@ -411,6 +414,7 @@ net\frozenorb\foxtrot\team\claims\Claim$BorderDirection.class
 net\frozenorb\foxtrot\deathmessage\trackers\GeneralTracker.class
 net\frozenorb\foxtrot\util\InventorySerialization$1.class
 net\frozenorb\foxtrot\server\Deathban.class
+net\frozenorb\foxtrot\team\enums\Upgrades.class
 net\frozenorb\foxtrot\events\events\EventCapturedEvent.class
 net\frozenorb\foxtrot\team\commands\team\TeamClaimCommand.class
 net\frozenorb\foxtrot\events\citadel\commands\CitadelRespawnChestsCommand.class
@@ -584,6 +588,7 @@ net\frozenorb\foxtrot\events\koth\commands\koth\KOTHTPCommand.class
 net\frozenorb\foxtrot\abilities\AbstractAbility.class
 net\frozenorb\foxtrot\events\citadel\events\CitadelCapturedEvent.class
 net\frozenorb\foxtrot\events\citadel\commands\CitadelSaveLoottableCommand.class
+net\frozenorb\foxtrot\team\upgrades\menu\TeamUpgradesMenu.class
 net\frozenorb\foxtrot\util\CuboidRegion$CuboidIterator.class
 net\frozenorb\foxtrot\commands\CustomTimerCreateCommand.class
 net\frozenorb\foxtrot\persist\maps\StaffBoardMap.class

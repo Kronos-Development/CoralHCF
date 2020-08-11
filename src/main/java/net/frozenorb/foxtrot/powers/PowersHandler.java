@@ -31,9 +31,5 @@ public class PowersHandler {
 
     }
 
-    public void ErrorMessage(Player player, String message) {
-        player.sendMessage(CC.translate("&c" + message));
-    }
-
 
 }

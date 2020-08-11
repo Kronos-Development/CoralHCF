@@ -5,6 +5,7 @@ import com.cheatbreaker.api.object.CBWaypoint;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;
 
+import com.minexd.zoot.util.CC;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -17,13 +18,14 @@ import net.frozenorb.foxtrot.chat.enums.ChatMode;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
 import net.frozenorb.foxtrot.persist.maps.DeathbanMap;
 import net.frozenorb.foxtrot.persist.maps.KillsMap;
-import net.frozenorb.foxtrot.settings.Setting;
 import net.frozenorb.foxtrot.team.claims.Claim;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
 import net.frozenorb.foxtrot.team.claims.Subclaim;
 import net.frozenorb.foxtrot.team.commands.team.TeamDisplayCommand;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.foxtrot.team.dtr.DTRHandler;
+import net.frozenorb.foxtrot.team.enums.Tier;
+import net.frozenorb.foxtrot.team.enums.Upgrades;
 import net.frozenorb.foxtrot.team.track.TeamActionTracker;
 import net.frozenorb.foxtrot.team.track.TeamActionType;
 import net.frozenorb.foxtrot.util.ChatUtils;
@@ -88,6 +90,7 @@ public class Team {
     @Getter private Set<UUID> displayPermissions = new HashSet<>();
     @Getter private Set<ObjectId> allies = new HashSet<>();
     @Getter private Set<ObjectId> requestedAllies = new HashSet<>();
+    @Getter private Set<String> usedUpgrades = new HashSet<>();
     @Getter private String announcement;
     @Getter private int maxOnline = -1;
     @Getter private boolean powerFaction = false;
@@ -415,6 +418,12 @@ public class Team {
 
     public boolean hasSubclaimPermission(UUID uuid) {
         return isCoLeader(uuid) || isOwner(uuid) || isCaptain(uuid) || getSubclaimPermissions().contains(uuid);
+    }
+
+    public void addFactionUpgrade(String upgrade, boolean enabled) {
+        if (Upgrades.valueOf(upgrade) == null) return;
+        Upgrades.valueOf(upgrade).setEnabled(enabled);
+
     }
 
     public void disband() {
@@ -1376,6 +1385,25 @@ public class Team {
         float pitch = Float.parseFloat(args[5]);
 
         return (new Location(world, x, y, z, yaw, pitch));
+    }
+
+    public Tier getTier(Team team) {
+        if(team.getPoints() > 200) return Tier.TIERI;
+        else if(team.getPoints() > 175) return Tier.TIERII;
+        else if(team.getPoints() > 100) return Tier.TIERIII;
+        else if(team.getPoints() > 50) return Tier.TIERIV;
+
+        return Tier.TIERV;
+    }
+
+    public String getTierPrefix (Team team) {
+        if (getTier(team) == Tier.TIERI) return CC.translate("&6(Tier I) ");
+        else if(getTier(team) == Tier.TIERII) return CC.translate("&e(Tier II) ");
+        else if (getTier(team) == Tier.TIERIII) return CC.translate("&b(Tier III) ");
+        else if (getTier(team) == Tier.TIERIV) return CC.translate("&3(Tier IV) ");
+        else if (getTier(team) == Tier.TIERV) return CC.translate("&9(Tier V) ");
+
+        return CC.translate("&cCouldn't load data");
     }
 
     public void sendMessage(String message) {

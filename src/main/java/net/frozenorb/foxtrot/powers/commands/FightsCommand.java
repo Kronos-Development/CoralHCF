@@ -21,7 +21,7 @@ public class FightsCommand {
         PowersHandler powersHandler = Foxtrot.getInstance().getPowersHandler();
 
         if (PowersHandler.getInFights().size() == 0) {
-            powersHandler.ErrorMessage(player, "No fights currently");
+            player.sendMessage(CC.translate("No fights currently"));
             return;
         }
         PowersHandler.getInFights().values().stream().map(Objects::nonNull).forEach(fight -> {
@@ -34,11 +34,11 @@ public class FightsCommand {
         PowersHandler powersHandler = Foxtrot.getInstance().getPowersHandler();
         //Standard error checking procedure.
         if (team1 == null) {
-            powersHandler.ErrorMessage(player, "Team one is null. or non existant.");
+            player.sendMessage(CC.translate("Team one is null or non existent"));
             return;
         }
         if (team2 == null) {
-            powersHandler.ErrorMessage(player, "Team two is null or non existant.");
+            player.sendMessage(CC.translate("Team two is null or non existent"));
             return;
         }
         if(team1.getMembers().size() == 0 || team2.getMembers().size() == 0) {
@@ -53,11 +53,11 @@ public class FightsCommand {
         PowersHandler powersHandler = Foxtrot.getInstance().getPowersHandler();
         //Standard error checking procedure.
         if (team1 == null) {
-            powersHandler.ErrorMessage(player, "Team one is null. or non existant.");
+            player.sendMessage(CC.translate("Team one is null or non existent"));
             return;
         }
         if (team2 == null) {
-            powersHandler.ErrorMessage(player, "Team two is null or non existant.");
+            player.sendMessage(CC.translate("Team two is null or non existent"));
             return;
         }
         if(team1.getMembers().size() == 0 || team2.getMembers().size() == 0) {
