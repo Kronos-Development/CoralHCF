@@ -14,6 +14,7 @@ public class TeamUpgradesCommand {
         Team team = Foxtrot.getInstance().getTeamHandler().getTeam(player.getUniqueId());
         if (team == null) {
             player.sendMessage(CC.translate("&cYou must be on a team to perform this command."));
+            return;
         }
 
         if(team.getCaptains().contains(player.getUniqueId())) {

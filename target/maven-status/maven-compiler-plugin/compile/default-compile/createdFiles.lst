@@ -327,7 +327,6 @@ net\frozenorb\foxtrot\persist\PersistMap$1.class
 net\frozenorb\foxtrot\deathmessage\objects\PlayerDamage.class
 net\frozenorb\foxtrot\team\menu\button\KickPlayerButton.class
 net\frozenorb\foxtrot\commands\CannonCommand$1.class
-net\frozenorb\foxtrot\abilities\type\FlashAbility$1.class
 net\frozenorb\foxtrot\map\stats\command\ChestCommand.class
 net\frozenorb\foxtrot\map\stats\StatsHandler.class
 net\frozenorb\foxtrot\team\Team$3.class

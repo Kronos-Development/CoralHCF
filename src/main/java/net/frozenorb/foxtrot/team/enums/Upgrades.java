@@ -1,6 +1,7 @@
 package net.frozenorb.foxtrot.team.enums;
 
 import com.google.common.collect.Lists;
+import com.minexd.zoot.util.CC;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 public enum Upgrades {
 
-    ONE("one", ChatColor.GOLD, Material.LEATHER_HELMET, Lists.newArrayList("helo"), 20, false),
-    TWO("two", ChatColor.GOLD, Material.EGG, Lists.newArrayList("helo"),40,false),
+    ONE("Speedy DTR", ChatColor.GOLD, Material.GOLD_BLOCK,
+            Lists.newArrayList(CC.translate("&7This will make you regenerate DTR"),
+            CC.translate("&7faster by 10 minutes."),
+            CC.translate("&cRequired Points: 20")),
+            20,
+            false),
+    TWO("Making Bank", ChatColor.GREEN, Material.EMERALD,
+            Lists.newArrayList(CC.translate("&7This will make the store have a 20%"),
+            CC.translate("&7Discount when buying materials."),
+            CC.translate("&cRequired Points: 40")),
+            40,
+            false),
     THREE("three", ChatColor.GOLD, Material.CHEST, Lists.newArrayList("helo"),60,false),
     FOUR("four", ChatColor.GOLD, Material.ACTIVATOR_RAIL, Lists.newArrayList("helo"),80, false),
     FIVE("five", ChatColor.GOLD, Material.INK_SACK, Lists.newArrayList("helo"),100, false),

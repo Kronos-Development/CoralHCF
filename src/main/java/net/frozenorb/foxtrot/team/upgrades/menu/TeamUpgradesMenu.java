@@ -50,7 +50,6 @@ public class TeamUpgradesMenu extends Menu {
                 @Override
                 public void clicked(Player player, int slot, ClickType clickType) {
                     if (team.getPoints() < upgrades.getPtsrequired()) {
-                        player.closeInventory();
                         player.sendMessage(CC.translate("&cYou don't have enough points for the &l" + upgrades.getName() + "&c upgrade."));
                         return;
                     }
