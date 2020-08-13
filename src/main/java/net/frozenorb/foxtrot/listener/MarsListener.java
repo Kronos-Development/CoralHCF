@@ -40,7 +40,7 @@ public class MarsListener implements Listener {
 
         player.teleport(Bukkit.getWorld("mars").getSpawnLocation());
         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10000, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10000, 1));
 
         //this is the exit block. just place water and you should have it.
         if(player.getWorld().getName().toLowerCase() == "mars") {

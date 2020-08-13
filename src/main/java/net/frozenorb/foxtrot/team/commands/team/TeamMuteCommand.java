@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.team.commands.team;
 
 import com.google.common.collect.ImmutableMap;
 
+import com.minexd.zoot.util.CC;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.team.Team;
@@ -33,7 +34,7 @@ public class TeamMuteCommand {
             Player bukkitPlayer = Foxtrot.getInstance().getServer().getPlayer(player);
 
             if (bukkitPlayer != null) {
-                bukkitPlayer.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "Your team has been muted for " + TimeUtils.formatIntoMMSS(timeSeconds) + " for " + reason + ".");
+                bukkitPlayer.sendMessage(CC.translate("§c§lYour team has been muted for" + TimeUtils.formatIntoMMSS(timeSeconds) + " for " + reason + "."));
             }
         }
 
@@ -64,7 +65,7 @@ public class TeamMuteCommand {
 
         }.runTaskLater(Foxtrot.getInstance(), timeSeconds * 20L);
 
-        sender.sendMessage(ChatColor.YELLOW + "Muted the team " + team.getName() + ChatColor.GRAY + " for " + TimeUtils.formatIntoMMSS(timeSeconds) + " for " + reason + ".");
+        sender.sendMessage(CC.translate("§eMuted the team §9" + team.getName() + " §efor §c" + TimeUtils.formatIntoMMSS(timeSeconds) + " §efor §9" + reason + "§e."));
     }
 
 }

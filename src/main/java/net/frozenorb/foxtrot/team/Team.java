@@ -1617,9 +1617,17 @@ public class Team {
             if (Foxtrot.getInstance().getServerHandler().isForceInvitesEnabled()) {
                 player.sendMessage(ChatColor.YELLOW + "Force Invites: " + ChatColor.RED + getForceInvites());
             }
-            player.sendMessage(ChatColor.YELLOW + "Points: " + ChatColor.RED + getPoints());
+
+            FancyMessage pointsMessage = new FancyMessage(CC.translate("§ePoints: §c" + getPoints()));
+
+            if (player.hasPermission("foxtrot.manage")) {
+                pointsMessage.command("/manageteam points " + getName()).tooltip("§bClick to modify team points");
+            }
+            pointsMessage.send(player);
+
             player.sendMessage(ChatColor.YELLOW + "KOTH Captures: " + ChatColor.RED + getKothCaptures());
             player.sendMessage(ChatColor.YELLOW + "Lives: " + ChatColor.RED + getLives());
+            player.sendMessage(ChatColor.YELLOW + "Power Faction: " + ChatColor.RED + isPowerFaction());
             player.sendMessage(ChatColor.YELLOW + "Spawners: " + ChatColor.RED + getSpawnersInClaim());
         }
 

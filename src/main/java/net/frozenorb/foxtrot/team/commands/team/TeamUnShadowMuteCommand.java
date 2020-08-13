@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.team.commands.team;
 
 import com.google.common.collect.ImmutableMap;
 
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.track.TeamActionTracker;
 import net.frozenorb.foxtrot.team.track.TeamActionType;
@@ -32,7 +33,7 @@ public class TeamUnShadowMuteCommand {
             }
         }
 
-        sender.sendMessage(ChatColor.GRAY + "Un-shadowmuted the team " + team.getName() + ChatColor.GRAY  + ".");
+        sender.sendMessage(CC.translate("§eUn-shadowmuted the team §9" + team.getName() + "§e."));
     }
 
 }

@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.team.commands.team;
 
 import com.google.common.collect.ImmutableMap;
 
+import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.track.TeamActionTracker;
@@ -33,7 +34,7 @@ public class TeamUnMuteCommand {
             }
         }
 
-        sender.sendMessage(ChatColor.GRAY + "Unmuted the team " + team.getName() + ChatColor.GRAY  + ".");
+        sender.sendMessage(CC.translate("§eUnmuted the team §9" + team.getName() + "§e."));
     }
 
 }

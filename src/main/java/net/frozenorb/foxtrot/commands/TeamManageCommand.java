@@ -73,7 +73,7 @@ public class TeamManageCommand {
     public static void pointsTeam (Player sender, @Param(name = "team") Team team) {
         conversationDouble(sender, "§eEnter a new Points amount for " + team.getName() + ".", (d) -> {
             team.setPoints(d.intValue());
-            sender.sendRawMessage(CC.translate("&eYou have set " + team.getName() + "'s points to" + d.intValue()));
+            sender.sendRawMessage(CC.translate("&eYou have set &9" + team.getName() + "&e's points to &9" + d.intValue()));
         });
     }
 
@@ -82,7 +82,7 @@ public class TeamManageCommand {
         conversationString(sender, "§eEnter a new name for " + team.getName() + ".", (name) -> {
             String oldName = team.getName();
             team.rename(name);
-            sender.sendRawMessage(ChatColor.GRAY + oldName + " now has a name of " + team.getName());
+            sender.sendRawMessage(CC.translate("&7" + oldName + " &enow has a name of &9" + team.getName()));
         });
     }
 

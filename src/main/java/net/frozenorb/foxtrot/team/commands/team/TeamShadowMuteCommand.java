@@ -2,6 +2,7 @@ package net.frozenorb.foxtrot.team.commands.team;
 
 import com.google.common.collect.ImmutableMap;
 
+import com.minexd.zoot.util.CC;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.team.Team;
@@ -58,7 +59,7 @@ public class TeamShadowMuteCommand {
 
         }.runTaskLater(Foxtrot.getInstance(), timeSeconds * 20L);
 
-        sender.sendMessage(ChatColor.YELLOW + "Shadow muted the team " + team.getName() + ChatColor.GRAY + " for " + TimeUtils.formatIntoMMSS(timeSeconds) + ".");
+        sender.sendMessage(CC.translate("§eShadow muted the team §9" + team.getName() +" §efor §7" + TimeUtils.formatIntoMMSS(timeSeconds) + "§e."));
     }
 
 }
