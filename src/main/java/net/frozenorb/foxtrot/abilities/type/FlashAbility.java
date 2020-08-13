@@ -5,6 +5,7 @@ import com.minexd.zoot.util.CC;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.abilities.AbilityHandler;
 import net.frozenorb.foxtrot.abilities.AbstractAbility;
+import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.qlib.util.ItemBuilder;
 import net.minecraft.server.v1_7_R4.Packet;
@@ -12,6 +13,7 @@ import net.minecraft.server.v1_7_R4.PacketPlayOutWorldParticles;
 import net.minecraft.server.v1_7_R4.PlayerConnection;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
@@ -54,8 +56,7 @@ public class FlashAbility extends AbstractAbility {
     @Override
     public ItemStack getItem() {
         return ItemBuilder
-                .of(Material.INK_SACK)
-                .data((short) 15)
+                .of(Material.SNOW_BALL)
                 .build();
     }
 
@@ -89,8 +90,10 @@ public class FlashAbility extends AbstractAbility {
 
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
         player.launchProjectile(Snowball.class);
-        useAbility(player);
-        addUse(player);
+        if(!useAbility(player)) {
+            useAbility(player);
+            addUse(player);
+        }
     }
 
     @EventHandler
@@ -147,36 +150,39 @@ public class FlashAbility extends AbstractAbility {
         Location victimLoc = damaged.getLocation();
         Location attackerLoc = attacker.getLocation();
 
-        //Checking if the attacker is in Safe-ZONE if so we cancel the ability
-        if (DTRBitmask.SAFE_ZONE.appliesAt(attackerLoc)) {
-            attacker.sendMessage(CC.translate("&c&lWARNING! &eYou can't do this is in a &aSafe-Zone&e!"));
-            return;
-        }
-        //Checking if the victim player is in Safe-ZONE if so we cancel the ability
-        if (DTRBitmask.SAFE_ZONE.appliesAt(victimLoc)) {
-            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player is in a &aSafe-Zone&e!"));
-            return;
-        }
-        //Checking if the attacker has PVP-Timer if so we cancel the ability
-        if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(attacker.getUniqueId())) {
-            attacker.sendMessage(CC.translate("&c&lWARNING! &eyou can't do this while you have &aPVP Timer&e!"));
-            return;
-        }
-        //Checking if the opponent has a PVP-TIMER if so we cancel the ability
-        if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(damaged.getUniqueId())) {
-            attacker.sendMessage(CC.translate("&c&lWARNING! &eThis player currently has their &aPVP Timer&e!"));
-            return;
+        getNearbyPlayers(damaged).forEach(flashed -> {
+            World world = damaged.getWorld();
+            world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
+            world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
+            world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
+            world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
+            damaged.playSound(damaged.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 0);
+        });
+    }
+
+    public List<Player> getNearbyPlayers(Player player) {
+        List<Player> valid = new ArrayList<>();
+        Team sourceTeam = Foxtrot.getInstance().getTeamHandler().getTeam(player);
+
+        // We divide by 2 so that the range isn't as much on the Y level (and can't be abused by standing on top of / under events)
+        for (Entity entity : player.getNearbyEntities(4, 2, 4)) {
+            if (entity instanceof Player) {
+                Player nearbyPlayer = (Player) entity;
+
+                if (DTRBitmask.SAFE_ZONE.appliesAt(nearbyPlayer.getLocation()))
+                    continue;
+
+                if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(nearbyPlayer.getUniqueId()))
+                    continue;
+
+                if (sourceTeam.getMembers().contains(nearbyPlayer.getUniqueId()))
+                    continue;
+
+                valid.add(nearbyPlayer);
+            }
         }
 
-        new BukkitRunnable() {
-            public void run() {
-                World world = damaged.getWorld();
-                world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
-                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
-                world.playEffect(damaged.getLocation(), Effect.CLOUD, 0);
-                world.playEffect(damaged.getLocation(), Effect.EXPLOSION_HUGE, 0);
-                damaged.playSound(damaged.getLocation(), Sound.FIREWORK_LARGE_BLAST, 2, 0);
-            }
-        }.runTask(Foxtrot.getInstance());
+        valid.add(player);
+        return (valid);
     }
 }

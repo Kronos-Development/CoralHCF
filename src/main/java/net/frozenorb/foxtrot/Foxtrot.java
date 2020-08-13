@@ -46,6 +46,7 @@ import net.frozenorb.qlib.util.ClassUtils;
 import net.minecraft.server.v1_7_R4.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -185,6 +186,9 @@ public class Foxtrot extends JavaPlugin {
 		(new RedisSaveTask()).runTaskTimerAsynchronously(this, 1200L, 1200L);
 		(new PacketBorderThread()).start();
 
+		if (Bukkit.getWorld("mars") == null) {
+			Bukkit.createWorld(new WorldCreator("mars"));
+		}
 		setupHandlers();
 		setupPersistence();
 		setupListeners();
@@ -222,6 +226,9 @@ public class Foxtrot extends JavaPlugin {
 		// we just define this here while we're testing, if we actually
 		// accept this feature it'll be moved to somewhere better
 		new ServerFakeFreezeTask().runTaskTimerAsynchronously(this, 20L, 20L);
+
+		EndListener.loadEndReturn();
+
 	}
 
 	@Override
@@ -304,6 +311,7 @@ public class Foxtrot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnchantmentLimiterListener(), this);
 		getServer().getPluginManager().registerEvents(new EnderpearlCooldownHandler(), this);
 		getServer().getPluginManager().registerEvents(new EndListener(), this);
+		getServer().getPluginManager().registerEvents(new MarsListener(), this);
 		getServer().getPluginManager().registerEvents(new PowersListener(), this);
 		getServer().getPluginManager().registerEvents(new ElevatorListener(), this);
 		getServer().getPluginManager().registerEvents(new FoundDiamondsListener(), this);

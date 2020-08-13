@@ -4,6 +4,7 @@ import com.minexd.zoot.util.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
@@ -21,41 +22,31 @@ public class MarsListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
-        Block to = event.getTo().getBlock();
+        Block to = event.getTo().getBlock().getRelative(BlockFace.DOWN);
         World mars = Bukkit.getWorld("mars");
         Player player = event.getPlayer();
 
         //again, its foxtrot so we try and use this wisely, make the server do less work.
-        if (to.getType() != Material.REDSTONE_ORE) return;
-        if(to.getRelative(BlockFace.UP).getRelative(BlockFace.EAST).getType() != Material.IRON_BLOCK) return;
-        if(to.getRelative(BlockFace.UP).getRelative(BlockFace.WEST).getType() != Material.IRON_BLOCK) return;
-        if(to.getRelative(BlockFace.UP).getRelative(BlockFace.NORTH).getType() != Material.IRON_BLOCK) return;
-        if(to.getRelative(BlockFace.UP).getRelative(BlockFace.SOUTH).getType() != Material.IRON_BLOCK) return;
+        if (to.getType() == Material.GLOWING_REDSTONE_ORE || to.getType() == Material.REDSTONE_ORE) {
+            player.sendMessage("1");
+            if (to.getRelative(BlockFace.EAST).getType() != Material.IRON_BLOCK) return;
+            if (to.getRelative(BlockFace.WEST).getType() != Material.IRON_BLOCK) return;
+            if (to.getRelative(BlockFace.NORTH).getType() != Material.IRON_BLOCK) return;
+            if (to.getRelative(BlockFace.SOUTH).getType() != Material.IRON_BLOCK) return;
 
-        //why would we be teleporting the player if the world is null? (Mojang thinking)
-        if(mars == null) {
-            player.sendMessage(CC.translate("&cThere was an error teleporting you, please contact an admin; Error #01"));
-            return;
+            //why would we be teleporting the player if the world is null? (Mojang thinking)
+
+            player.teleport(Bukkit.getWorld("mars").getSpawnLocation());
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, 2));
+
         }
-
-        player.teleport(Bukkit.getWorld("mars").getSpawnLocation());
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10000, 2));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10000, 1));
 
         //this is the exit block. just place water and you should have it.
         if(player.getWorld().getName().toLowerCase() == "mars") {
-            if(to.getType() == Material.STATIONARY_WATER) {
-
-                //again same thing as above
-                if(EndListener.getEndReturn() == null) {
-                    player.sendMessage(CC.translate("&cThere was an error teleporting you, please contact an admin; Error #02"));
-                    return;
-                }
-
+            if(to.getType() == Material.STATIONARY_WATER || to.getType() == Material.WATER) {
                 //
                 player.teleport(EndListener.getEndReturn());
                 player.removePotionEffect(PotionEffectType.JUMP);
-                player.removePotionEffect(PotionEffectType.WEAKNESS);
             }
 
         }

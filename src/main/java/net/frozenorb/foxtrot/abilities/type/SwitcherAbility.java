@@ -72,11 +72,10 @@ public class SwitcherAbility extends AbstractAbility {
     public void onLaunch(ProjectileLaunchEvent event) {
         if (!(event.getEntity() instanceof Egg)) return;
 
-        Egg snowball = (Egg) event.getEntity();
-        if (!(snowball.getShooter() instanceof Player)) return;
+        Egg egg = (Egg) event.getEntity();
+        if (!(egg.getShooter() instanceof Player)) return;
 
-        Player shooter = (Player) snowball.getShooter();
-        Player damaged = (Player) event.getEntity();
+        Player shooter = (Player) egg.getShooter();
         ItemStack itemInHand = shooter.getItemInHand();
 
         if (itemInHand == null || !isSimilar(itemInHand, false)) return;
@@ -104,25 +103,21 @@ public class SwitcherAbility extends AbstractAbility {
         }
 
         //Checking if the opponent has a PVP-TIMER if so we cancel the ability
-        if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(damaged.getUniqueId())) {
-            shooter.sendMessage(CC.translate("&c&lWARNING! &eThis player currently has their &aPVP Timer&e!"));
-            return;
-        }
 
-        snowball.setMetadata("switcher", new FixedMetadataValue(Foxtrot.getInstance(), true));
+        egg.setMetadata("switcher", new FixedMetadataValue(Foxtrot.getInstance(), true));
     }
 
     @EventHandler
     public void onAttack(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Snowball)) return;
+        if (!(event.getDamager() instanceof Egg)) return;
         if (!(event.getEntity() instanceof Player)) return;
 
-        Egg snowball = (Egg) event.getDamager();
-        if (!snowball.hasMetadata("switcher")) return;
-        if (!(snowball.getShooter() instanceof Player)) return;
+        Egg egg = (Egg) event.getDamager();
+        if (!egg.hasMetadata("switcher")) return;
+        if (!(egg.getShooter() instanceof Player)) return;
 
         Player victim = (Player) event.getEntity();
-        Player attacker = (Player) snowball.getShooter();
+        Player attacker = (Player) egg.getShooter();
 
         Location victimLoc = victim.getLocation();
         Location attackerLoc = attacker.getLocation();
