@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.pvpclasses.pvpclasses;
 
+import com.minexd.zoot.util.CC;
 import lombok.Getter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.pvpclasses.PvPClass;
@@ -8,12 +9,12 @@ import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.team.dtr.DTRBitmask;
 import net.frozenorb.qlib.util.TimeUtils;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -28,9 +29,12 @@ import java.util.concurrent.TimeUnit;
 
 public class ScoutClass extends PvPClass {
 
-	@Getter private static Map<String, Long> lastSpeedUsage = new HashMap<>();
-	@Getter private static Map<String, Long> lastGrapplingUsage = new HashMap<>();
+	@Getter
+	private static Map<String, Long> lastSpeedUsage = new HashMap<>();
+	@Getter
+	private static Map<String, Long> lastGrapplingUsage = new HashMap<>();
 	private static Map<String, Boolean> grapplingNoDamage = new HashMap<>();
+	private static Map<String, Long> lastConsumableUsage = new HashMap<>();
 
 	public ScoutClass() {
 		super("Scout", 5, Arrays.asList(Material.SUGAR));
@@ -39,10 +43,10 @@ public class ScoutClass extends PvPClass {
 	@Override
 	public boolean qualifies(PlayerInventory armor) {
 		return wearingAllArmor(armor) &&
-		       armor.getHelmet().getType() == Material.CHAINMAIL_HELMET &&
-		       armor.getChestplate().getType() == Material.LEATHER_CHESTPLATE &&
-		       armor.getLeggings().getType() == Material.LEATHER_LEGGINGS &&
-		       armor.getBoots().getType() == Material.CHAINMAIL_BOOTS;
+				armor.getHelmet().getType() == Material.CHAINMAIL_HELMET &&
+				armor.getChestplate().getType() == Material.LEATHER_CHESTPLATE &&
+				armor.getLeggings().getType() == Material.LEATHER_LEGGINGS &&
+				armor.getBoots().getType() == Material.CHAINMAIL_BOOTS;
 	}
 
 	@Override
@@ -111,6 +115,7 @@ public class ScoutClass extends PvPClass {
 	public void onPlayerQuitEvent(PlayerQuitEvent event) {
 		lastSpeedUsage.remove(event.getPlayer().getName());
 		lastGrapplingUsage.remove(event.getPlayer().getName());
+		lastConsumableUsage.remove(event.getPlayer().getName());
 		grapplingNoDamage.remove(event.getPlayer().getName());
 	}
 
@@ -119,7 +124,8 @@ public class ScoutClass extends PvPClass {
 		if (!(event.getEntity() instanceof Player) || !(event.getCause() == EntityDamageEvent.DamageCause.FALL)) return;
 
 		Player player = (Player) event.getEntity();
-		if (!lastGrapplingUsage.containsKey(player.getName()) || !grapplingNoDamage.containsKey(player.getName()) || !grapplingNoDamage.get(player.getName())) return;
+		if (!lastGrapplingUsage.containsKey(player.getName()) || !grapplingNoDamage.containsKey(player.getName()) || !grapplingNoDamage.get(player.getName()))
+			return;
 		grapplingNoDamage.remove(player.getName());
 
 		long grappleCooldown = lastGrapplingUsage.get(player.getName()) - System.currentTimeMillis();
@@ -128,38 +134,51 @@ public class ScoutClass extends PvPClass {
 	}
 
 	@EventHandler
-	public void onPlayerFish(PlayerFishEvent event) {
-		if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH || event.getState() == PlayerFishEvent.State.FISHING) return;
-		if (!PvPClassHandler.hasKitOn(event.getPlayer(), this)) return;
+	public void onDamage (EntityDamageByEntityEvent event) {
+		if(!(event.getEntity() instanceof Player)) return;
+		Player attacker = (Player) event.getDamager();
+		ItemStack itemInHand = attacker.getItemInHand();
+		Player victim = (Player) event.getEntity();
+		BardClass bardClass = Foxtrot.getInstance().getBardClass();
 
-		Player player = event.getPlayer();
-		ItemStack itemInHand = player.getItemInHand();
+		ItemStack hook = new ItemStack(Material.TRIPWIRE_HOOK);
 
-		if (itemInHand == null || itemInHand.getType() != Material.FISHING_ROD) return;
+		if (itemInHand == null || !itemInHand.isSimilar(hook)) return;
 
-		if (lastGrapplingUsage.containsKey(player.getName()) && lastGrapplingUsage.get(player.getName()) > System.currentTimeMillis()) {
-			long millisLeft = lastGrapplingUsage.get(player.getName()) - System.currentTimeMillis();
-			String msg = TimeUtils.formatIntoDetailedString((int) millisLeft / 1000);
-			player.sendMessage(ChatColor.RED + "You cannot use this for another §c§l" + msg + "§c.");
-			return;
+		if (PvPClassHandler.getPvPClass(victim) instanceof BardClass) {
+			BardClass.getBARD_CLICK_EFFECTS().values().forEach(click -> BardClass.getLastEffectUsage().put(victim.getName(), System.currentTimeMillis() + BardClass.getEFFECT_COOLDOWN()));
+			victim.sendMessage(CC.translate("&4&lYou have been hit! &c&lA Scout has hit you. You can no longer use consumables"));
+		}
+		if (PvPClassHandler.getPvPClass(victim) instanceof RogueClass) {
+			RogueClass.getLastSpeedUsage().put(victim.getName(), System.currentTimeMillis() + (1000L * 60 * 2));
+			RogueClass.getLastJumpUsage().put(victim.getName(), System.currentTimeMillis() + (1000L * 60 * 2));
+			victim.sendMessage(CC.translate("&4&lYou have been hit! &c&lA Scout has hit you. You can no longer use consumables"));
+		}
+		if (PvPClassHandler.getPvPClass(victim) instanceof ArcherClass) {
+			ArcherClass.getLastSpeedUsage().put(victim.getName(), System.currentTimeMillis() + (1000L * 60 * 2));
+			ArcherClass.getLastJumpUsage().put(victim.getName(), System.currentTimeMillis() + (1000L * 60 * 2));
+			victim.sendMessage(CC.translate("&4&lYou have been hit! &c&lA Scout has hit you. You can no longer use consumables"));
 		}
 
+	}
+
+	@EventHandler
+	public void onPlayerFish(PlayerFishEvent event) {
+		Player player = event.getPlayer();
+
+		if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH || event.getState() == PlayerFishEvent.State.FISHING)
+			return;
+
 		Location hook = event.getHook().getLocation();
-		lastGrapplingUsage.put(player.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10L));
 
 		switch (event.getState()) {
-			case FAILED_ATTEMPT: {
-				player.sendMessage(ChatColor.RED + "Your hook needs to be in the ground!");
-				break;
-			}
-
 			case IN_GROUND: {
 				if (event.getHook().getLocation().distance(player.getLocation()) > 30) {
 					player.sendMessage(ChatColor.RED + "You are too far from the hook!");
 					return;
 				}
 
-				pullTo(player, hook, false);
+				pullTo(player, hook, true);
 				//player.setVelocity(getVector(player, hook));
 				break;
 			}
@@ -179,7 +198,10 @@ public class ScoutClass extends PvPClass {
 			}
 		}
 
-		grapplingNoDamage.put(player.getName(), true);
+		if (event.getState() != PlayerFishEvent.State.FAILED_ATTEMPT) {
+			grapplingNoDamage.put(player.getName(), true);
+			pullTo(player, hook, true);
+		}
 	}
 
 	public List<Player> getNearbyPlayers(Player player, boolean friendly) {
@@ -218,6 +240,7 @@ public class ScoutClass extends PvPClass {
 
 		return (valid);
 	}
+
 
 	private void pullTo(Entity e, Location loc, boolean pull) {
 		Location l = e.getLocation();

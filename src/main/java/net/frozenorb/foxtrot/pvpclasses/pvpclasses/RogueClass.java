@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -31,8 +32,8 @@ import net.frozenorb.qlib.util.UUIDUtils;
 
 public class RogueClass extends PvPClass {
 
-    private static Map<String, Long> lastSpeedUsage = new HashMap<>();
-    private static Map<String, Long> lastJumpUsage = new HashMap<>();
+    @Getter private static Map<String, Long> lastSpeedUsage = new HashMap<>();
+    @Getter private static Map<String, Long> lastJumpUsage = new HashMap<>();
     private static Map<String, Long> backstabCooldown = new HashMap<>();
 
     public RogueClass() {

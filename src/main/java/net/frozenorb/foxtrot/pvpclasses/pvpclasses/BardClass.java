@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import lombok.Setter;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -39,14 +40,14 @@ public class BardClass extends PvPClass implements Listener {
             This is therefore commented with // CUSTOM
      */
 
-    public static Map<Material, BardEffect> BARD_CLICK_EFFECTS = new HashMap<>();
+    @Getter public static Map<Material, BardEffect> BARD_CLICK_EFFECTS = new HashMap<>();
     public static Map<Material, BardEffect> BARD_PASSIVE_EFFECTS = new HashMap<>();
 
-    @Getter private static Map<String, Long> lastEffectUsage = new ConcurrentHashMap<>();
+    @Getter @Setter private static Map<String, Long> lastEffectUsage = new ConcurrentHashMap<>();
     @Getter private static Map<String, Float> energy = new ConcurrentHashMap<>();
 
     public static int BARD_RANGE = 25;
-    public static int EFFECT_COOLDOWN = 10 * 1000;
+    @Getter private static int EFFECT_COOLDOWN = 10 * 1000;
     public static float MAX_ENERGY = 120;
     public static float ENERGY_REGEN_PER_SECOND = 1;
 
@@ -93,7 +94,7 @@ public class BardClass extends PvPClass implements Listener {
                         energy.put(player.getName(), 0F);
                     }
 
-                    int manaInt = energy.get(player.getName()).intValue();
+                    double manaInt = energy.get(player.getName()).doubleValue();
 
                     if (manaInt % 10 == 0) {
                         player.sendMessage(ChatColor.AQUA + "Bard Energy: " + ChatColor.GREEN + manaInt);

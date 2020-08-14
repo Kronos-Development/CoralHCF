@@ -79,7 +79,7 @@ public class FoxtrotScoreGetter implements ScoreGetter {
         if (Foxtrot.getInstance().getMapHandler().isKitMap() || Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
             StatsEntry stats = Foxtrot.getInstance().getMapHandler().getStatsHandler().getStats(player.getUniqueId());
             if (!ModHandler.isModMode(player)) {
-                scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + (stats.getKD() > 0 ? "&7(&b" +  stats.getKD() + "&7)" : ""));
+                scores.add(sectionColor + "Kills&7: " + infoColor + stats.getKills() + " " + (stats.getKD() > 0 ? "&7(&b" + Team.DTR_FORMAT.format(stats.getKD()) + "&7)" : ""));
                 if (stats.getKillstreak() > 0) {
                     scores.add(sectionColor + "Killstreak&7: " + infoColor + stats.getKillstreak());
                 }

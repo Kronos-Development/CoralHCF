@@ -252,13 +252,12 @@ public class FoxtrotTabLayoutProvider implements LayoutProvider {
 
                 String teamName = teamEntry.getKey().getName();
                 String teamColor = teamEntry.getKey().isMember(player.getUniqueId()) ? ChatColor.GREEN.toString() : infoColor;
-                int x = 0;
                 int y = 14;
 
                 if (teamName.length() > 10) teamName = teamName.substring(0, 10);
                 layout.set(index, y, teamColor + teamName + ChatColor.GRAY + " (" + teamEntry.getValue() + ")");
                 if (index == 2) {
-                    index = -1;
+                    index = 0;
                     y++;
                 }
             }

@@ -29,6 +29,9 @@ import net.frozenorb.foxtrot.powers.PowersListener;
 import net.frozenorb.foxtrot.protocol.ClientCommandPacketAdaper;
 import net.frozenorb.foxtrot.protocol.SignGUIPacketAdaper;
 import net.frozenorb.foxtrot.pvpclasses.PvPClassHandler;
+import net.frozenorb.foxtrot.pvpclasses.pvpclasses.ArcherClass;
+import net.frozenorb.foxtrot.pvpclasses.pvpclasses.BardClass;
+import net.frozenorb.foxtrot.pvpclasses.pvpclasses.RogueClass;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
 import net.frozenorb.foxtrot.server.ServerHandler;
 import net.frozenorb.foxtrot.tab.FoxtrotTabLayoutProvider;
@@ -120,6 +123,10 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private TabListModeMap tabListModeMap;
 	@Getter private CobblePickupMap cobblePickupMap;
 	@Getter private KDRMap kdrMap;
+
+	@Getter private ArcherClass archerClass;
+	@Getter private BardClass bardClass;
+	@Getter private RogueClass rogueClass;
 
 	@Getter private CombatLoggerListener combatLoggerListener;
 	@Getter

@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import lombok.Getter;
+import lombok.Setter;
 import net.frozenorb.foxtrot.Foxtrot;
 import net.frozenorb.foxtrot.deathmessage.DeathMessageHandler;
 import net.frozenorb.foxtrot.deathmessage.trackers.ArrowTracker;
@@ -37,10 +38,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ArcherClass extends PvPClass {
 
-	private static final int MARK_SECONDS = 5;
+	private static final int MARK_SECONDS = 7;
 
-	private static final Map<String, Long> lastSpeedUsage = new HashMap<>();
-	private static final Map<String, Long> lastJumpUsage = new HashMap<>();
+	@Getter @Setter private static final Map<String, Long> lastSpeedUsage = new HashMap<>();
+	@Getter @Setter private static final Map<String, Long> lastJumpUsage = new HashMap<>();
 	@Getter private static final Map<String, Long> markedPlayers = new ConcurrentHashMap<>();
 	@Getter private static final Map<String, Set<Pair<String, Long>>> markedBy = new HashMap<>();
 
