@@ -34,6 +34,10 @@ public class PvPClassHandler extends BukkitRunnable implements Listener {
             pvpClasses.add(new ArcherClass());
         }
 
+        if (Foxtrot.getInstance().getConfig().getBoolean("pvpClasses.ranger", true)) {
+            pvpClasses.add(new RangerClass());
+        }
+
         if (Foxtrot.getInstance().getConfig().getBoolean("pvpClasses.bard", true)) {
             pvpClasses.add(new BardClass());
         }
