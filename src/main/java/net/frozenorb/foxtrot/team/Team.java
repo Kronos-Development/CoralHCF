@@ -1635,7 +1635,9 @@ public class Team {
                     powerfactionmessage.then().text(ChatColor.RED + "true");
                     powerfactionmessage.command("/powerfaction remove" + getName());
                     powerfactionmessage.tooltip("§bClick change faction to a non power faction.");
+
                 } else {
+
                     powerfactionmessage.then().text(ChatColor.RED + "false");
                     powerfactionmessage.command("/powerfaction add" + getName());
                     powerfactionmessage.tooltip("§bClick change faction to a power faction.");
