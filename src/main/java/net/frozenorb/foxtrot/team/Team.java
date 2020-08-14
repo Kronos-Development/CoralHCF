@@ -1627,51 +1627,64 @@ public class Team {
 
             player.sendMessage(ChatColor.YELLOW + "KOTH Captures: " + ChatColor.RED + getKothCaptures());
             player.sendMessage(ChatColor.YELLOW + "Lives: " + ChatColor.RED + getLives());
-            player.sendMessage(ChatColor.YELLOW + "Power Faction: " + ChatColor.RED + isPowerFaction());
-            player.sendMessage(ChatColor.YELLOW + "Spawners: " + ChatColor.RED + getSpawnersInClaim());
-        }
 
-        if (DTRHandler.isOnCooldown(this)) {
-            if (!player.isOp()) {
-                player.sendMessage(ChatColor.YELLOW + "Time Until Regen: " + ChatColor.BLUE + TimeUtils.formatIntoDetailedString(((int) (getDTRCooldown() - System.currentTimeMillis())) / 1000).trim());
-            } else {
-                FancyMessage message = new FancyMessage(ChatColor.YELLOW + "Time Until Regen: ")
-                        .tooltip(ChatColor.GREEN + "Click to remove regeneration timer").command("/startdtrregen " + getName());
+            FancyMessage powerfactionmessage = new FancyMessage((CC.translate("§ePower Faction: §c" + isPowerFaction())));
 
-                message.then(TimeUtils.formatIntoDetailedString(((int) (getDTRCooldown() - System.currentTimeMillis())) / 1000)).color(ChatColor.BLUE)
-                        .tooltip(ChatColor.GREEN + "Click to remove regeneration timer").command("/startdtrregen " + getName());
+            if (player.hasPermission("foxtrot.powerfaction")) {
+                if (isPowerFaction()) {
+                    powerfactionmessage.then().text(ChatColor.RED + "true");
+                    powerfactionmessage.command("/powerfaction remove" + getName());
+                    powerfactionmessage.tooltip("§bClick change faction to a non power faction.");
+                } else {
+                    powerfactionmessage.then().text(ChatColor.RED + "false");
+                    powerfactionmessage.command("/powerfaction add" + getName());
+                    powerfactionmessage.tooltip("§bClick change faction to a power faction.");
 
-                message.send(player);
+                    player.sendMessage(ChatColor.YELLOW + "Spawners: " + ChatColor.RED + getSpawnersInClaim());
+                }
+
+                if (DTRHandler.isOnCooldown(this)) {
+                    if (!player.isOp()) {
+                        player.sendMessage(ChatColor.YELLOW + "Time Until Regen: " + ChatColor.BLUE + TimeUtils.formatIntoDetailedString(((int) (getDTRCooldown() - System.currentTimeMillis())) / 1000).trim());
+                    } else {
+                        FancyMessage message = new FancyMessage(ChatColor.YELLOW + "Time Until Regen: ")
+                                .tooltip(ChatColor.GREEN + "Click to remove regeneration timer").command("/startdtrregen " + getName());
+
+                        message.then(TimeUtils.formatIntoDetailedString(((int) (getDTRCooldown() - System.currentTimeMillis())) / 1000)).color(ChatColor.BLUE)
+                                .tooltip(ChatColor.GREEN + "Click to remove regeneration timer").command("/startdtrregen " + getName());
+
+                        message.send(player);
+                    }
+                }
+
+//                if (player.hasPermission("foxtrot.powerfactions")) {
+//                    FancyMessage powerFactionLine = new FancyMessage();
+//                    powerFactionLine.text(ChatColor.YELLOW + "Power Faction: ");
+//                    if (isPowerFaction()) {
+//                        powerFactionLine.then().text(ChatColor.GREEN + "True");
+//                        powerFactionLine.command("/powerfaction remove " + getName());
+//                        powerFactionLine.tooltip("§bClick change faction to a non power faction.");
+//                    } else {
+//                        powerFactionLine.then().text(ChatColor.RED + "False");
+//                        powerFactionLine.command("/powerfaction add " + getName());
+//                        powerFactionLine.tooltip("§bClick change faction to a power faction.");
+//                    }
+//                    // powerFactionLine.send(player);
+//                }
+
+                // Only show this if they're a member.
+                if (isMember(player.getUniqueId()) && announcement != null && !announcement.equals("null")) {
+                    player.sendMessage(ChatColor.YELLOW + "Announcement: " + ChatColor.LIGHT_PURPLE + announcement);
+                }
+
+                player.sendMessage(GRAY_LINE);
+                // .... and that is how we do a /f who.
+
+                if (Foxtrot.getInstance().getFDisplayMap().isToggled(player.getUniqueId()) && getOwner() != null && HQ != null && !isMember(player.getUniqueId()) && (isCoLeader(player.getUniqueId()) || isOwner(player.getUniqueId()))) {
+                    TeamDisplayCommand.teamDisplay(player, this);
+                }
             }
-        }
-
-        if(player.hasPermission("foxtrot.powerfactions")) {
-            FancyMessage powerFactionLine = new FancyMessage();
-            powerFactionLine.text(ChatColor.YELLOW + "Power Faction: ");
-            if( isPowerFaction() ) {
-                powerFactionLine.then().text(ChatColor.GREEN + "True");
-                powerFactionLine.command("/powerfaction remove " + getName());
-                powerFactionLine.tooltip("§bClick change faction to a non power faction.");
-            } else {
-                powerFactionLine.then().text(ChatColor.RED + "False");
-                powerFactionLine.command("/powerfaction add " + getName());
-                powerFactionLine.tooltip("§bClick change faction to a power faction.");
-            }
-           // powerFactionLine.send(player);
-        }
-
-        // Only show this if they're a member.
-        if (isMember(player.getUniqueId()) && announcement != null && !announcement.equals("null")) {
-            player.sendMessage(ChatColor.YELLOW + "Announcement: " + ChatColor.LIGHT_PURPLE + announcement);
-        }
-
-        player.sendMessage(GRAY_LINE);
-        // .... and that is how we do a /f who.
-
-        if(Foxtrot.getInstance().getFDisplayMap().isToggled(player.getUniqueId()) && getOwner() != null && HQ != null && !isMember(player.getUniqueId()) && (isCoLeader(player.getUniqueId()) || isOwner(player.getUniqueId()))) {
-            TeamDisplayCommand.teamDisplay(player, this);
-        }
-    }
+        }}
 
     @Override
     public int hashCode() {
