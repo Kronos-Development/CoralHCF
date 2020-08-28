@@ -1,5 +1,6 @@
 package net.frozenorb.foxtrot.util;
 
+import com.minexd.zoot.util.CC;
 import net.frozenorb.qlib.util.ItemBuilder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -37,6 +38,8 @@ public class InventoryUtils {
 
         CROWBAR.setItemMeta(meta);
     }
+
+    public static ItemStack PRYBAR = ItemBuilder.of(Material.DIAMOND_HOE).name(CC.RED + CC.BOLD + "Prybar").setLore(new ArrayList<>()).addToLore(ChatColor.GRAY + "Pry yourself into another persons base, valid for one use.").build();
 
     public static void fillBucket(Player player) {
         for (int i = 0; i < player.getInventory().getSize(); i++) {

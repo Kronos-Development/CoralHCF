@@ -178,6 +178,10 @@ public class FoxtrotScoreGetter implements ScoreGetter {
             scores.add(ChatColor.DARK_AQUA.toString() + ChatColor.BOLD + "Ability&7: &c" + (ScoreFunction.TIME_FANCY.apply(Foxtrot.getInstance().getAbilityHandler().getCooldownLeft(player.getUniqueId()) / 1000F)));
         }
 
+        if (Foxtrot.getInstance().getRampageHandler().isRampageActive()) {
+            scores.add("&c&lRampage Active");
+        }
+
         if (archerMarkScore != null) {
             scores.add("&6&lArcher Mark&7: &c" + archerMarkScore);
         }

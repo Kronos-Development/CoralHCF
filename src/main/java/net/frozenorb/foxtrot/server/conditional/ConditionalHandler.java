@@ -180,8 +180,9 @@ public class ConditionalHandler {
             private boolean shouldHide(Player player, Player viewer) {
                 boolean vanished = ModHandler.isVanished(player);
                 boolean modModeViewer = ModHandler.isModMode(viewer);
+                boolean canSeeStaff = ModHandler.canSeeStaff(viewer);
 
-                return vanished && !modModeViewer && !viewer.hasPermission("foxtrot.staff") || viewer.hasMetadata("nostaff");
+                return vanished && !modModeViewer && !viewer.hasPermission("foxtrot.staff") && !canSeeStaff;
             }
         });
     }

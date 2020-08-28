@@ -234,6 +234,8 @@ public class StatsHandler implements Listener {
         qLib.getInstance().runRedisCommand(redis -> {
             List<String> serializedHolos = leaderboardHolos.entrySet().stream().map(entry -> LocationSerializer.serialize(entry.getKey()).toString() + "----" + entry.getValue().name()).collect(Collectors.toList());
             redis.del(Bukkit.getServerName() + ":" + "leaderboardHolos");
+            leaderboardHolos.clear();
+            Bukkit.getScheduler().scheduleAsyncDelayedTask(Foxtrot.getInstance(), this::save);
 
             return null;
         });
@@ -260,7 +262,6 @@ public class StatsHandler implements Listener {
                     }
                     lines.add("§7§m---*-----------------*---");
                     hologram.setLines(lines);
-                    Zoot.get().getHologramManager().register(hologram);
                 }
         ).interval(15, TimeUnit.SECONDS).build();
         holo.send();
@@ -470,6 +471,8 @@ public class StatsHandler implements Listener {
     public void clearLeaderboards() {
         leaderboardHeads.clear();
         leaderboardSigns.clear();
+        leaderboardHolos.clear();
+        leaderboardNPCs.clear();
         objectives.clear();
 
         Bukkit.getScheduler().scheduleAsyncDelayedTask(Foxtrot.getInstance(), this::save);

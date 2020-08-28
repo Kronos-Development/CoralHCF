@@ -16,6 +16,10 @@ public class TeamUpgradesCommand {
             player.sendMessage(CC.translate("&cYou must be on a team to perform this command."));
             return;
         }
+        if (Foxtrot.getInstance().getServerHandler().isVeltKitMap()) {
+            player.sendMessage(CC.translate("&cThis is not available during KitMap"));
+            return;
+        }
 
         if(team.getCaptains().contains(player.getUniqueId())) {
             player.sendMessage(CC.translate("&cYou must be a captain to perform this command"));

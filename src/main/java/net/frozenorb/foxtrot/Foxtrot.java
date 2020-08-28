@@ -15,6 +15,7 @@ import net.frozenorb.foxtrot.elevators.ElevatorListener;
 import net.frozenorb.foxtrot.events.EventHandler;
 import net.frozenorb.foxtrot.events.citadel.CitadelHandler;
 import net.frozenorb.foxtrot.events.conquest.ConquestHandler;
+import net.frozenorb.foxtrot.events.rampage.RampageHandler;
 import net.frozenorb.foxtrot.events.region.carepackage.CarePackageHandler;
 import net.frozenorb.foxtrot.events.region.cavern.CavernHandler;
 import net.frozenorb.foxtrot.events.region.glowmtn.GlowHandler;
@@ -24,8 +25,8 @@ import net.frozenorb.foxtrot.map.deathban.purgatory.PurgatoryHandler;
 import net.frozenorb.foxtrot.packetborder.PacketBorderThread;
 import net.frozenorb.foxtrot.persist.RedisSaveTask;
 import net.frozenorb.foxtrot.persist.maps.*;
-import net.frozenorb.foxtrot.powers.PowersHandler;
-import net.frozenorb.foxtrot.powers.PowersListener;
+import net.frozenorb.foxtrot.powers.FightHandler;
+import net.frozenorb.foxtrot.powers.listener.FightDamageListener;
 import net.frozenorb.foxtrot.protocol.ClientCommandPacketAdaper;
 import net.frozenorb.foxtrot.protocol.SignGUIPacketAdaper;
 import net.frozenorb.foxtrot.pvpclasses.PvPClassHandler;
@@ -34,6 +35,7 @@ import net.frozenorb.foxtrot.pvpclasses.pvpclasses.BardClass;
 import net.frozenorb.foxtrot.pvpclasses.pvpclasses.RogueClass;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
 import net.frozenorb.foxtrot.server.ServerHandler;
+import net.frozenorb.foxtrot.server.conditional.spectator.SpectatorHandler;
 import net.frozenorb.foxtrot.tab.FoxtrotTabLayoutProvider;
 import net.frozenorb.foxtrot.tasks.RallyExpireTask;
 import net.frozenorb.foxtrot.team.TeamHandler;
@@ -71,6 +73,7 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private PvPClassHandler pvpClassHandler;
 	@Getter private CarePackageHandler carePackageHandler;
 	@Getter private TeamHandler teamHandler;
+	@Getter private FightHandler fightHandler;
 	@Getter private ServerHandler serverHandler;
 	@Getter private PurgatoryHandler purgatoryHandler;
 	@Getter private MapHandler mapHandler;
@@ -82,7 +85,6 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private AbilityHandler abilityHandler;
 
 	@Getter private PlaytimeMap playtimeMap;
-	@Getter private PowersHandler powersHandler;
 	@Getter private OppleMap oppleMap;
 	@Getter private DeathbanMap deathbanMap;
 	@Getter private PvPTimerMap PvPTimerMap;
@@ -123,6 +125,8 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private TabListModeMap tabListModeMap;
 	@Getter private CobblePickupMap cobblePickupMap;
 	@Getter private KDRMap kdrMap;
+	@Getter private RampageHandler rampageHandler;
+	@Getter private SpectatorHandler spectatorHandler;
 
 	@Getter private ArcherClass archerClass;
 	@Getter private BardClass bardClass;
@@ -276,17 +280,19 @@ public class Foxtrot extends JavaPlugin {
 		mapHandler.load();
 
 		teamHandler = new TeamHandler();
+		fightHandler = new FightHandler();
 		LandBoard.getInstance().loadFromTeams();
+		rampageHandler = new RampageHandler();
 
 		chatHandler = new ChatHandler();
 		citadelHandler = new CitadelHandler();
-		powersHandler = new PowersHandler();
 		crateHandler = new CrateHandler();
 		pvpClassHandler = new PvPClassHandler();
 		eventHandler = new EventHandler();
 		conquestHandler = new ConquestHandler();
 		carePackageHandler = new CarePackageHandler();
 		abilityHandler = new AbilityHandler();
+		spectatorHandler = new SpectatorHandler();
 
 
 		if (getConfig().getBoolean("glowstoneMountain", false)) {
@@ -319,7 +325,7 @@ public class Foxtrot extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnderpearlCooldownHandler(), this);
 		getServer().getPluginManager().registerEvents(new EndListener(), this);
 		getServer().getPluginManager().registerEvents(new MarsListener(), this);
-		getServer().getPluginManager().registerEvents(new PowersListener(), this);
+		getServer().getPluginManager().registerEvents(new FightDamageListener(), this);
 		getServer().getPluginManager().registerEvents(new ElevatorListener(), this);
 		getServer().getPluginManager().registerEvents(new FoundDiamondsListener(), this);
 		getServer().getPluginManager().registerEvents(new FoxListener(), this);

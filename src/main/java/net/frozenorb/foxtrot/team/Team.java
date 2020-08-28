@@ -93,6 +93,7 @@ public class Team {
     @Getter private Set<String> usedUpgrades = new HashSet<>();
     @Getter private String announcement;
     @Getter private int maxOnline = -1;
+    @Getter @Setter private int teamfightsWon = 0;
     @Getter private boolean powerFaction = false;
     @Getter private int lives = 0;
     @Getter private int points = 0;
@@ -520,6 +521,12 @@ public class Team {
         flagForSave();
     }
 
+    public void setWonTeamfights(int teamfightsWon) {
+        this.teamfightsWon = teamfightsWon;
+        recalculatePoints();
+        flagForSave();
+    }
+
     public void setKills(int kills) {
         this.kills = kills;
         recalculatePoints();
@@ -662,12 +669,16 @@ public class Team {
 
         basePoints += (Math.floor(kills / 5.0D)) * 10;
         basePoints -= (Math.floor(deaths / 5.0D)) * 15;
-        basePoints += kothCaptures * 50;
+        basePoints += kothCaptures * 20;
         basePoints += (diamondsMined / 500) * 15;
-        basePoints += citadelsCapped * 125;
+        basePoints += citadelsCapped * 150;
         basePoints += spawnersInClaim * 5;
         basePoints += killstreakPoints;
         basePoints -= spentPoints;
+
+        if (Foxtrot.getInstance().getConfig().getBoolean("tiers")) {
+            basePoints += teamfightsWon * 5;
+        }
 
         basePoints += kills;
         basePoints -= deaths;
@@ -691,6 +702,10 @@ public class Team {
         basePoints += killstreakPoints;
         basePoints -= spentPoints;
 
+        if (Foxtrot.getInstance().getConfig().getBoolean("tiers")) {
+            basePoints += teamfightsWon * 5;
+        }
+
         basePoints += kills;
         basePoints -= deaths;
 
@@ -707,7 +722,8 @@ public class Team {
                 "Diamonds Mined Points: (" + diamondsMined + " mined / 500) * 15 = " + ((diamondsMined / 500) * 15),
                 "Spawners Points: (" + spawnersInClaim + " spawners) * 5 = " + (spawnersInClaim * 5),
                 "Killstreaks Points: " + killstreakPoints,
-                "Spent Points: " + spentPoints
+                "Spent Points: " + spentPoints,
+                "(Tier Maps Only) Teamfight Points: (" + teamfightsWon + " teamfights won * 5 = " + teamfightsWon * 5
         };
     }
 
@@ -1159,7 +1175,9 @@ public class Team {
             } else if (identifier.equalsIgnoreCase("Points")) {
 	            setPoints(Integer.valueOf(lineParts[0]));
             } else if (identifier.equalsIgnoreCase("SpentPoints")) {
-				setSpentPoints(Integer.valueOf(lineParts[0]));
+                setSpentPoints(Integer.valueOf(lineParts[0]));
+            } else  if (identifier.equalsIgnoreCase("TeamfightsWon")) {
+                setTeamfightsWon(Integer.valueOf(lineParts[0]));
             } else if (identifier.equalsIgnoreCase("SpawnersInClaim")) {
                 setSpawnersInClaim(Integer.valueOf(lineParts[0]));
             } else if (identifier.equalsIgnoreCase("Upgrades")) {
@@ -1297,6 +1315,7 @@ public class Team {
         teamString.append("CitadelsCapped:").append(getCitadelsCapped()).append("\n");
         teamString.append("KillstreakPoints:").append(getKillstreakPoints()).append("\n");
 	    teamString.append("Points:").append(getPoints()).append("\n");
+	    teamString.append("TeamfightsWon").append(getTeamfightsWon()).append("\n");
 	    teamString.append("SpentPoints:").append(getSpentPoints()).append("\n");
         teamString.append("SpawnersInClaim:").append(getSpawnersInClaim()).append("\n");
         teamString.append("Upgrades:").append(upgrades.toString()).append("\n");
@@ -1350,6 +1369,7 @@ public class Team {
         dbObject.put("KillstreakPoints", this.killstreakPoints);
         dbObject.put("KothCaptures", this.kothCaptures);
 	    dbObject.put("Points", this.points);
+	    dbObject.put("TeamfightsWon", this.teamfightsWon);
 	    dbObject.put("SpentPoints", this.spentPoints);
 	    dbObject.put("SpawnersInClaim", this.spawnersInClaim);
 
@@ -1657,22 +1677,23 @@ public class Team {
 
                         message.send(player);
                     }
+                    player.sendMessage(GRAY_LINE);
                 }
 
-//                if (player.hasPermission("foxtrot.powerfactions")) {
-//                    FancyMessage powerFactionLine = new FancyMessage();
-//                    powerFactionLine.text(ChatColor.YELLOW + "Power Faction: ");
-//                    if (isPowerFaction()) {
-//                        powerFactionLine.then().text(ChatColor.GREEN + "True");
-//                        powerFactionLine.command("/powerfaction remove " + getName());
-//                        powerFactionLine.tooltip("§bClick change faction to a non power faction.");
-//                    } else {
-//                        powerFactionLine.then().text(ChatColor.RED + "False");
-//                        powerFactionLine.command("/powerfaction add " + getName());
-//                        powerFactionLine.tooltip("§bClick change faction to a power faction.");
-//                    }
-//                    // powerFactionLine.send(player);
-//                }
+                if (player.hasPermission("foxtrot.powerfactions")) {
+                    FancyMessage powerFactionLine = new FancyMessage();
+                    powerFactionLine.text(ChatColor.YELLOW + "Power Faction: ");
+                    if (isPowerFaction()) {
+                        powerFactionLine.then().text(ChatColor.GREEN + "True");
+                        powerFactionLine.command("/powerfaction remove " + getName());
+                        powerFactionLine.tooltip("§bClick change faction to a non power faction.");
+                    } else {
+                        powerFactionLine.then().text(ChatColor.RED + "False");
+                        powerFactionLine.command("/powerfaction add " + getName());
+                        powerFactionLine.tooltip("§bClick change faction to a power faction.");
+                    }
+                     powerFactionLine.send(player);
+                }
 
                 // Only show this if they're a member.
                 if (isMember(player.getUniqueId()) && announcement != null && !announcement.equals("null")) {

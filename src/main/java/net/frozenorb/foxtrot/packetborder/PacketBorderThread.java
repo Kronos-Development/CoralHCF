@@ -84,6 +84,7 @@ public class PacketBorderThread extends Thread {
                     } else if ((team.hasDTRBitmask(DTRBitmask.KOTH) || team.hasDTRBitmask(DTRBitmask.CITADEL)) && hasPvPTimer) {
                         // If it's an event zone (KOTH or Citadel) and they have a PvP Timer
                         claims.add(claim);
+                     //In powers mode, we don't allow cleaners
                     }
                 } else {
                     if (Foxtrot.getInstance().getPvPTimerMap().hasTimer(player.getUniqueId())) {
@@ -144,7 +145,7 @@ public class PacketBorderThread extends Thread {
                 Location check = onPlayerY.clone().add(0, i, 0);
 
                 if (check.getWorld().isChunkLoaded(check.getBlockX() >> 4, check.getBlockZ() >> 4) && check.getBlock().getType().isTransparent() && check.distanceSquared(onPlayerY) < REGION_DISTANCE_SQUARED) {
-                    player.sendBlockChange(check, Material.STAINED_GLASS, (byte) 14); // Red stained glass
+                    player.sendBlockChange(check, Material.STAINED_GLASS, (byte) 3); // blue!
                     sentBlockChanges.get(player.getName()).put(check, System.currentTimeMillis() + 4000L); // The time the glass will stay for if the player walks away
                 }
             }

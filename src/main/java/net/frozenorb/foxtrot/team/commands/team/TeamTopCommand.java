@@ -55,7 +55,7 @@ public class TeamTopCommand {
                     .tooltip((sender instanceof Player && teamEntry.getKey().isMember(((Player) sender).getUniqueId()) ? ChatColor.GREEN : ChatColor.RED).toString() + teamEntry.getKey().getName() + "\n" +
                      ChatColor.GREEN + "Click to view team info").command("/t who " + teamEntry.getKey().getName()).then();
                     teamMessage.text(" ").color(ChatColor.YELLOW).then();
-                    if (Foxtrot.getInstance().getConfig().getBoolean("squads") || Foxtrot.getInstance().getConfig().getBoolean("powers")) {
+                    if (Foxtrot.getInstance().getConfig().getBoolean("tiers")) {
                         teamMessage.text(team.getTierPrefix(team));
                     } else {
                         teamMessage.text(teamEntry.getValue().toString()).color(ChatColor.GRAY);

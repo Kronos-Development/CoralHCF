@@ -101,11 +101,11 @@ public class CarePackageHandler implements Listener {
         }
 
         Block realBlock = block.getRelative(BlockFace.UP);
-        realBlock.setType(CHEST);
-        realBlock.setMetadata("CarePackage", new FixedMetadataValue(Foxtrot.getInstance(), new Object()));
-        lastCarePackage = realBlock.getLocation();
+        block.setType(CHEST);
+        block.setMetadata("CarePackage", new FixedMetadataValue(Foxtrot.getInstance(), new Object()));
+        lastCarePackage = block.getLocation();
 
-        Bukkit.getLogger().info("Spawning crate at " + realBlock.getLocation());
+        Bukkit.getLogger().info("Spawning crate at " + block.getLocation());
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&8[&bCarePackages&8] &bA &3Crate &bhas spawned at &3" + x + " " + z + "&b."));
         Bukkit.getScheduler().runTaskLater(Foxtrot.getInstance(), this::removeCarePackage, 10 * 20 * 60);
     }

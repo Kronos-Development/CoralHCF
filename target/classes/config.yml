@@ -33,6 +33,7 @@ cavern: false
 startingTimer: false
 forceInvites: true
 squads: false
+tiers: false
 idleCheck: true
 uhcHealing: false
 passiveTag: true

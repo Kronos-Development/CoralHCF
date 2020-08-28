@@ -136,6 +136,7 @@ public class ScoutClass extends PvPClass {
 	@EventHandler
 	public void onDamage (EntityDamageByEntityEvent event) {
 		if(!(event.getEntity() instanceof Player)) return;
+		if(!(event.getDamager() instanceof Player)) return;
 		Player attacker = (Player) event.getDamager();
 		ItemStack itemInHand = attacker.getItemInHand();
 		Player victim = (Player) event.getEntity();
@@ -159,6 +160,12 @@ public class ScoutClass extends PvPClass {
 			ArcherClass.getLastJumpUsage().put(victim.getName(), System.currentTimeMillis() + (1000L * 60 * 2));
 			victim.sendMessage(CC.translate("&4&lYou have been hit! &c&lA Scout has hit you. You can no longer use consumables"));
 		}
+		if (PvPClassHandler.getPvPClass(victim) instanceof RangerClass) {
+			RangerClass.getThrowCooldown().put(victim.getUniqueId(), System.currentTimeMillis() + (30 * 1000L));
+			RangerClass.getLastSpeedUsage().put(victim.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(30));
+			RangerClass.getLastJumpUsage().put(victim.getName(), System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(30));
+			victim.sendMessage(CC.translate("&4&lYou have been hit! &c&lA Scout has hit you. You can no longer use consumables"));
+		}
 
 	}
 
@@ -178,6 +185,7 @@ public class ScoutClass extends PvPClass {
 					return;
 				}
 
+				lastGrapplingUsage.put(player.getName(), System.currentTimeMillis());
 				pullTo(player, hook, true);
 				//player.setVelocity(getVector(player, hook));
 				break;
@@ -192,6 +200,7 @@ public class ScoutClass extends PvPClass {
 					return;
 				}
 
+				lastGrapplingUsage.put(player.getName(), System.currentTimeMillis());
 				pullTo(caught, player.getLocation(), true);
 				//caught.setVelocity(getVector(caught, player.getLocation()));
 				break;
@@ -200,6 +209,7 @@ public class ScoutClass extends PvPClass {
 
 		if (event.getState() != PlayerFishEvent.State.FAILED_ATTEMPT) {
 			grapplingNoDamage.put(player.getName(), true);
+			lastGrapplingUsage.put(player.getName(), System.currentTimeMillis());
 			pullTo(player, hook, true);
 		}
 	}

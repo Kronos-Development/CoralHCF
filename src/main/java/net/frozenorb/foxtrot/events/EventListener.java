@@ -251,7 +251,11 @@ public class EventListener implements Listener {
 
             Team playerTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getPlayer());
             if (playerTeam != null) {
-                playerTeam.setKothCaptures(playerTeam.getKothCaptures() + 1);
+                if (Foxtrot.getInstance().getRampageHandler().isRampageActive()) {
+                    playerTeam.setKothCaptures(playerTeam.getKothCaptures() + 2);
+                } else {
+                    playerTeam.setKothCaptures(playerTeam.getKothCaptures() + 1);
+                }
             }
         }
 

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.minexd.zoot.profile.Profile;
 import net.frozenorb.foxtrot.deathmessage.event.PlayerKilledEvent;
 import net.frozenorb.foxtrot.util.Players;
 import org.bukkit.Bukkit;
@@ -161,7 +162,7 @@ public class DamageListener implements Listener {
         Team deadTeam = Foxtrot.getInstance().getTeamHandler().getTeam(event.getEntity());
         
         if (killerTeam != null) {
-            killerTeam.setKills(killerTeam.getKills() + 1);
+            killerTeam.setKills(killerTeam.getKills() + (Foxtrot.getInstance().getRampageHandler().isRampageActive() ? 2 : 1));
         }
         
         if (deadTeam != null) {

@@ -35,12 +35,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class RangerClass extends PvPClass {
 
     private static int TAG_SECONDS = 15;
-    private static int HIT_COOLDOWN_SECONDS = 20;
-    private static int MISS_COOLDOWN_SECONDS = 10;
+    private static int HIT_COOLDOWN_SECONDS = 50;
+    private static int MISS_COOLDOWN_SECONDS = 30;
 
-    private static Map<String, Long> lastSpeedUsage = new HashMap<>();
-    private static Map<String, Long> lastJumpUsage = new HashMap<>();
-    private static Map<UUID, Long> throwCooldown = new HashMap<>();
+    @Getter private static Map<String, Long> lastSpeedUsage = new HashMap<>();
+    @Getter private static Map<String, Long> lastJumpUsage = new HashMap<>();
+    @Getter private static Map<UUID, Long> throwCooldown = new HashMap<>();
     @Getter private static Map<UUID, Long> markedPlayers = new ConcurrentHashMap<>();
 
     public RangerClass() {
