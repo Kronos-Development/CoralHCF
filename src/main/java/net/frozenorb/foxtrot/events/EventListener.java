@@ -14,6 +14,8 @@ import net.frozenorb.foxtrot.events.events.EventCapturedEvent;
 import net.frozenorb.foxtrot.events.events.EventDeactivatedEvent;
 import net.frozenorb.foxtrot.events.koth.KOTH;
 import net.frozenorb.foxtrot.events.koth.events.KOTHControlLostEvent;
+import net.frozenorb.foxtrot.persist.maps.CheatbreakerNotificationMap;
+import net.frozenorb.foxtrot.settings.Setting;
 import net.frozenorb.foxtrot.team.Team;
 import net.frozenorb.foxtrot.util.InventoryUtils;
 import net.frozenorb.qlib.qLib;
@@ -52,7 +54,9 @@ public class EventListener implements Listener {
         }
 
         for (Player player : Foxtrot.getInstance().getServer().getOnlinePlayers()) {
-            CheatBreakerAPI.getInstance().sendNotification(player, new CBNotification("&8[&3" + Bukkit.getServer().getServerName() + "&8] &b" + event.getEvent().getName() + " is now live!", 10, TimeUnit.SECONDS));
+           if (Foxtrot.getInstance().getCheatbreakerNotificationMap().isToggled(player.getUniqueId())) {
+               CheatBreakerAPI.getInstance().sendNotification(player, new CBNotification("&8[&3" + Bukkit.getServer().getServerName() + "&8] &b" + event.getEvent().getName() + " is now live!", 3, TimeUnit.SECONDS));
+           }
         }
 
         String[] messages;

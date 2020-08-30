@@ -83,6 +83,7 @@ net\frozenorb\foxtrot\team\dtr\DTRHandler.class
 net\frozenorb\foxtrot\commands\ToggleEndCommand.class
 net\frozenorb\foxtrot\server\commands\betrayer\BetrayerInfoCommand.class
 net\frozenorb\foxtrot\listener\CombatLoggerListener$CombatLoggerMetadata.class
+net\frozenorb\foxtrot\settings\menu\display\DisplayMenu$1.class
 net\frozenorb\foxtrot\map\stats\StatsHandler$5.class
 net\frozenorb\foxtrot\team\commands\PowerFactionCommand.class
 net\frozenorb\foxtrot\team\commands\team\TeamDisbandCommand.class
@@ -98,6 +99,7 @@ net\frozenorb\foxtrot\team\commands\team\TeamUninviteCommand$1.class
 net\frozenorb\foxtrot\listener\MapListener.class
 net\frozenorb\foxtrot\crates\CrateCommand.class
 net\frozenorb\foxtrot\deathmessage\trackers\BurnTracker.class
+net\frozenorb\foxtrot\settings\Setting$6.class
 net\frozenorb\foxtrot\team\commands\team\TeamDepositCommand.class
 net\frozenorb\foxtrot\server\conditional\spectator\menus\FightsMenu$1.class
 net\frozenorb\foxtrot\server\permission\impl\VaultPermissions.class
@@ -274,6 +276,7 @@ net\frozenorb\foxtrot\persist\maps\LastJoinMap.class
 net\frozenorb\foxtrot\persist\maps\StartingPvPTimerMap.class
 net\frozenorb\foxtrot\settings\Setting$3.class
 net\frozenorb\foxtrot\team\commands\TeamPointBreakDownCommand.class
+net\frozenorb\foxtrot\persist\maps\CheatbreakerNotificationMap.class
 net\frozenorb\foxtrot\server\ServerHandler$3.class
 net\frozenorb\foxtrot\team\permissions\menu\type\buttons\PermissionPlayerButton.class
 net\frozenorb\foxtrot\map\kits\Kit.class
@@ -368,7 +371,6 @@ net\frozenorb\foxtrot\abilities\menu\AbilityInfoButton.class
 net\frozenorb\foxtrot\team\menu\button\ChangePromotionStatusButton.class
 net\frozenorb\foxtrot\abilities\type\PocketBardAbility.class
 net\frozenorb\foxtrot\scoreboard\FoxtrotScoreboardConfiguration.class
-net\frozenorb\foxtrot\tab\FoxtrotTabLayoutProvider.class
 net\frozenorb\foxtrot\team\commands\team\chatspy\TeamChatSpyCommand.class
 net\frozenorb\foxtrot\persist\maps\TeamColorMap.class
 net\frozenorb\foxtrot\team\commands\team\TeamUninviteCommand.class
@@ -460,7 +462,6 @@ net\frozenorb\foxtrot\listener\KOTHRewardKeyListener.class
 net\frozenorb\foxtrot\server\RegionData.class
 net\frozenorb\foxtrot\listener\BlockConvenienceListener.class
 net\frozenorb\foxtrot\team\commands\team\TeamHQCommand.class
-net\frozenorb\foxtrot\settings\menu\SettingsMenu$1.class
 net\frozenorb\foxtrot\events\citadel\events\CitadelActivatedEvent.class
 net\frozenorb\foxtrot\util\ChatUtils.class
 net\frozenorb\foxtrot\team\commands\team\TeamChatCommand.class
@@ -479,6 +480,7 @@ net\frozenorb\foxtrot\team\Team$1.class
 net\frozenorb\foxtrot\protocol\SignGUIPacketAdaper.class
 net\frozenorb\foxtrot\map\killstreaks\velttypes\PermSpeed2.class
 net\frozenorb\foxtrot\deathmessage\trackers\ArrowTracker$ArrowDamageByMob.class
+net\frozenorb\foxtrot\settings\Setting$7.class
 net\frozenorb\foxtrot\tab\DefaultFoxtrotTabLayoutProvider.class
 net\frozenorb\foxtrot\deathmessage\objects\MobDamage.class
 net\frozenorb\foxtrot\events\citadel\CitadelHandler.class
@@ -488,6 +490,7 @@ net\frozenorb\foxtrot\settings\commands\SettingsCommand.class
 net\frozenorb\foxtrot\persist\PersistMap$3.class
 net\frozenorb\foxtrot\map\stats\command\LeaderboardAddCommand.class
 net\frozenorb\foxtrot\server\conditional\spectator\menus\FactionMenu$1.class
+net\frozenorb\foxtrot\settings\Setting$8.class
 net\frozenorb\foxtrot\events\region\glowmtn\GlowHandler.class
 net\frozenorb\foxtrot\map\killstreaks\arcanetypes\Strength.class
 net\frozenorb\foxtrot\server\conditional\staff\ModHandler.class
@@ -528,6 +531,7 @@ net\frozenorb\foxtrot\commands\SetNetherBufferCommand.class
 net\frozenorb\foxtrot\team\claims\VisualClaim$1.class
 net\frozenorb\foxtrot\deathmessage\trackers\VoidTracker$VoidDamage.class
 net\frozenorb\foxtrot\listener\EnchantmentLimiterListener$1.class
+net\frozenorb\foxtrot\settings\menu\display\DisplayButton.class
 net\frozenorb\foxtrot\events\koth\commands\koth\KOTHTimeCommand.class
 net\frozenorb\foxtrot\team\commands\pvp\PvPEnableCommand.class
 net\frozenorb\foxtrot\team\permissions\menu\type\PermissionTypeMenu$1.class
@@ -678,3 +682,4 @@ net\frozenorb\foxtrot\commands\lff\menu\buttons\LFFKitButton.class
 net\frozenorb\foxtrot\pvpclasses\pvpclasses\RogueClass.class
 net\frozenorb\foxtrot\server\RegionType$1.class
 net\frozenorb\foxtrot\events\dtc\DTC.class
+net\frozenorb\foxtrot\settings\menu\display\DisplayMenu.class

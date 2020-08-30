@@ -91,7 +91,7 @@ public class KitCommand {
         String kitName = kit.getName();
 
         // Don't show any of these kits as donator kits
-        if (kitName.equals("Scout") || kitName.equals("PvP") || kitName.equals("Archer") || kitName.equals("Bard") || kitName.equals("Rogue") || kitName.equals("Miner") || kitName.equals("Builder")) {
+        if (kitName.equals("Scout") || kitName.equals("PvP") || kitName.equals("Archer") || kitName.equals("Bard") || kitName.equals("Rogue") || kitName.equals("Miner") || kitName.equals("Builder") || kitName.equals("Ranger")) {
             return false;
         }
 

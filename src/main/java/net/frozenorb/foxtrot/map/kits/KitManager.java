@@ -158,7 +158,7 @@ public class KitManager {
 
     public boolean canUseKit(Player player, String kitName) {
         // You can always use these kits
-        if (kitName.equals("Miner") || kitName.equals("Builder") || kitName.equals("Scout") || kitName.equals("PvP") || kitName.equals("Archer") || kitName.equals("Bard") || kitName.equals("Rogue")) {
+        if (kitName.equals("Miner") || kitName.equals("Builder") || kitName.equals("Scout") || kitName.equals("PvP") || kitName.equals("Archer") || kitName.equals("Bard") || kitName.equals("Rogue") || kitName.equals("Ranger")) {
             return true;
         }
 

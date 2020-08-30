@@ -31,7 +31,7 @@ public class TeamInfoCommand {
                 if (team.getMembers().contains(sender.getUniqueId())) return;
 
                 team.getOnlineMembers().forEach(player -> {
-                    if(Setting.AUTOMATICALLY_F_DISPLAY.isEnabled(player) && team.getHQ() != null) {
+                    if(Foxtrot.getInstance().getFDisplayMap().isToggled(player.getUniqueId())) {
                         CBWaypoint cbWaypoint = new CBWaypoint(team.getName(), team.getHQ().getBlockX(), team.getHQ().getBlockY(), team.getHQ().getBlockZ(), team.getHQ().getWorld().getUID().toString(), -16776961, true, true);
                         team.setFactionHQRally(cbWaypoint);
                     } else {

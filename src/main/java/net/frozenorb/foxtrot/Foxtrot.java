@@ -36,7 +36,7 @@ import net.frozenorb.foxtrot.pvpclasses.pvpclasses.RogueClass;
 import net.frozenorb.foxtrot.server.EnderpearlCooldownHandler;
 import net.frozenorb.foxtrot.server.ServerHandler;
 import net.frozenorb.foxtrot.server.conditional.spectator.SpectatorHandler;
-import net.frozenorb.foxtrot.tab.FoxtrotTabLayoutProvider;
+import net.frozenorb.foxtrot.tab.DefaultFoxtrotTabLayoutProvider;
 import net.frozenorb.foxtrot.tasks.RallyExpireTask;
 import net.frozenorb.foxtrot.team.TeamHandler;
 import net.frozenorb.foxtrot.team.claims.LandBoard;
@@ -99,6 +99,8 @@ public class Foxtrot extends JavaPlugin {
 	@Getter private StaffBoardMap staffBoardMap;
 	@Getter private AbilityCooldownsMap abilityCooldownsMap;
 	@Getter private FDisplayMap fDisplayMap;
+	@Getter private CheatbreakerNotificationMap cheatbreakerNotificationMap;
+	@Getter private ReceiveFactionInviteMap receiveFactionInviteMap;
 
 	@Getter private TeamColorMap teamColorMap;
 	@Getter private EnemyColorMap enemyColorMap;
@@ -204,7 +206,7 @@ public class Foxtrot extends JavaPlugin {
 		setupPersistence();
 		setupListeners();
 
-		FrozenTabHandler.setLayoutProvider(new FoxtrotTabLayoutProvider());
+		FrozenTabHandler.setLayoutProvider(new DefaultFoxtrotTabLayoutProvider());
 
 		ProtocolLibrary.getProtocolManager().addPacketListener(new SignGUIPacketAdaper());
 		ProtocolLibrary.getProtocolManager().addPacketListener(new ClientCommandPacketAdaper());
@@ -392,6 +394,8 @@ public class Foxtrot extends JavaPlugin {
 		(toggleLFFMessageMap = new ToggleLFFMessageMap()).loadFromRedis();
 		(abilityCooldownsMap = new AbilityCooldownsMap()).loadFromRedis();
 		(fDisplayMap = new FDisplayMap()).loadFromRedis();
+		(cheatbreakerNotificationMap = new CheatbreakerNotificationMap()).loadFromRedis();
+		(receiveFactionInviteMap = new ReceiveFactionInviteMap()).loadFromRedis();
 
 		(teamColorMap = new TeamColorMap()).loadFromRedis();
 		(enemyColorMap = new EnemyColorMap()).loadFromRedis();

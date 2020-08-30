@@ -92,8 +92,33 @@ public enum  Setting {
         }
 
     },
+    TAB_LIST(
+            ChatColor.LIGHT_PURPLE + "Tab List Info",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want to see",
+                    ChatColor.BLUE + "extra info on your",
+                    ChatColor.BLUE + "tab list?"
+            ),
+            Material.ENCHANTED_BOOK,
+            ChatColor.YELLOW + "",
+            ChatColor.YELLOW + "",
+            true
+    ) {
 
-    FOUND_DIAMONDS(
+        @Override
+        public void toggle(Player player) {
+            TabListMode mode = SettingButton.next(Foxtrot.getInstance().getTabListModeMap().getTabListMode(player.getUniqueId()));
+
+            Foxtrot.getInstance().getTabListModeMap().setTabListMode(player.getUniqueId(), mode);
+            player.sendMessage(ChatColor.YELLOW + "You've set your tab list mode to " + ChatColor.LIGHT_PURPLE + mode.getName() + ChatColor.YELLOW + ".");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return true;
+        }
+
+    }, FOUND_DIAMONDS(
             ChatColor.LIGHT_PURPLE + "Found Diamonds",
             ImmutableList.of(
                     ChatColor.BLUE + "Do you want to see",
@@ -120,6 +145,31 @@ public enum  Setting {
 
     },
 
+    DEATH_MESSAGES(
+            ChatColor.LIGHT_PURPLE + "Death Messages",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want to see",
+                    ChatColor.BLUE + "death messages?"
+            ),
+            Material.SKULL_ITEM,
+            ChatColor.YELLOW + "Show messages",
+            ChatColor.YELLOW + "Hide messages",
+            true
+    ) {
+        @Override
+        public void toggle(Player player) {
+            boolean value = !Foxtrot.getInstance().getToggleDeathMessageMap().areDeathMessagesEnabled(player.getUniqueId());
+
+            Foxtrot.getInstance().getToggleDeathMessageMap().setDeathMessagesEnabled(player.getUniqueId(), value);
+            player.sendMessage(ChatColor.YELLOW + "You are now " + (value ? ChatColor.GREEN + "able" : ChatColor.RED + "unable") + ChatColor.YELLOW + " to see death messages.");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return Foxtrot.getInstance().getToggleDeathMessageMap().areDeathMessagesEnabled(player.getUniqueId());
+        }
+    },
+
     AUTOMATICALLY_F_DISPLAY(
             ChatColor.LIGHT_PURPLE + "Automatic Faction Display",
             ImmutableList.of(
@@ -130,7 +180,7 @@ public enum  Setting {
             Material.BEACON,
             ChatColor.YELLOW + "Run F Display",
             ChatColor.YELLOW + "Don't Run F Display",
-            true
+            false
     ) {
         @Override
         public void toggle(Player player) {
@@ -138,6 +188,57 @@ public enum  Setting {
 
             Foxtrot.getInstance().getFDisplayMap().setToggled(player.getUniqueId(), value);
             player.sendMessage(ChatColor.YELLOW + "F Display will " + (value ? ChatColor.GREEN + "now" : ChatColor.RED + "no longer") + ChatColor.YELLOW + " run when doing /f who.");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return Foxtrot.getInstance().getClassCooldownsMap().isCooldownsToggled(player.getUniqueId());
+        }
+    },
+
+    FACTION_INVITES(
+            ChatColor.LIGHT_PURPLE + "Faction Invites",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want others",
+                    ChatColor.BLUE + "to be able to invite",
+                    ChatColor.BLUE + "you to their faction?"
+            ),
+            Material.BEACON,
+            ChatColor.YELLOW + "Allow Invites",
+            ChatColor.YELLOW + "Don't Allow Invites",
+            true
+    ) {
+        @Override
+        public void toggle(Player player) {
+            boolean value = !Foxtrot.getInstance().getReceiveFactionInviteMap().isToggled(player.getUniqueId());
+
+            Foxtrot.getInstance().getReceiveFactionInviteMap().setToggled(player.getUniqueId(), value);
+            player.sendMessage(ChatColor.YELLOW + "You will " + (value ? ChatColor.GREEN + "now" : ChatColor.RED + "no longer") + ChatColor.YELLOW + " be able to see faction invites.");
+        }
+
+        @Override
+        public boolean isEnabled(Player player) {
+            return Foxtrot.getInstance().getClassCooldownsMap().isCooldownsToggled(player.getUniqueId());
+        }
+    },
+
+    SEE_CB_NOTIS(
+            ChatColor.LIGHT_PURPLE + "Cheatbreaker Notifications",
+            ImmutableList.of(
+                    ChatColor.BLUE + "Do you want to",
+                    ChatColor.BLUE + "see cheatbreaker notifications"
+            ),
+            Material.BEACON,
+            ChatColor.YELLOW + "See Notifications",
+            ChatColor.YELLOW + "Don't see Notifications",
+            false
+    ) {
+        @Override
+        public void toggle(Player player) {
+            boolean value = !Foxtrot.getInstance().getCheatbreakerNotificationMap().isToggled(player.getUniqueId());
+
+            Foxtrot.getInstance().getCheatbreakerNotificationMap().setToggled(player.getUniqueId(), value);
+            player.sendMessage(ChatColor.YELLOW + "Cheatbreaker Notifications " + (value ? ChatColor.GREEN + "now" : ChatColor.RED + "no longer") + ChatColor.YELLOW + " shown.");
         }
 
         @Override

@@ -31,7 +31,7 @@ public class SettingButton extends Button {
         description.addAll(setting.getDescription());
         description.add("");
 
- /**       if (setting != Setting.TAB_LIST) {
+        if (setting != Setting.TAB_LIST) {
             if (setting.isEnabled(player)) {
                 description.add(ChatColor.BLUE.toString() + ChatColor.BOLD + "  ► " + setting.getEnabledText());
                 description.add("    " + setting.getDisabledText());
@@ -43,7 +43,6 @@ public class SettingButton extends Button {
             TabListMode current = Foxtrot.getInstance().getTabListModeMap().getTabListMode(player.getUniqueId());
 
             for (TabListMode mode : TabListMode.values()) {
-                if(mode == TabListMode.DETAILED_WITH_FACTION_INFO) continue;
                 if (mode != current) {
                     description.add("    " + ChatColor.GRAY + mode.getName());
                 } else {
@@ -51,7 +50,7 @@ public class SettingButton extends Button {
                 }
             }
         }
-*/
+
         return description;
     }
 
@@ -74,6 +73,10 @@ public class SettingButton extends Button {
         switch (current) {
             case DETAILED:
                 return TabListMode.VANILLA;
+            case DETAILED_WITH_FACTION_INFO:
+                return TabListMode.DETAILED;
+            case VANILLA:
+                return TabListMode.DETAILED_WITH_FACTION_INFO;
             default:
                 return TabListMode.DETAILED;
         }
