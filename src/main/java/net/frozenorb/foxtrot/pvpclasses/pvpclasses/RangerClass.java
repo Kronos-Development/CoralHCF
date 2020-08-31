@@ -65,7 +65,7 @@ public class RangerClass extends PvPClass {
     @Override
     public void tick(Player player) {
         if (!player.hasPotionEffect(PotionEffectType.SPEED)) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
         }
 
         if (!player.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)) {
